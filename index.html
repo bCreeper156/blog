@@ -3,209 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>资源下载中心 | 安全验证</title>
-    
-    <!-- CSS 文件 -->
+    <title>Creeper苦力怕i个人博客</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/captcha.css">
-    
-    <!-- 先加载自己的脚本 -->
-    <script src="js/verification.js"></script>
-    <script src="js/hcaptcha-integration.js"></script>
-    <script src="js/fallback-captcha.js"></script>
-    <script src="js/script.js"></script>
-
-<!-- 最后加载 hCaptcha -->
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-    
-    <!-- 图标 -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    <script src="js/common.js"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- 头部区域 -->
-        <header class="header">
-            <div class="logo">
-                <span class="logo-icon">🔒</span>
-                <h1 class="logo-text">资源下载中心</h1>
-            </div>
-            <p class="tagline">安全验证访问系统</p>
-            <div class="verification-mode-indicator">
-                <span id="captchaModeIndicator">验证模式: hCaptcha</span>
-                <button id="switchCaptchaMode" class="btn-mode-switch">切换到备用验证</button>
-            </div>
-        </header>
-
-        <!-- 主要内容 -->
-        <main class="main-content">
-            <div class="verification-card">
-                <div class="card-header">
-                    <h2>访问验证</h2>
-                    <p class="card-subtitle">请输入您的访问密钥以继续</p>
-                </div>
-                
-                <div class="card-body">
-                    <form id="verificationForm">
-                        <!-- 访问密钥输入 -->
-                        <div class="form-group">
-                            <label for="accessKey" class="form-label">
-                                <span class="label-icon">🔑</span>
-                                访问密钥
-                            </label>
-                            <div class="input-with-icon">
-                                <input 
-                                    type="password" 
-                                    id="accessKey" 
-                                    name="accessKey" 
-                                    class="form-input"
-                                    placeholder="请输入您的访问密钥"
-                                    autocomplete="off"
-                                    required
-                                >
-                                <button type="button" class="toggle-password" id="togglePassword">
-                                    👁️
-                                </button>
-                            </div>
-                            <div class="input-hint">
-                                <span class="hint-icon">💡</span>
-                                请从管理员处获取访问密钥
-                            </div>
-                        </div>
-
-                        <!-- hCaptcha 容器 -->
-                        <div id="hcaptchaContainer" class="captcha-container">
-                            <div class="captcha-header">
-                                <h3>🤖 hCaptcha 验证</h3>
-                                <span class="captcha-badge active">推荐</span>
-                            </div>
-                            <div class="h-captcha"
-                                 data-sitekey="1464c936-0618-41c8-bd20-f2e4b44e48a8"
-                                 data-theme="dark"
-                                 data-size="normal"
-                                 data-tabindex="0"
-                                 data-callback="onCaptchaVerified"
-                                 data-expired-callback="onCaptchaExpired"
-                                 data-error-callback="onCaptchaError">
-                            </div>
-                            <div class="captcha-status" id="hcaptchaStatus">
-                                <span class="status-icon">⏳</span>
-                                <span class="status-text">等待验证...</span>
-                            </div>
-                        </div>
-
-                        <!-- 备用验证容器 -->
-                        <div id="fallbackCaptchaContainer" class="captcha-container hidden">
-                            <div class="captcha-header">
-                                <h3>🔢 备用数学验证</h3>
-                                <span class="captcha-badge warning">备用</span>
-                            </div>
-                            
-                            <div class="math-captcha">
-                                <div class="math-problem" id="mathProblem">
-                                    <!-- 动态生成数学问题 -->
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="mathAnswer" class="form-label">
-                                        <span class="label-icon">🧮</span>
-                                        计算结果
-                                    </label>
-                                    <input 
-                                        type="number" 
-                                        id="mathAnswer" 
-                                        name="mathAnswer"
-                                        class="form-input"
-                                        placeholder="请输入计算结果"
-                                        autocomplete="off"
-                                        required
-                                    >
-                                    <div class="input-hint">
-                                        <span class="hint-icon">📝</span>
-                                        请输入整数结果
-                                    </div>
-                                </div>
-                                
-                                <div class="math-actions">
-                                    <button type="button" id="refreshMathProblem" class="btn-refresh-math">
-                                        <span class="refresh-icon">🔄</span>
-                                        换一题
-                                    </button>
-                                    <button type="button" id="hintMathProblem" class="btn-hint-math">
-                                        <span class="hint-icon">💡</span>
-                                        提示
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="captcha-status" id="mathCaptchaStatus">
-                                <span class="status-icon">🔢</span>
-                                <span class="status-text">请解答数学问题</span>
-                            </div>
-                        </div>
-
-                        <!-- 备用验证通知 -->
-                        <div class="captcha-fallback-notice hidden" id="fallbackNotice">
-                            <span class="notice-icon">⚠️</span>
-                            <span class="notice-text">hCaptcha 加载失败，已自动切换到备用验证方式</span>
-                        </div>
-
-                        <!-- 验证按钮 -->
-                        <div class="form-actions">
-                            <button type="button" id="verifyBtn" class="btn btn-primary">
-                                <span id="btnText">验证密钥</span>
-                                <span id="loadingSpinner" class="loading-spinner hidden"></span>
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="form-footer">
-                        <div class="security-info">
-                            <p><span class="info-icon">🔐</span> 您的连接已加密，所有数据均安全传输</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 使用说明 -->
-            <div class="info-panel">
-                <h3><span class="panel-icon">📋</span> 使用说明</h3>
-                <ul class="instructions-list">
-                    <li>从管理员处获取唯一的访问密钥</li>
-                    <li>完成人机验证以确保安全访问</li>
-                    <li>系统使用 hCaptcha 验证，备用数学验证作为备选</li>
-                    <li>验证通过后进入资源下载中心</li>
-                    <li>会话有效期为30分钟</li>
-                    <li>请勿与他人共享您的访问密钥</li>
-                </ul>
-            </div>
-        </main>
-
-        <!-- 页脚 -->
-        <footer class="footer">
-            <div class="footer-content">
-                <p class="copyright">© 2024 资源下载中心 | 安全访问系统 v2.0</p>
-                <div class="status-indicators">
-                    <span class="status-item">
-                        <span class="status-dot active"></span>
-                        系统在线
-                    </span>
-                    <span class="status-item">
-                        <span class="status-dot" id="captchaStatusDot"></span>
-                        <span id="captchaStatusText">验证服务正常</span>
-                    </span>
-                </div>
-            </div>
-        </footer>
+    <header>
+    <button class="menu">&#9776;</button>
+    <h1>Creeper苦力怕i</h1>
+    <nav>
+    <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="download.html">下载</a></li>
+        <li><a href="blog.html">博客</a></li>
+        <li><a href="link.html">链接</a></li>                
+    </ul>
+    </nav>  
+    </header>
+    <section class = "Ad">
+        <a href="https://www.ifdian.net/order/create?plan_id=260e0bf0bd5c11f0aca452540025c377&product_type=0&remark=&affiliate_code=">"广告位招租，点击投放广告位！"</a>
+    </section>
+    <main>
+    
+    <section class = "about_me">
+    <img src="images/LOGO.png" alt="Creeper苦力怕i个人博客LOGO"></img>
+    <p>bilibili游戏区、科技区自媒体，爱玩游戏、编程</p>
+    <div class="social media">
+            <a href="https://github.com/156sr-dogs">GitHub</a> | 
+            <a href="https://space.bilibili.com/3546378363996834?spm_id_from=333.999.0.0">bilibili</a> | 
+            <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">YouTube</a> |
+            <a href="https://156sr-dogs.github.io/C_blog/QQ.html">QQ</a> |
+            <a href="http://ifdian.net/a/bcdogs156">爱发电</a>
     </div>
-
-    <!-- 状态消息 -->
-    <div id="statusMessage" class="status-message hidden"></div>
-
-    <!-- JavaScript 文件 -->
-    <script src="js/verification.js"></script>
-    <script src="js/hcaptcha-integration.js"></script>
-    <script src="js/fallback-captcha.js"></script>
-    <script src="js/script.js"></script>
+    </section>
+    <section class="form">
+        <h1>精选文章</h1>
+        <div class="highlight-box">
+            <h3><a href="/articles/1/article1.html">1.欢迎来到我的博客！</a></h3>
+        </div>
+    </section>
+    </main>
+    <footer>
+        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+    </footer>
 </body>
-
 </html>

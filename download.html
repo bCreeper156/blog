@@ -3,149 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>资源下载中心 | 文件下载</title>
-    
-    <!-- CSS 文件 -->
-    <link rel="stylesheet" href="css/download.css">
-    
-    <!-- 图标 -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+    <title>资源下载 - Creeper苦力怕i个人博客</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common.js"></script>
 </head>
 <body>
-    <div class="download-container">
-        <!-- 头部 -->
-        <header class="download-header">
-            <div class="header-left">
-                <h1 class="site-title">
-                    <span class="title-icon">📦</span>
-                    资源下载中心
-                </h1>
-                <p class="site-subtitle">安全访问，请选择您需要的资源</p>
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1>Creeper苦力怕i</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="download.html">下载</a></li>
+                <li><a href="blog.html">博客</a></li>
+                <li><a href="link.html">链接</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+        <section class="download-section">
+            <h1>📦 资源下载中心</h1>
+            <div class="coming-soon" style="text-align: center; padding: 3rem 1rem;">
+                <h2>正在精心准备中...</h2>
+                <p>这里将提供我的项目源码、实用工具、学习资料等资源下载</p>
+                <div style="margin: 2rem 0;">
+                    <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
+                        <div style="background: yellowgreen; height: 100%; width: 1%; border-radius: 10px;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; color: #666;">开发进度: 1%</p>
+                </div>
+                <p>敬请期待更多精彩内容！</p>
             </div>
             
-            <div class="header-right">
-                <div class="session-info">
-                    <div class="session-timer">
-                        <span class="timer-icon">⏱️</span>
-                        会话剩余: 
-                        <span id="sessionTime" class="timer-value">30:00</span>
-                    </div>
-                    <div class="session-status">
-                        <span class="status-dot active"></span>
-                        已授权访问
-                    </div>
-                </div>
-                <button id="logoutBtn" class="btn-logout">
-                    <span class="logout-icon">🚪</span>
-                    安全退出
-                </button>
+            <div class="planned-features" style="margin-top: 3rem;">
+                <h3>🎯 计划提供的资源类型</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 0.5rem 0;">✅ 开源项目源码</li>
+                    <li style="padding: 0.5rem 0;">✅ 开发工具集合</li>
+                    <li style="padding: 0.5rem 0;">✅ 学习资料文档</li>
+                    <li style="padding: 0.5rem 0;">✅ 实用模板资源</li>
+                </ul>
             </div>
-        </header>
-
-        <!-- 主要内容 -->
-        <main class="download-content">
-            <div class="content-header">
-                <h2 class="section-title">
-                    <span class="section-icon">📁</span>
-                    可用资源文件
-                </h2>
-                <div class="file-stats">
-                    <span id="fileCount" class="stat-item">0</span> 个文件
-                    <span id="totalSize" class="stat-item">0 MB</span> 总大小
-                </div>
-            </div>
-
-            <!-- 加载状态 -->
-            <div class="loading-state" id="loading">
-                <div class="loading-spinner"></div>
-                <p>正在加载资源列表，请稍候...</p>
-                <p class="loading-sub">正在验证您的访问权限</p>
-            </div>
-
-            <!-- 资源网格 -->
-            <div class="resources-grid" id="resourcesGrid">
-                <!-- 资源卡片通过 JS 动态生成 -->
-            </div>
-
-            <!-- 空状态 -->
-            <div class="empty-state hidden" id="emptyState">
-                <div class="empty-icon">📭</div>
-                <h3>暂无可用资源</h3>
-                <p>当前没有可下载的资源文件，请稍后再试</p>
-                <button id="refreshBtn" class="btn-refresh">
-                    <span class="refresh-icon">🔄</span>
-                    刷新列表
-                </button>
-            </div>
-
-            <!-- 说明面板 -->
-            <div class="instructions-panel">
-                <div class="panel-header">
-                    <h3>
-                        <span class="panel-icon">📋</span>
-                        下载说明
-                    </h3>
-                    <span class="panel-badge">重要</span>
-                </div>
-                <div class="panel-content">
-                    <ul class="instructions-list">
-                        <li>
-                            <span class="list-icon">✅</span>
-                            点击"下载"按钮开始下载文件
-                        </li>
-                        <li>
-                            <span class="list-icon">💾</span>
-                            建议使用高速网络下载大文件
-                        </li>
-                        <li>
-                            <span class="list-icon">🛡️</span>
-                            下载完成后请及时查杀病毒
-                        </li>
-                        <li>
-                            <span class="list-icon">⏰</span>
-                            当前会话将在 <span id="sessionExpiry" class="highlight">30分钟</span> 后过期
-                        </li>
-                        <li>
-                            <span class="list-icon">⚠️</span>
-                            请勿在公共计算机上保存文件
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </main>
-
-        <!-- 页脚 -->
-        <footer class="download-footer">
-            <div class="footer-content">
-                <div class="footer-left">
-                    <p class="copyright">© 2024 资源下载中心 | 安全访问系统 v2.0</p>
-                    <p class="version">服务器版本: 2.1.0 | 最后更新: <span id="lastUpdate">2024-01-01</span></p>
-                </div>
-                <div class="footer-right">
-                    <div class="system-status">
-                        <span class="status-item">
-                            <span class="status-dot active"></span>
-                            下载服务正常
-                        </span>
-                        <span class="status-item">
-                            <span class="status-dot secure"></span>
-                            数据传输加密
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- 下载提示 -->
-    <div id="downloadToast" class="download-toast hidden">
-        <div class="toast-content">
-            <span class="toast-icon">📥</span>
-            <span id="toastMessage">正在准备下载...</span>
-        </div>
-    </div>
-
-    <!-- JavaScript 文件 -->
-    <script src="js/download.js"></script>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+    </footer>
 </body>
 </html>
