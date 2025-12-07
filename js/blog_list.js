@@ -89,6 +89,15 @@ const articles = [
         date: "2025-09-15",
         readTime: "4分钟阅读",
         link: "/articles/10/article10.html"
+    },
+    {
+        id: 11,
+        title: "11.关于下载页面项目下线的公告",
+        excerpt: "关于下载页面项目下线的公告",
+        category: "公告",
+        date: "2025-12-07",
+        readTime: "1分钟阅读",
+        link: "/articles/11/article11.html"
     }
 ];
 
