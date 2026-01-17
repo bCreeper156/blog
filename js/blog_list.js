@@ -98,6 +98,15 @@ const articles = [
         date: "2025-12-07",
         readTime: "1分钟阅读",
         link: "/articles/11/article11.html"
+    },
+    {
+        id: 12,
+        title: "12.【Creeper的软件测评】第一集：我把三大音乐App“装”进了一个软件！免费开源神器Sollin测评",
+        excerpt: "免费开源神器Sollin测评,
+        category: "无",
+        date: "2026-1-17",
+        readTime: "1分钟阅读",
+        link: "/articles/12/article12.html"
     }
 ];
 
