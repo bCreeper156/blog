@@ -6,6 +6,153 @@
     <title>Creeper苦力怕i个人博客</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/common.js"></script>
+    <style>
+        #andy-lau-thaw-progress {
+            font-family: 'Microsoft YaHei', sans-serif;
+            padding: 20px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            border: 1px solid #d1e3ff;
+            max-width: 500px;
+            margin: 20px auto;
+            box-shadow: 0 4px 12px rgba(0, 40, 100, 0.1);
+            display: none; /* 默认隐藏 */
+        }
+        #andy-lau-thaw-progress.show {
+            display: block; /* 显示时设为block */
+        }
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .progress-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1a56db;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .progress-title::before {
+            content: '⏳';
+            font-size: 1.2em;
+        }
+        #current-date {
+            font-size: 0.9em;
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .progress-bar-container {
+            height: 24px;
+            background-color: #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        #progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4facfe 0%, #00c6ff 50%, #00f2fe 100%);
+            border-radius: 12px;
+            transition: width 0.8s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95em;
+            color: #4b5563;
+            margin-bottom: 15px;
+        }
+        #thaw-status {
+            text-align: center;
+            font-size: 1em;
+            min-height: 1.5em;
+            padding: 8px;
+            background-color: #fef3c7;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+        .season-indicator {
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid #dbeafe;
+            color: #1e40af;
+            font-weight: bold;
+        }
+        .season-indicator::before {
+            content: '❄️ ';
+        }
+        .event-highlight {
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            padding: 12px;
+            border-left: 4px solid #3b82f6;
+            margin-top: 15px;
+        }
+        .event-highlight h4 {
+            margin-top: 0;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .event-highlight h4::before {
+            content: '✨';
+        }
+        .countdown {
+            font-weight: bold;
+            color: #dc2626;
+        }
+        .footnote {
+            font-size: 0.8em;
+            color: #9ca3af;
+            text-align: center;
+            margin-top: 15px;
+            border-top: 1px dashed #d1d5db;
+            padding-top: 10px;
+        }
+        /* 隐藏状态提示样式 */
+        #off-season-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            font-family: 'Microsoft YaHei', sans-serif;
+            color: #6b7280;
+            font-size: 1.1em;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        #off-season-message.show {
+            display: block;
+        }
+        .off-season-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .off-season-note {
+            font-size: 0.85em;
+            color: #9ca3af;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -23,6 +170,33 @@
     </header>
     <section class = "Ad">
         <a href="https://www.ifdian.net/order/create?plan_id=260e0bf0bd5c11f0aca452540025c377&product_type=0&remark=&affiliate_code=">"广告位招租，点击投放广告位！"</a>
+    </section>
+    <section class = "ldhjd">
+        <div id="andy-lau-thaw-progress">
+        <div class="progress-header">
+            <div class="progress-title">刘德华年度解冻进度</div>
+            <div id="current-date">加载日期中...</div>
+        </div>
+        
+        <div class="progress-bar-container">
+            <div id="progress-bar-fill">0%</div>
+        </div>
+        
+        <div class="progress-stats">
+            <div>解冻进度: <span id="progress-percentage">0</span>%</div>
+            <div>春节倒计时: <span id="spring-festival-countdown">--</span> 天</div>
+        </div>
+        
+        <div id="thaw-status">正在计算华仔的解冻状态...</div>
+        
+        <div class="event-highlight" id="special-event" style="display:none;">
+            <!-- 特殊事件提示会动态插入到这里 -->
+        </div>
+        
+        <div class="footnote">
+            * “解冻”梗源自刘德华歌曲《恭喜发财》每年春节前在各大场所循环播放的现象[citation:3]。进度条为趣味计算，并非官方内容。
+        </div>
+    </div>
     </section>
     <main>
     
@@ -47,5 +221,215 @@
     <footer>
         <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
     </footer>
+    <script>
+        // 主要配置：请根据目标年份修改此处春节日期
+        const config = {
+            // 自动计算当前年份或下一年的春节日期
+            get targetSpringFestival() {
+                const currentYear = new Date().getFullYear();
+                // 春节日期映射表（2025-2030年）
+                const springFestivalDates = {
+                    2025: '2025-01-29', // 2025年春节
+                    2026: '2026-02-17', // 2026年春节
+                    2027: '2027-02-06', // 2027年春节
+                    2028: '2028-01-26', // 2028年春节
+                    2029: '2029-02-13', // 2029年春节
+                    2030: '2030-02-03'  // 2030年春节
+                };
+                
+                const now = new Date();
+                let targetYear = currentYear;
+                
+                // 如果当前日期已经过了今年春节，则目标设为明年春节
+                const currentYearFestival = new Date(springFestivalDates[currentYear]);
+                if (now > currentYearFestival && springFestivalDates[currentYear + 1]) {
+                    targetYear = currentYear + 1;
+                }
+                
+                // 如果目标年份在映射表中，使用该日期；否则使用2026年作为默认
+                const festivalDate = springFestivalDates[targetYear] || '2026-02-17';
+                return new Date(festivalDate);
+            },
+            
+            // 特殊事件提示保持不变
+            specialEvents: [
+                {
+                    date: '2025-11-09',
+                    title: '历史事件：提前"解冻"',
+                    description: '2025年11月9日，刘德华在全运会开幕式演唱《中国人》，因早于往年"解冻期"，被网友戏称为"提前解冻"。'
+                }
+            ]
+        };
+
+        // 获取DOM元素
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const springFestivalCountdown = document.getElementById('spring-festival-countdown');
+        const currentDateEl = document.getElementById('current-date');
+        const thawStatus = document.getElementById('thaw-status');
+        const specialEventContainer = document.getElementById('special-event');
+        const progressContainer = document.getElementById('andy-lau-thaw-progress');
+        const offSeasonMessage = document.getElementById('off-season-message');
+
+        // 判断当前是否在12月-3月期间
+        function isThawSeason() {
+            const now = new Date();
+            const month = now.getMonth() + 1; // getMonth()返回0-11，所以+1得到1-12
+            
+            // 12月(12)到3月(3)期间显示
+            return month === 12 || month === 1 || month === 2 || month === 3;
+        }
+
+        // 获取去年春节的日期（假设为前一年的2月1日，作为进度计算的近似起点）
+        function getLastYearSpringFestival() {
+            const currentYear = new Date().getFullYear();
+            // 这是一个简化的起点，通常"解冻周期"被认为从上一年春节后开始
+            // 实际网络中，进度条往往从年初(0%)运行到当年春节(100%)
+            return new Date(`${currentYear-1}-02-01`);
+        }
+
+        // 计算解冻进度
+        function calculateThawProgress() {
+            const now = new Date();
+            const startDate = getLastYearSpringFestival();
+            const endDate = config.targetSpringFestival;
+            
+            // 确保当前日期在时间范围内
+            if (now < startDate) return 0;
+            if (now > endDate) return 100;
+            
+            const totalDuration = endDate - startDate;
+            const elapsedDuration = now - startDate;
+            const progress = Math.min(100, Math.max(0, (elapsedDuration / totalDuration) * 100));
+            
+            return Math.round(progress * 10) / 10; // 保留一位小数
+        }
+
+        // 计算春节倒计时
+        function calculateCountdown() {
+            const now = new Date();
+            const targetDate = config.targetSpringFestival;
+            
+            // 如果春节已过，计算下一个春节
+            let nextSpringFestival = new Date(targetDate);
+            if (now > nextSpringFestival) {
+                nextSpringFestival.setFullYear(nextSpringFestival.getFullYear() + 1);
+            }
+            
+            const timeDiff = nextSpringFestival - now;
+            const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            return daysDiff;
+        }
+
+        // 根据进度生成状态描述
+        function getThawStatusDescription(progress) {
+            if (progress === 0) return "🔄 华仔尚在冰封中，全年休假模式开启。";
+            if (progress < 20) return "❄️ 解冻初期，华仔偶尔在记忆中浮现。";
+            if (progress < 40) return "🧊 解冻进行中，超市尚未接到《恭喜发财》播放通知。";
+            if (progress < 60) return "🌬️ 解冻近半，有网友开始感叹时间飞快。";
+            if (progress < 80) return "💧 解冻加速，部分地区可能开始出现年味预热。";
+            if (progress < 95) return "🔥 解冻冲刺！华仔即将去超市上班，商场开始筹备春节歌单。";
+            if (progress < 100) return "🚨 高度解冻！《恭喜发财》已陆续登陆各大卖场，年味十足。";
+            if (progress >= 100) return "🎉 完全解冻！华仔正式上岗，《恭喜发财》响彻大街小巷，春节到！";
+            return "监测解冻状态中...";
+        }
+
+        // 检查并显示特殊事件
+        function checkSpecialEvents() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const event = config.specialEvents.find(e => e.date === todayStr);
+            
+            if (event) {
+                specialEventContainer.innerHTML = `
+                    <h4>${event.title}</h4>
+                    <p>${event.description}</p>
+                `;
+                specialEventContainer.style.display = 'block';
+            } else {
+                specialEventContainer.style.display = 'none';
+            }
+        }
+
+        // 显示或隐藏进度条
+        function toggleProgressVisibility() {
+            const isSeason = isThawSeason();
+            
+            if (isSeason) {
+                progressContainer.classList.add('show');
+                // 移除对offSeasonMessage的操作
+                return true; // 返回true表示当前是解冻季
+            } else {
+                progressContainer.classList.remove('show');
+                // 移除对offSeasonMessage的操作
+                return false; // 返回false表示当前不是解冻季
+            }
+        }
+
+        // 更新所有显示
+        function updateAllDisplays() {
+            // 首先检查是否在解冻季
+            const isSeason = toggleProgressVisibility();
+            
+            // 如果不是解冻季，不计算和更新进度
+            if (!isSeason) {
+                return;
+            }
+            
+            const progress = calculateThawProgress();
+            const countdown = calculateCountdown();
+            const now = new Date();
+            
+            // 更新进度条
+            progressBarFill.style.width = `${progress}%`;
+            progressBarFill.textContent = `${progress}%`;
+            progressPercentage.textContent = progress;
+            
+            // 更新倒计时
+            springFestivalCountdown.textContent = countdown;
+            
+            // 更新日期显示
+            currentDateEl.textContent = now.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            });
+            
+            // 更新状态描述
+            thawStatus.textContent = getThawStatusDescription(progress);
+            
+            // 检查特殊事件
+            checkSpecialEvents();
+            
+            // 如果完全解冻，添加庆祝样式
+            if (progress >= 100) {
+                progressBarFill.style.background = 'linear-gradient(90deg, #f97316 0%, #eab308 50%, #84cc16 100%)';
+                thawStatus.style.backgroundColor = '#dcfce7';
+                thawStatus.style.borderLeftColor = '#16a34a';
+                thawStatus.style.color = '#166534';
+            }
+        }
+
+        // 页面加载后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAllDisplays();
+            
+            // 每小时更新一次显示状态
+            setInterval(updateAllDisplays, 3600000);
+            
+            // 额外：每天0点检查是否需要切换显示状态
+            // 这确保用户在页面长时间打开时，跨月时能正确切换
+            const now = new Date();
+            const millisecondsUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0) - now;
+            
+            // 设置定时器在每天0点触发一次完整更新
+            setTimeout(function() {
+                updateAllDisplays();
+                // 然后每天执行一次
+                setInterval(updateAllDisplays, 86400000);
+            }, millisecondsUntilMidnight);
+        });
+    </script>
 </body>
 </html>
