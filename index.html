@@ -128,30 +128,6 @@
             border-top: 1px dashed #d1d5db;
             padding-top: 10px;
         }
-        /* 隐藏状态提示样式 */
-        #off-season-message {
-            display: none;
-            text-align: center;
-            padding: 30px;
-            font-family: 'Microsoft YaHei', sans-serif;
-            color: #6b7280;
-            font-size: 1.1em;
-            max-width: 500px;
-            margin: 20px auto;
-        }
-        #off-season-message.show {
-            display: block;
-        }
-        .off-season-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
-        }
-        .off-season-note {
-            font-size: 0.85em;
-            color: #9ca3af;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
@@ -161,7 +137,6 @@
     <nav>
     <ul>
         <li><a href="index.html">首页</a></li>
-        <li><a href="156soft/index.html">156软件官网</a></li> 
         <li><a href="download.html">下载</a></li>
         <li><a href="blog.html">博客</a></li>
         <li><a href="link.html">链接</a></li>                
@@ -169,7 +144,7 @@
     </nav>  
     </header>
     <section class = "Ad">
-        <a href="https://www.ifdian.net/order/create?plan_id=260e0bf0bd5c11f0aca452540025c377&product_type=0&remark=&affiliate_code=">"广告位招租，点击投放广告位！"</a>
+        <a href="#">"156粉丝站即将上线，敬请期待！"</a>
     </section>
     <section class = "ldhjd">
         <div id="andy-lau-thaw-progress">
@@ -194,7 +169,7 @@
         </div>
         
         <div class="footnote">
-            * “解冻”梗源自刘德华歌曲《恭喜发财》每年春节前在各大场所循环播放的现象[citation:3]。进度条为趣味计算，并非官方内容。
+            * "解冻"梗源自刘德华歌曲《恭喜发财》每年春节前在各大场所循环播放的现象。进度条为趣味计算，并非官方内容。
         </div>
     </div>
     </section>
@@ -204,17 +179,18 @@
     <img src="images/LOGO.png" alt="Creeper苦力怕i个人博客LOGO"></img>
     <p>bilibili游戏区、科技区自媒体，爱玩游戏、编程</p>
     <div class="social media">
-            <a href="https://github.com/156sr-dogs">GitHub</a> | 
+            <a href="https://github.com/bCreeper156">GitHub</a> | 
             <a href="https://space.bilibili.com/3546378363996834?spm_id_from=333.999.0.0">bilibili</a> | 
             <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">YouTube</a> |
-            <a href="https://156sr-dogs.github.io/C_blog/QQ.html">QQ</a> |
+            <a href="https://qm.qq.com/q/3xAA2pN0bm">QQ群</a> |
+            <a href="email.html">email</a> |
             <a href="http://ifdian.net/a/bcdogs156">爱发电</a>
     </div>
     </section>
     <section class="form">
         <h1>精选文章</h1>
         <div class="highlight-box">
-            <h3><a href="/articles/1/article1.html">1.欢迎来到我的博客！</a></h3>
+            <h3><a href="articles/12/article12.html">12.【Creeper的软件测评】第一集：我把三大音乐App“装”进了一个软件！免费开源神器Sollin测评</a></h3>
         </div>
     </section>
     </main>
@@ -222,42 +198,18 @@
         <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
     </footer>
     <script>
-        // 主要配置：请根据目标年份修改此处春节日期
+        // 主要配置：春节日期已修正为2026年2月17日
         const config = {
-            // 自动计算当前年份或下一年的春节日期
-            get targetSpringFestival() {
-                const currentYear = new Date().getFullYear();
-                // 春节日期映射表（2025-2030年）
-                const springFestivalDates = {
-                    2025: '2025-01-29', // 2025年春节
-                    2026: '2026-02-17', // 2026年春节
-                    2027: '2027-02-06', // 2027年春节
-                    2028: '2028-01-26', // 2028年春节
-                    2029: '2029-02-13', // 2029年春节
-                    2030: '2030-02-03'  // 2030年春节
-                };
-                
-                const now = new Date();
-                let targetYear = currentYear;
-                
-                // 如果当前日期已经过了今年春节，则目标设为明年春节
-                const currentYearFestival = new Date(springFestivalDates[currentYear]);
-                if (now > currentYearFestival && springFestivalDates[currentYear + 1]) {
-                    targetYear = currentYear + 1;
-                }
-                
-                // 如果目标年份在映射表中，使用该日期；否则使用2026年作为默认
-                const festivalDate = springFestivalDates[targetYear] || '2026-02-17';
-                return new Date(festivalDate);
-            },
-            
-            // 特殊事件提示保持不变
+            // 2026年春节是2月17日
+            targetSpringFestival: new Date('2026-02-17'),
+            // 特殊事件提示（可选，用于在特定日期显示额外信息）
             specialEvents: [
                 {
                     date: '2025-11-09',
                     title: '历史事件：提前"解冻"',
                     description: '2025年11月9日，刘德华在全运会开幕式演唱《中国人》，因早于往年"解冻期"，被网友戏称为"提前解冻"。'
                 }
+                // 你可以在此处添加更多事件
             ]
         };
 
@@ -269,7 +221,6 @@
         const thawStatus = document.getElementById('thaw-status');
         const specialEventContainer = document.getElementById('special-event');
         const progressContainer = document.getElementById('andy-lau-thaw-progress');
-        const offSeasonMessage = document.getElementById('off-season-message');
 
         // 判断当前是否在12月-3月期间
         function isThawSeason() {
@@ -288,42 +239,81 @@
             return new Date(`${currentYear-1}-02-01`);
         }
 
-        // 计算解冻进度
+        // 计算解冻进度（春节假期期间保持100%）
         function calculateThawProgress() {
             const now = new Date();
             const startDate = getLastYearSpringFestival();
             const endDate = config.targetSpringFestival;
             
-            // 确保当前日期在时间范围内
-            if (now < startDate) return 0;
-            if (now > endDate) return 100;
+            // 春节假期长度（默认7天：除夕到初六）
+            const holidayDays = 7;
+            const holidayEndDate = new Date(endDate);
+            holidayEndDate.setDate(holidayEndDate.getDate() + holidayDays);
             
-            const totalDuration = endDate - startDate;
-            const elapsedDuration = now - startDate;
-            const progress = Math.min(100, Math.max(0, (elapsedDuration / totalDuration) * 100));
-            
-            return Math.round(progress * 10) / 10; // 保留一位小数
+            // 情况1：春节前 - 正常计算进度
+            if (now < endDate) {
+                // 确保当前日期在时间范围内
+                if (now < startDate) return 0;
+                
+                const totalDuration = endDate - startDate;
+                const elapsedDuration = now - startDate;
+                const progress = Math.min(100, Math.max(0, (elapsedDuration / totalDuration) * 100));
+                
+                return Math.round(progress * 10) / 10; // 保留一位小数
+            }
+            // 情况2：春节假期期间（春节当天到假期结束）- 保持100%
+            else if (now <= holidayEndDate) {
+                return 100;
+            }
+            // 情况3：春节假期结束后 - 重置为0%（重新冰封）
+            else {
+                return 0;
+            }
         }
 
-        // 计算春节倒计时
+        // 计算春节倒计时（考虑假期后重置）
         function calculateCountdown() {
             const now = new Date();
             const targetDate = config.targetSpringFestival;
             
-            // 如果春节已过，计算下一个春节
-            let nextSpringFestival = new Date(targetDate);
-            if (now > nextSpringFestival) {
-                nextSpringFestival.setFullYear(nextSpringFestival.getFullYear() + 1);
+            // 春节假期长度（与进度计算保持一致）
+            const holidayDays = 7;
+            const holidayEndDate = new Date(targetDate);
+            holidayEndDate.setDate(holidayEndDate.getDate() + holidayDays);
+            
+            // 情况1：春节前 - 显示距离春节的天数
+            if (now < targetDate) {
+                const timeDiff = targetDate - now;
+                return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
             }
-            
-            const timeDiff = nextSpringFestival - now;
-            const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            
-            return daysDiff;
+            // 情况2：春节假期期间 - 显示"假期中"
+            else if (now <= holidayEndDate) {
+                return "假期中";
+            }
+            // 情况3：春节假期结束后 - 显示距离明年春节的天数
+            else {
+                // 计算明年春节（需要根据实际情况调整）
+                const nextSpringFestival = new Date(targetDate);
+                nextSpringFestival.setFullYear(nextSpringFestival.getFullYear() + 1);
+                const timeDiff = nextSpringFestival - now;
+                return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            }
         }
 
         // 根据进度生成状态描述
         function getThawStatusDescription(progress) {
+            const now = new Date();
+            const endDate = config.targetSpringFestival;
+            const holidayDays = 7;
+            const holidayEndDate = new Date(endDate);
+            holidayEndDate.setDate(holidayEndDate.getDate() + holidayDays);
+            
+            // 特殊状态：春节假期期间
+            if (now >= endDate && now <= holidayEndDate) {
+                return "🎊 春节假期中！《恭喜发财》正在各大商场热播，华仔全功率输出！";
+            }
+            
+            // 原来的状态描述
             if (progress === 0) return "🔄 华仔尚在冰封中，全年休假模式开启。";
             if (progress < 20) return "❄️ 解冻初期，华仔偶尔在记忆中浮现。";
             if (progress < 40) return "🧊 解冻进行中，超市尚未接到《恭喜发财》播放通知。";
@@ -357,11 +347,9 @@
             
             if (isSeason) {
                 progressContainer.classList.add('show');
-                // 移除对offSeasonMessage的操作
                 return true; // 返回true表示当前是解冻季
             } else {
                 progressContainer.classList.remove('show');
-                // 移除对offSeasonMessage的操作
                 return false; // 返回false表示当前不是解冻季
             }
         }

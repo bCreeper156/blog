@@ -12,7 +12,7 @@
 
 ![这是图片](https://156blog.netlify.app/articles/12/1.png "Magic Gardens")
 
-然后，配置API，我使用的API是：https://music-dl.sayqz.com
+然后，配置API，推荐API：~~https://music-dl.sayqz.com~~**（<mark>于 *2026年1月25日* 故障，暂时无法使用，</mark>临时API由于官方明确<mark>禁止外传</mark>，使用如要获取，<mark>请加[Sollin官群](https://qm.qq.com/q/yRG31YLrji)</mark>！！！）**
 
 ----------
 
@@ -21,5 +21,3 @@
 -----
 
 当然，一定要支持正版哟！
-
-

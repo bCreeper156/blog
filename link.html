@@ -1,46 +1,790 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>156友情链接 - Creeper苦力怕i个人博客</title>
+    <title>链接 - Creeper苦力怕i个人博客</title>
+    <!-- 引用原有CSS文件 -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/common.js"></script>
+    <style>
+        /* 页面独有样式 */
+        :root {
+            --primary-green: #10b981;
+            --light-green: #a7f3d0;
+            --dark-green: #047857;
+            --bg-green: #ecfdf5;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --card-shadow: 0 8px 25px rgba(16, 185, 129, 0.08);
+            --hover-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
+        }
+        
+        /* 页面主体布局 */
+        .page-container {
+            display: flex;
+            min-height: calc(100vh - 200px);
+            margin-top: 20px;
+            gap: 30px;
+        }
+        
+        /* 左侧导航定位 */
+        .sidebar-nav {
+            flex: 0 0 220px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .sidebar-nav h3 {
+            color: var(--dark-green);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-green);
+        }
+        
+        .nav-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            margin-bottom: 10px;
+        }
+        
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            background: var(--bg-green);
+            color: var(--primary-green);
+            transform: translateX(5px);
+        }
+        
+        .nav-links a.active {
+            background: var(--bg-green);
+            color: var(--primary-green);
+            border-left: 3px solid var(--primary-green);
+        }
+        
+        .nav-icon {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        /* 右侧内容区域 */
+        .content-area {
+            flex: 1;
+        }
+        
+        /* 页面头部 */
+        .page-header {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+        }
+        
+        .page-header h1 {
+            color: var(--dark-green);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-header h1::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background: var(--primary-green);
+            border-radius: 2px;
+        }
+        
+        .page-header .subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 15px;
+        }
+        
+        /* 内容区块 */
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .content-section[id] {
+            scroll-margin-top: 120px; /* 为锚点跳转添加滚动边距 */
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-green);
+        }
+        
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .section-title {
+            color: var(--dark-green);
+            font-size: 1.6rem;
+            margin: 0;
+        }
+        
+        /* 链接网格 */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        /* 链接卡片 */
+        .link-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-green);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .link-card:hover::before {
+            opacity: 1;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover .card-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+        }
+        
+        .card-subtitle {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .card-description {
+            color: var(--text-dark);
+            margin: 12px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .card-tag {
+            background: var(--bg-green);
+            color: var(--dark-green);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .card-arrow {
+            color: var(--primary-green);
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .link-card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* 合作伙伴特殊样式 */
+        .partner-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        /* 156系列特殊样式 */
+        .series-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            background: var(--bg-green);
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .empty-state h3 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .page-container {
+                flex-direction: column;
+            }
+            
+            .sidebar-nav {
+                position: static;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .nav-links li {
+                margin-bottom: 0;
+            }
+            
+            .nav-links a {
+                padding: 8px 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header, .content-section {
+                padding: 20px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-icon {
+                margin-bottom: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .card-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .content-section {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .content-section:nth-child(1) { animation-delay: 0.1s; }
+        .content-section:nth-child(2) { animation-delay: 0.2s; }
+        .content-section:nth-child(3) { animation-delay: 0.3s; }
+        
+        /* 活跃状态指示器 */
+        .active-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
+    <!-- 导航栏 -->
     <header>
     <button class="menu">&#9776;</button>
     <h1>Creeper苦力怕i</h1>
     <nav>
     <ul>
         <li><a href="index.html">首页</a></li>
-        <li><a href="156soft/index.html">156软件官网</a></li> 
         <li><a href="download.html">下载</a></li>
         <li><a href="blog.html">博客</a></li>
         <li><a href="link.html">链接</a></li>                
     </ul>
     </nav>  
     </header>
-    <main style="padding: 2rem; max-width: 800px; margin: 0 auto;">
-        <section class="download-section">
-            <h1>友情链接</h1>
-            <div class="coming-soon" style="text-align: center; padding: 3rem 1rem;">
-                <h2>正在精心准备中...</h2>
-                <p>这里将会提供所有的友情链接！</p>
-                <div style="margin: 2rem 0;">
-                    <div style="background: #f0f0f0; border-radius: 10px; height: 20px; overflow: hidden;">
-                        <div style="background: yellowgreen; height: 100%; width: 0%; border-radius: 10px;"></div>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="page-header" style="padding-bottom: 150px;">
+            <h1>🌐 链接与资源</h1>
+            <p class="subtitle" style="padding-left: 250px;">汇集友情链接、合作伙伴与156系列相关内容</p>
+        </header>
+        
+        <div class="page-container">
+            <!-- 左侧导航 -->
+            <aside class="sidebar-nav">
+                <h3>页面导航</h3>
+                <ul class="nav-links">
+                    <li><a href="#friends-link" class="active"><span class="nav-icon">🤝</span> 友情链接</a></li>
+                    <li><a href="#partners"><span class="nav-icon">🤝</span> 合作伙伴</a></li>
+                    <li><a href="#156-series"><span class="nav-icon">🔧</span> 156系列</a></li>
+                </ul>
+            </aside>
+            
+            <!-- 右侧内容 -->
+            <main class="content-area">
+                <!-- 友情链接部分 -->
+                <section id="friends-link" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">🤝</div>
+                        <div>
+                            <h2 class="section-title">友情链接</h2>
+                            <p style="color: var(--text-light); font-size: 0.95rem; margin-top: 5px;">与其他博客和创作者的互连</p>
+                        </div>
                     </div>
-                    <p style="margin-top: 0.5rem; color: #666;">开发进度: 0%</p>
-                </div>
-                <p>敬请期待更多精彩内容！</p>
-            </div>
-            
-            
-        </section>
-    </main>
-    <footer>
-        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+                    
+                    <div class="links-grid">
+                        <a href="https://nicrozoft.github.io" class="link-card" target="_blank" rel="noopener">
+                            <div class="card-header">
+                                <div class="card-icon">A</div>
+                                <div>
+                                    <h3 class="card-title">Nicrozoft</h3>
+                                    <p class="card-subtitle">Windows、C++、Python 爱好者的个人博客</p>
+                                </div>
+                            </div>
+                            <p class="card-description">分享个人开发内容的个人博客。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">技术博客</span>
+                                <span class="card-arrow">→</span>
+                            </div>
+                        </a>
+                        
+                        <!-- 友链申请 -->
+                        <div class="link-card" style="cursor: pointer;" onclick="showFriendLinkForm()">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">+</div>
+                                <div>
+                                    <h3 class="card-title">申请友链</h3>
+                                    <p class="card-subtitle">点击申请交换友情链接</p>
+                                </div>
+                            </div>
+                            <p class="card-description">欢迎技术、游戏、编程相关的个人博客申请友链！</p>
+                            <div class="card-meta">
+                                <span class="card-tag" style="background: #f0f9ff; color: #0369a1;">点击申请</span>
+                                <span class="card-arrow">+</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 友链申请说明 -->
+                    <div class="empty-state">
+                        <h3>💡 友链申请说明</h3>
+                        <p>欢迎技术、游戏、编程相关的个人博客申请友链！请确保您的博客有原创内容并保持更新。</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">申请方式：请通过博客中的联系方式与我联系</p>
+                    </div>
+                </section>
+                
+                <!-- 合作伙伴部分 -->
+                <section id="partners" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">🤝</div>
+                        <div>
+                            <h2 class="section-title">合作伙伴</h2>
+                            <p style="color: var(--text-light); font-size: 0.95rem; margin-top: 5px;">与我合作的项目与平台</p>
+                        </div>
+                    </div>
+                    
+                    <div class="links-grid">
+                        <!-- 合作伙伴示例1 -->
+                        <a href="#" class="link-card" target="_blank" rel="noopener">
+                            <span class="partner-badge">合作伙伴</span>
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🌟</div>
+                                <div>
+                                    <h3 class="card-title">占位符</h3>
+                                    <p class="card-subtitle">技术社区合作（占位符）</p>
+                                </div>
+                            </div>
+                            <p class="card-description">（占位符）一个专注于开发者成长的技术社区，提供技术文章、项目实战和经验分享。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">（占位符）技术社区</span>
+                                <span class="card-arrow">→</span>
+                            </div>
+                        </a>
+                        
+                        <!-- 合作伙伴申请 -->
+                        <div class="link-card" style="cursor: pointer;" onclick="showPartnerForm()">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #047857);">🤝</div>
+                                <div>
+                                    <h3 class="card-title">合作洽谈</h3>
+                                    <p class="card-subtitle">寻求合作机会</p>
+                                </div>
+                            </div>
+                            <p class="card-description">如果您有合作意向，欢迎联系洽谈技术合作、内容合作等机会。</p>
+                            <div class="card-meta">
+                                <span class="card-tag" style="background: var(--bg-green); color: var(--dark-green);">点击联系</span>
+                                <span class="card-arrow">→</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 合作伙伴说明 -->
+                    <div class="empty-state">
+                        <h3>🤝 合作机会</h3>
+                        <p>欢迎技术社区、游戏平台、内容创作者等寻求合作机会。合作领域包括但不限于：</p>
+                        <ul style="text-align: left; margin-top: 10px; padding-left: 20px;">
+                            <li>技术文章合作与交叉推广</li>
+                            <li>开源项目协作</li>
+                            <li>游戏评测与内容创作</li>
+                            <li>技术社区共建</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- 156系列部分 -->
+                <section id="156-series" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">🔧</div>
+                        <div>
+                            <h2 class="section-title">156系列项目</h2>
+                            <p style="color: var(--text-light); font-size: 0.95rem; margin-top: 5px;">我开发的软件和工具集合</p>
+                        </div>
+                    </div>
+                    
+                    <div class="links-grid">
+                        <!-- 156软件官网 -->
+                        <a href="#" class="link-card" target="_blank" rel="noopener">
+                            <span class="series-badge">156系列</span>
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">🔧</div>
+                                <div>
+                                    <h3 class="card-title">156软件官网</h3>
+                                    <p class="card-subtitle">个人软件项目集合</p>
+                                </div>
+                            </div>
+                            <p class="card-description">我开发的实用软件工具集合。包括效率工具、小应用等。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">软件产品</span>
+                                <span class="card-arrow">→</span>
+                            </div>
+                        </a>
+                        
+                        <!-- GitHub仓库 -->
+                        <a href="https://github.com/bCreeper156" class="link-card" target="_blank" rel="noopener">
+                            <span class="series-badge">156系列</span>
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="card-title">GitHub仓库</h3>
+                                    <p class="card-subtitle">开源代码与项目</p>
+                                </div>
+                            </div>
+                            <p class="card-description">查看我的博客源码、编程项目和开源贡献。这里是所有技术想法的起点。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">开源项目</span>
+                                <span class="card-arrow">→</span>
+                            </div>
+                        </a>
+                        
+                        <!-- 未来项目 -->
+                        <div class="link-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #6b7280, #4b5563);">🚧</div>
+                                <div>
+                                    <h3 class="card-title">更多156项目筹备中</h3>
+                                    <p class="card-subtitle">敬请期待</p>
+                                </div>
+                            </div>
+                            <p class="card-description">还有更多156系列的软件工具和项目正在开发和规划中。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">即将推出</span>
+                                <span class="card-arrow">→</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 156系列说明 -->
+                    <div class="empty-state">
+                        <h3>🔧 156系列项目</h3>
+                        <p>"156"系列是我个人开发的软件和工具集合，名称来源于我的用户名"bCreeper156"。这些项目主要围绕以下方向：</p>
+                        <ul style="text-align: left; margin-top: 10px; padding-left: 20px;">
+                            <li>效率工具与实用软件</li>
+                            <li>开发者工具与资源</li>
+                            <li>游戏相关工具</li>
+                            <li>学习与创作辅助工具</li>
+                        </ul>
+                        <p style="margin-top: 15px; font-size: 0.9rem;">所有项目均为开源或免费提供，欢迎使用和贡献代码。</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利.</p>
+        </div>
     </footer>
+
+    <script>
+        // 页面加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            // 左侧导航点击效果 - 修复跳转问题
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sections = document.querySelectorAll('.content-section');
+            
+            // 修复：允许锚点链接正常跳转
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // 移除所有active类
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // 添加当前active类
+                    this.classList.add('active');
+                    
+                    // 允许浏览器处理锚点跳转
+                    // 浏览器会自动滚动到对应位置
+                });
+            });
+            
+            // 滚动时更新导航状态
+            window.addEventListener('scroll', updateActiveNav);
+            
+            // 初始更新导航状态
+            updateActiveNav();
+            
+            // 处理URL中的hash（页面加载时）
+            if (window.location.hash) {
+                // 等待页面加载完成
+                setTimeout(() => {
+                    const targetId = window.location.hash;
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // 平滑滚动到目标位置
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // 更新导航状态
+                        updateActiveNav();
+                    }
+                }, 100);
+            }
+            
+            // 友链申请表单
+            window.showFriendLinkForm = function() {
+                alert('友链申请请通过博客中的联系方式与我联系。\n\n请在邮件中包含：\n1. 博客名称\n2. 博客链接\n3. 博客描述\n4. 您的联系方式\n\n我会尽快审核并添加！');
+            };
+            
+            // 合作伙伴申请表单
+            window.showPartnerForm = function() {
+                alert('合作洽谈请通过博客中的联系方式与我联系。\n\n请在邮件中包含：\n1. 合作方名称\n2. 合作意向\n3. 合作内容概述\n4. 您的联系方式\n\n期待与您的合作！');
+            };
+            
+            // 添加滚动动画
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // 观察所有内容区块
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+            
+            // 更新导航状态函数
+            function updateActiveNav() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    // 考虑导航栏高度，减去120px作为偏移
+                    if (window.scrollY >= (sectionTop - 120)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkHash = link.getAttribute('href');
+                    
+                    // 检查是否是当前部分的链接
+                    if (linkHash === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                    
+                    // 如果没有当前部分，检查URL中的hash
+                    if (!current && window.location.hash === linkHash) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            // 监听hash变化（用户点击浏览器的前进/后退按钮）
+            window.addEventListener('hashchange', function() {
+                updateActiveNav();
+            });
+        });
+    </script>
 </body>
 </html>
