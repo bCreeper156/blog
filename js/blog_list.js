@@ -11,87 +11,6 @@ const articles = [
     },
     {
         id: 2,
-        title: "2.Node.js性能优化实战指南",
-        excerpt: "深入探讨Node.js应用性能优化的各种技巧，从代码层面到服务器配置的全方位优化方案",
-        category: "后端",
-        date: "2025-10-10",
-        readTime: "5分钟阅读",
-        link: "/articles/2/article2.html"
-    },
-    {
-        id: 3,
-        title: "3.2025年前端开发新趋势",
-        excerpt: "探索最新的前端技术栈和发展方向，包括WebAssembly、微前端架构等前沿技术",
-        category: "前端",
-        date: "2025-10-08",
-        readTime: "3分钟阅读",
-        link: "/articles/3/article3.html"
-    },
-    {
-        id: 4,
-        title: "4.移动应用开发入门指南",
-        excerpt: "从零开始学习移动应用开发，涵盖React Native、Flutter等跨平台框架",
-        category: "移动",
-        date: "2025-10-05",
-        readTime: "4分钟阅读",
-        link: "/articles/4/article4.html"
-    },
-    {
-        id: 5,
-        title: "5.AI在Web开发中的应用",
-        excerpt: "了解人工智能技术如何改变现代Web开发，包括智能代码生成和用户体验优化",
-        category: "AI",
-        date: "2025-10-01",
-        readTime: "6分钟阅读",
-        link: "/articles/5/article5.html"
-    },
-    {
-        id: 6,
-        title: "6.Vue 3 Composition API 深度解析",
-        excerpt: "全面掌握Vue 3的Composition API，提升代码组织和复用能力",
-        category: "前端",
-        date: "2025-09-28",
-        readTime: "4分钟阅读",
-        link: "/articles/6/article6.html"
-    },
-    {
-        id: 7,
-        title: "7.Python异步编程最佳实践",
-        excerpt: "学习Python asyncio模块的使用技巧，构建高性能的异步应用",
-        category: "后端",
-        date: "2025-09-25",
-        readTime: "5分钟阅读",
-        link: "/articles/7/article7.html"
-    },
-    {
-        id: 8,
-        title: "8.小程序开发实战经验分享",
-        excerpt: "总结小程序开发中的常见问题和解决方案，提升开发效率",
-        category: "移动",
-        date: "2025-09-20",
-        readTime: "3分钟阅读",
-        link: "/articles/8/article8.html"
-    },
-    {
-        id: 9,
-        title: "9.机器学习模型部署指南",
-        excerpt: "从训练到部署，完整掌握机器学习模型的生产环境部署流程",
-        category: "AI",
-        date: "2025-09-18",
-        readTime: "7分钟阅读",
-        link: "/articles/9/article9.html"
-    },
-    {
-        id: 10,
-        title: "10.CSS Grid布局完全指南",
-        excerpt: "掌握现代CSS Grid布局，创建复杂的响应式网页设计",
-        category: "前端",
-        date: "2025-09-15",
-        readTime: "4分钟阅读",
-        link: "/articles/10/article10.html"
-    },
-    {
-        id: 11,
         title: "11.关于下载页面项目下线的公告",
         excerpt: "关于下载页面项目下线的公告",
         category: "公告",
@@ -100,7 +19,7 @@ const articles = [
         link: "/articles/11/article11.html"
     },
     {
-        id: 12,
+        id: 3,
         title: "12.【Creeper的软件测评】第一集：我把三大音乐App“装”进了一个软件！免费开源神器Sollin测评",
         excerpt: "免费开源神器Sollin测评",
         category: "软件测评, 开源工具, 音乐播放器",
