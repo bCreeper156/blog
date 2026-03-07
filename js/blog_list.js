@@ -33,7 +33,7 @@ const articles = [
         title: "4.软件测评#3——Cloudreve",
         excerpt: "免费开源神器Cloudreve测评",
         category: "教程 · 云存储 · 内网穿透",
-        date: "2026-1-17",
+        date: "2026-3-7",
         readTime: "12分钟阅读",
         link: "/articles/4/index.html"
     }
@@ -237,3 +237,4 @@ document.addEventListener('DOMContentLoaded', function() {
         applyFiltersAndSearch(1); // 重置到第一页
     });
 });
+
