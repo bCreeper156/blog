@@ -1,4 +1,4 @@
-# 新版更新日志
+# Update Note
 
 [中文简体](Update_Note.md)·[English](Update_Note_en.md)
 
