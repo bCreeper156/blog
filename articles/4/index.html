@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件测评#3——Cloudreve - 156博客</title>
+    <meta name="description" content="详细的内网穿透与云服务器部署教程，教你自建私有网盘摆脱限速烦恼">
+    <link rel="stylesheet" href="/articles/article.css">
+    <script src="js/common.js"></script>
+    <style>
+        /* 补充代码块与引用样式，确保文章显示美观 */
+        .article-content pre {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid #eaeef2;
+            margin: 1.5em 0;
+        }
+        .article-content code {
+            background: #f0f2f5;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #d14;
+        }
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+            font-size: 0.9rem;
+        }
+        .article-content blockquote {
+            margin: 1.5em 0;
+            padding: 1em 1.5em;
+            background: #f9fafc;
+            border-left: 4px solid #10b981;
+            border-radius: 0 8px 8px 0;
+            color: #2c3e50;
+            font-style: normal;
+        }
+        .article-content blockquote p {
+            margin: 0.5em 0;
+        }
+        .article-content hr {
+            border: none;
+            border-top: 2px dashed #d0d7de;
+            margin: 2em 0;
+        }
+        .article-content img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .article-content h2 {
+            margin-top: 2em;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5em;
+        }
+        .article-content h3 {
+            margin-top: 1.5em;
+            color: #2d3748;
+        }
+        .article-content ul, .article-content ol {
+            padding-left: 1.8em;
+        }
+        .article-content li {
+            margin: 0.5em 0;
+        }
+        .article-content a {
+            color: #10b981;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+        .feature-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5em;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1);
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <article>
+            <header class="article-header">
+                <!-- 文章主标题从Markdown第一个一级标题提取 -->
+                <h1 class="article-title">软件测评#3——Cloudreve</h1>
+                <div class="article-meta">
+                    <span class="meta-item">
+                        <span class="meta-icon">📅</span> 2026年3月7日
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-icon">⏱️</span> 12分钟阅读
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-icon">🏷️</span> 教程 · 云存储 · 内网穿透
+                    </span>
+                </div>
+            </header>
+            
+            <div class="article-content">
+                <!-- 以下为转换自 test.md 的 HTML 内容，已调整标题层级：原一级标题除第一个外均降为二级，以此类推 -->
+                <section class="article-section">
+                    
+                    <p class="article-text">
+                        你是否受够了某度网盘的<strong>限速</strong>、<strong>体验差</strong>？那么这期视频教大家如何通过自建云盘摆脱这些烦恼！
+                    </p>
+
+                    <hr />
+
+                    <h2 class="section-title">内网穿透教程</h2>
+
+                    <h3>起步</h3>
+                    <p class="article-text">
+                        首先，打开<a href="https://cloudreve.org" target="_blank" rel="noopener">官网</a>或<a href="https://github.com/cloudreve/Cloudreve" target="_blank" rel="noopener">GitHub仓库</a>的最新版本。
+                        下载所属于你的操作系统版本，放在你喜欢的地方。
+                    </p>
+
+                    <h3>内网穿透方法</h3>
+
+                    <h4>1. 如何打开Cloudreve？</h4>
+                    <p class="article-text">
+                        在地址栏输入cmd回车，输入“cloudreve”回车，等待一会儿打开浏览器窗口，输入“localhost:5212”（IP+英文冒号+端口号）。注册账号并登录，你就获得了一个管理员账户。
+                    </p>
+
+                    <h4>2. 如何内网穿透？</h4>
+
+                    <h5>2.1 如何添加隧道？</h5>
+                    <p class="article-text">
+                        打开<a href="https://panel.chmlfrp.net" target="_blank" rel="noopener">chmlfrp面板</a>并登录，如果你没实名认证请先实名。然后点击【<strong>隧道管理 - 隧道列表</strong>】，点击<strong>添加隧道</strong>，选择你心仪的节点（如使用chmlfrp免费域名，请选择<strong>境外节点</strong>！！！），点击继续；端口类型选择<strong>HTTP</strong>，内网端口填5212。如果你没有域名，域名类型选择<strong>免费域名</strong>，选择你喜欢的域名后缀，填写你的域名前缀，点击确定即可！
+                    </p>
+
+                    <h5>2.2 如何进行内网穿透？</h5>
+                    <p class="article-text">
+                        点击<strong>软件下载</strong>，下载到你喜欢的位置，再点击<strong>配置文件</strong>，选择对应的节点及隧道名称，点击<strong>生成</strong>，将左侧的配置文件代码复制到本地的<strong>frpc.ini</strong>即可！
+                    </p>
+
+                    <h5>2.3 如何启动内网穿透？</h5>
+                    <p class="article-text">
+                        在地址栏输入cmd，输入“frpc”回车，等待至出现“感谢您使用chmlfrp”时代表已经成功！
+                    </p>
+
+                    <h4>完成</h4>
+                    <p class="article-text">
+                        接下来，访问你的域名，注册第一个账户（第一个默认管理员账户）并登录，开始你的自定义网盘之旅！
+                    </p>
+
+                    <h2 class="section-title">云服务器教程</h2>
+
+                    <blockquote>
+                        <p>这里给的示例是<a href="https://rainyun.com" target="_blank" rel="noopener">雨云</a>，其他方法见<a href="https://docs.cloudreve.org" target="_blank" rel="noopener">Cloudreve官方文档</a></p>
+                        <p>以下内容由AI生成，请注意辨别！</p>
+                    </blockquote>
+
+                    <p class="article-text">
+                        根据你的反馈，Cloudreve V4 版本的默认行为是<strong>第一个注册的用户即为超级管理员</strong>，部署后没有随机初始密码。以下教程基于 V4 版本进行修订，聚焦于<strong>雨云云服务器</strong>的部署。
+                    </p>
+
+                    <hr />
+
+                    <h3>📋 准备工作</h3>
+                    <ul>
+                        <li><strong>雨云服务器</strong>：一台已购买的云服务器（建议 2核2G 以上，系统选择 <strong>Debian 12/Ubuntu 22.04</strong>）。<br />若使用国内机房（如宿迁、十堰），需域名已备案；否则建议选择香港或美国机房。</li>
+                        <li><strong>域名（可选）</strong>：如需通过域名访问并启用 HTTPS，请提前将域名解析到服务器公网 IP。</li>
+                    </ul>
+
+                    <h3>🚀 第一步：部署 Cloudreve V4</h3>
+                    <p class="article-text">根据你的操作习惯，任选以下一种方式完成部署。</p>
+
+                    <h4>方式一：使用雨云预安装 APP（最简单）</h4>
+                    <ol>
+                        <li><strong>创建服务器时选择预安装 APP</strong>：在雨云控制台购买云服务器时，在“预安装APP”选项中，选择 <strong>【网盘系统】Cloudreve</strong>。</li>
+                        <li><strong>等待创建完成</strong>：服务器启动后，Cloudreve 已自动运行在 <code>http://&lt;你的服务器IP&gt;:5212</code>。</li>
+                        <li><strong>注册成为管理员</strong>：浏览器访问该地址，你将看到 Cloudreve 的注册页面。<strong>第一个注册的账号将自动获得超级管理员权限</strong>，请妥善保管账号密码。
+                            <blockquote>注：预安装版本通常为最新稳定版，默认即采用“首个用户为管理员”策略。</blockquote>
+                        </li>
+                    </ol>
+
+                    <h4>方式二：通过 Docker 部署（推荐）</h4>
+                    <ol>
+                        <li><strong>连接服务器</strong>（SSH）。</li>
+                        <li><strong>安装 Docker</strong>（如已安装可跳过）：
+                            <pre><code class="language-bash">curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+sudo systemctl start docker && sudo systemctl enable docker</code></pre>
+                        </li>
+                        <li><strong>运行 Cloudreve 容器</strong>（使用官方镜像，默认为 V4 及以上版本）：
+                            <pre><code class="language-bash">docker run -d \
+  --name cloudreve \
+  --restart=always \
+  -p 5212:5212 \
+  -p 6888:6888 \
+  -p 6888:6888/udp \
+  -v ~/cloudreve/data:/cloudreve/data \
+  cloudreve/cloudreve:latest</code></pre>
+                        </li>
+                        <li><strong>完成部署</strong>：容器启动后，访问 <code>http://&lt;你的服务器IP&gt;:5212</code>，即可看到注册页面。<strong>第一个注册的用户成为超级管理员</strong>。</li>
+                    </ol>
+
+                    <h4>方式三：手动下载二进制文件部署</h4>
+                    <ol>
+                        <li><strong>连接服务器</strong>。</li>
+                        <li><strong>下载最新版 Cloudreve</strong>（以 Linux amd64 为例）：
+                            <pre><code class="language-bash">mkdir -p /www/wwwroot/cloudreve && cd /www/wwwroot/cloudreve
+wget https://github.com/cloudreve/Cloudreve/releases/latest/download/cloudreve_linux_amd64.tar.gz
+tar -zxvf cloudreve_*.tar.gz
+chmod +x ./cloudreve</code></pre>
+                        </li>
+                        <li><strong>首次运行</strong>（生成配置文件并初始化数据库）：
+                            <pre><code class="language-bash">./cloudreve</code></pre>
+                            <p class="article-text"><strong>注意</strong>：V4 版本在首次运行<strong>不会</strong>输出默认管理员密码，而是直接进入监听状态。使用 <code>Ctrl + C</code> 停止程序，以便后续配置守护进程。</p>
+                        </li>
+                        <li><strong>配置 systemd 服务</strong>（后台运行）：
+                            <ul>
+                                <li>创建服务文件：<code>vim /usr/lib/systemd/system/cloudreve.service</code></li>
+                                <li>写入以下内容：
+                                    <pre><code>[Unit]
+Description=Cloudreve
+After=network.target
+
+[Service]
+WorkingDirectory=/www/wwwroot/cloudreve
+ExecStart=/www/wwwroot/cloudreve/cloudreve
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+                                </li>
+                                <li>启动服务：<code>systemctl daemon-reload && systemctl start cloudreve && systemctl enable cloudreve</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>访问注册</strong>：现在访问 <code>http://&lt;你的服务器IP&gt;:5212</code>，第一个注册的账号即为管理员。</li>
+                    </ol>
+
+                    <h3>🔓 第二步：放行端口并访问</h3>
+                    <ul>
+                        <li><strong>放行端口</strong>：在雨云控制台的服务器防火墙/安全组中，放行 <strong>TCP 5212</strong> 端口（Web 访问）。如需离线下载功能，还需放行 <strong>TCP/UDP 6888</strong> 端口。</li>
+                        <li><strong>浏览器访问</strong>：<code>http://&lt;你的服务器IP&gt;:5212</code>，完成第一个账号的注册，该账号即拥有所有管理权限。</li>
+                    </ul>
+
+                    <h3>🌐 第三步：配置域名访问与 HTTPS（推荐）</h3>
+
+                    <h4>1. 安装 Nginx（以宝塔面板为例）</h4>
+                    <pre><code class="language-bash">wget -O install.sh https://download.bt.cn/install/install-ubuntu_6.0.sh && bash install.sh ed8484bec</code></pre>
+                    <p class="article-text">安装完成后登录面板，在软件商店安装 Nginx。</p>
+
+                    <h4>2. 设置反向代理</h4>
+                    <ul>
+                        <li><strong>添加网站</strong>：填写你的域名（如 <code>pan.yourdomain.com</code>），创建纯静态站点。</li>
+                        <li><strong>设置反向代理</strong>：进入网站设置 → 反向代理 → 添加反向代理。
+                            <ul>
+                                <li><strong>目标 URL</strong>：<code>http://127.0.0.1:5212</code></li>
+                                <li><strong>发送域名</strong>：填写你的域名</li>
+                            </ul>
+                        </li>
+                        <li><strong>修改配置文件</strong>：在反向代理配置中，确保包含以下头部信息（可在网站配置文件中添加）：
+                            <pre><code class="language-nginx">location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:5212;
+}</code></pre>
+                        </li>
+                    </ul>
+
+                    <h4>3. 启用 HTTPS</h4>
+                    <p class="article-text">在网站设置中申请 Let's Encrypt 证书，并开启强制 HTTPS。</p>
+
+                    <h3>⚙️ 第四步：进阶配置——挂载雨云对象存储（ROS）</h3>
+                    <p class="article-text">将文件存储到对象存储可节省服务器硬盘空间。</p>
+                    <ol>
+                        <li><strong>创建存储桶</strong>：在雨云控制台购买并创建对象存储桶，开启<strong>公共读取</strong>，记录 <strong>Endpoint</strong>、<strong>AccessKey</strong>、<strong>SecretKey</strong>。</li>
+                        <li><strong>登录 Cloudreve 管理面板</strong>：使用第一步注册的账号登录，点击右上角头像进入管理面板。</li>
+                        <li><strong>添加存储策略</strong>：
+                            <ul>
+                                <li>进入 <strong>存储策略</strong> → <strong>添加存储策略</strong> → 选择 <strong>AWS S3</strong>（兼容雨云 ROS）。</li>
+                                <li>填写：
+                                    <ul>
+                                        <li><strong>Bucket 名称</strong>：你的存储桶名</li>
+                                        <li><strong>Endpoint</strong>：API 端点（如 <code>https://xxx.ros.rainyun.com</code>）</li>
+                                        <li><strong>AccessKey/SecretKey</strong>：雨云密钥</li>
+                                        <li><strong>空间类型</strong>：公共读取</li>
+                                    </ul>
+                                </li>
+                                <li>点击“跳过”完成。</li>
+                            </ul>
+                        </li>
+                        <li><strong>应用策略</strong>：在 <strong>用户组</strong> 中，将默认组的存储策略修改为刚创建的策略，此后新上传文件将直接存入雨云对象存储。</li>
+                    </ol>
+
+                    <h3>❓ 常见问题</h3>
+
+                    <h4>Q1：如何确认 Cloudreve 是 V4 版本？</h4>
+                    <ul>
+                        <li>访问 <code>http://&lt;你的IP&gt;:5212</code>，如果页面底部显示 “Powered by Cloudreve v4.x.x” 或注册页面存在，即为 V4 版本。</li>
+                        <li>或者执行 <code>./cloudreve --version</code>（手动部署）查看。</li>
+                    </ul>
+
+                    <h4>Q2：如果忘记了管理员密码怎么办？</h4>
+                    <ul>
+                        <li>由于管理员就是第一个注册的用户，只能通过数据库重置密码。Cloudreve 提供了命令行工具：
+                            <pre><code class="language-bash"># 进入 Cloudreve 安装目录
+./cloudreve --database-script ResetAdminPassword</code></pre>
+                            执行后根据提示输入新密码，该命令会将第一个管理员（用户ID=1）的密码重置。
+                        </li>
+                    </ul>
+
+                    <h4>Q3：第一个注册的用户就是管理员，那普通用户如何注册？</h4>
+                    <ul>
+                        <li>管理员可以在后台 <strong>用户管理</strong> 中开启“允许用户注册”，或者通过邀请链接添加用户。普通用户注册后默认为普通会员，需由管理员提升权限。</li>
+                    </ul>
+
+                    <h3>✅ 完成</h3>
+                    <p class="article-text">
+                        至此，你已经在雨云服务器上基于 Cloudreve V4 搭建了私有网盘。享受文件存储、分享和离线下载的乐趣吧！记得定期备份 <code>~/cloudreve/data</code>（Docker）或 Cloudreve 安装目录（手动部署）中的数据库和配置文件。
+                    </p>
+
+                    <!-- 原模板中的特色卡片区域可以保留，但此处已替换为文章内容，故省略原模板的 features-grid -->
+                </section>
+
+                <div class="article-actions">
+                    <button class="action-btn" onclick="window.location.href='/blog.html'">
+                        📖 浏览更多文章
+                    </button>
+                    <button class="action-btn secondary" onclick="window.location.href='/index.html'">
+                        🏠 返回首页
+                    </button>
+                </div>
+            </div>
+        </article>
+    </main>
+    
+    <footer>
+        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+    </footer>
+</body>
+</html>

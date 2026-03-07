@@ -1,0 +1,367 @@
+/* 移除重复的header样式，只保留博客页面特有样式 */
+@import url('common.css');
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* 防止水平滚动 */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f1f3f5;
+    border-bottom: 1px solid #e9ecef;
+    flex-wrap: wrap;
+    gap: 15px;
+    flex-shrink: 0; /* 防止控件区域被压缩 */
+}
+
+/* 修复搜索框宽度 */
+.search-box {
+    flex: 1;
+    min-width: 250px;
+    max-width: 690px;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: white;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #11cb74;
+    box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #11cb74;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: #11cb84;
+    color: white;
+    border-color: #11cb5f;
+}
+
+.articles-container-wrapper {
+    flex: 1;
+    overflow-y: auto; /* 允许内容区域滚动 */
+    max-height: calc(100vh - 300px); /* 设置最大高度 */
+}
+
+.articles-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-height: 200px; /* 确保有最小高度 */
+}
+
+.article-item {
+    padding: 25px 30px;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.article-item:hover {
+    background-color: #f8f9fa;
+}
+
+.article-item:last-child {
+    border-bottom: none;
+}
+
+.article-content {
+    flex: 1;
+    min-width: 0; /* 防止文本溢出 */
+}
+
+.article-title {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    word-wrap: break-word;
+}
+
+.article-title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+.article-title a:hover {
+    color: #11cb39;
+}
+
+.article-excerpt {
+    color: #6c757d;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.article-meta {
+    display: flex;
+    gap: 20px;
+    color: #868e96;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.meta-icon {
+    font-size: 0.9rem;
+}
+
+.article-category {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+.article-actions {
+    display: flex;
+    gap: 15px;
+    margin-left: 20px;
+    flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #868e96;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.action-btn:hover {
+    color: #11cb4f;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.empty-state h3 {
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    border-top: 1px solid #e9ecef;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-shrink: 0; /* 防止分页被压缩 */
+}
+
+.pagination-btn {
+    padding: 10px 15px;
+    margin: 0 2px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pagination-btn:hover {
+    background-color: #f1f3f5;
+    border-color: #11cb5f;
+}
+
+.pagination-btn.active {
+    background-color: #11cb5f;
+    color: white;
+    border-color: #11cb5f;
+}
+
+.pagination-btn:disabled {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+    border-color: #dee2e6;
+}
+
+.pagination-ellipsis {
+    padding: 10px 5px;
+    color: #6c757d;
+    margin: 0 2px;
+}
+
+.pagination-info {
+    margin-left: 20px;
+    color: #6c757d;
+    font-size: 0.85rem;
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* 收藏按钮样式 */
+.action-btn.favorited {
+    color: #ffd700 !important;
+}
+
+/* 移动端分页样式 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        margin: 10px auto;
+    }
+    
+    .articles-container-wrapper {
+        max-height: calc(100vh - 250px);
+    }
+    
+    .article-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+    }
+    
+    .article-category, .article-actions {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    
+    .article-actions {
+        align-self: flex-end;
+    }
+    
+    .controls {
+        flex-direction: column;
+        padding: 15px;
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+    
+    .article-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .pagination {
+        padding: 15px;
+        gap: 5px;
+    }
+    
+    .pagination-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        min-width: 35px;
+    }
+    
+    .prev-btn, .next-btn {
+        font-size: 0.75rem;
+        padding: 8px 10px;
+    }
+    
+    .pagination-info {
+        flex-basis: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .pagination-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .pagination-ellipsis {
+        display: none;
+    }
+    
+    .articles-container-wrapper {
+        max-height: calc(100vh - 200px);
+    }
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客文章 - 156博客</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <script src="js/common.js"></script>
+    <script src="js/blog_list.js"></script>
+    <!-- 进度条样式 -->
+    <style>
+        /* ========== 页面加载进度条 ========== */
+        #loading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #10b981, #a7f3d0, #fbbf24);
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            transition: width 0.2s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
+        #loading-progress.hide {
+            opacity: 0;
+            transition: opacity 0.3s ease 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部加载进度条 -->
+    <div id="loading-progress"></div>
+
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="index.html">156博客</a></h1>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="http://156pan.owo.vin">网盘</a></li>
+            <li><a href="blog.html">博客</a></li>
+            <li><a href="link.html">链接</a></li>                
+        </ul>
+    </header>
+    
+    <main class="container">
+        <div class="controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search" placeholder="搜索文章...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="前端">前端开发</button>
+                <button class="filter-btn" data-filter="后端">后端开发</button>
+                <button class="filter-btn" data-filter="移动">移动开发</button>
+                <button class="filter-btn" data-filter="AI">人工智能</button>
+            </div>
+        </div>
+        
+        <!-- 添加滚动容器 -->
+        <div class="articles-container-wrapper">
+            <ul class="articles-list" id="articles-container">
+                <!-- 文章列表将通过JavaScript动态生成 -->
+            </ul>
+        </div>
+        
+        <div class="pagination">
+            <!-- 分页按钮将通过JavaScript动态生成 -->
+        </div>
+    </main>
+    
+    <footer>
+        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+    </footer>
+
+    <!-- 进度条脚本 -->
+    <script>
+        (function() {
+            'use strict';
+            const progress = document.getElementById('loading-progress');
+            let progressInterval;
+            let currentWidth = 0;
+
+            function startProgress() {
+                progressInterval = setInterval(() => {
+                    if (currentWidth < 90) {
+                        const increment = Math.max(1, (90 - currentWidth) / 10);
+                        currentWidth = Math.min(90, currentWidth + increment);
+                        progress.style.width = currentWidth + '%';
+                    }
+                }, 100);
+            }
+
+            function finishProgress() {
+                if (progressInterval) clearInterval(progressInterval);
+                currentWidth = 100;
+                progress.style.width = '100%';
+                progress.classList.add('hide');
+                setTimeout(() => {
+                    if (progress.parentNode) {
+                        progress.style.display = 'none';
+                    }
+                }, 800);
+            }
+
+            startProgress();
+            window.addEventListener('load', finishProgress);
+            setTimeout(() => {
+                if (currentWidth < 100) {
+                    finishProgress();
+                }
+            }, 8000);
+        })();
+    </script>
+</body>
+</html>

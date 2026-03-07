@@ -1,0 +1,151 @@
+/* 通用重置和基础样式 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden; /* 防止水平滚动 */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 头部导航通用样式 */
+header {
+    background-color: black;
+    height: 80px;
+    width: 100%;
+    position: relative;
+    flex-shrink: 0;
+    z-index: 1000;
+}
+/* 通用重置和基础样式 */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 头部导航通用样式 */
+header {
+    background-color: black;
+    height: 80px;
+    width: 100%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+header h1 {
+    color: white;
+    position: absolute;
+    left: 120px;
+    top: 0;
+    line-height: 80px;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+header ul {
+    position: absolute;
+    right: 5vw;
+    top: 0;
+    line-height: 80px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header li {
+    display: inline;
+    margin-right: 4vw;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+header a:hover {
+    color: #11cb5f;
+}
+
+.menu {
+    display: none;
+}
+
+/* 移动端响应式 */
+@media screen and (max-width: 768px) {
+    header ul {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: black;
+        flex-direction: column;
+        padding: 10px 0;
+        z-index: 1000;
+    }
+    
+    header ul.show {
+        display: flex;
+    }
+    
+    header li {
+        display: block;
+        margin: 0;
+        text-align: center;
+        padding: 10px 0;
+    }
+    
+    header h1 {
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.3rem;
+    }
+    
+    .menu {
+        display: block;
+        background-color: transparent;
+        color: white;
+        font-size: 24px;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 1001;
+    }
+}
+
+/* 页脚通用样式 */
+footer {
+    background-color: #000000;
+    color: #ffffff;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    margin-top: auto;
+    flex-shrink: 0;
+}

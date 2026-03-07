@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链接与资源 - 156博客</title>
+    <meta name="description" content="156博客的友情链接、合作伙伴及156系列项目集合，欢迎技术、游戏、编程相关博客交换友链。">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common.js"></script>
+    <style>
+        /* ========== 原有样式保持不变 ========== */
+        :root {
+            --primary-green: #10b981;
+            --light-green: #a7f3d0;
+            --dark-green: #047857;
+            --bg-green: #ecfdf5;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --card-shadow: 0 8px 25px rgba(16, 185, 129, 0.08);
+            --hover-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
+            --partner-color: #f59e0b;
+            --series-color: #8b5cf6;
+            --transition-default: all 0.3s ease;
+        }
+
+        /* ========== 新增进度条样式 ========== */
+        #loading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green), #fbbf24);
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            transition: width 0.2s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
+        #loading-progress.hide {
+            opacity: 0;
+            transition: opacity 0.3s ease 0.5s; /* 延迟隐藏，让用户看到100%状态 */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 16px;
+            padding: 30px 30px 150px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+        }
+        .page-header h1 {
+            color: var(--dark-green);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            left: 0 !important; /* 覆盖内联样式 */
+        }
+        .page-header h1::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background: var(--primary-green);
+            border-radius: 2px;
+        }
+        .page-header .subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 15px auto 0;
+            padding-left: 0;
+        }
+
+        .page-container {
+            display: flex;
+            min-height: calc(100vh - 200px);
+            margin-top: 20px;
+            gap: 30px;
+        }
+
+        .sidebar-nav {
+            flex: 0 0 220px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e5e7eb;
+        }
+        .sidebar-nav h3 {
+            color: var(--dark-green);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-green);
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-links li {
+            margin-bottom: 10px;
+        }
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition-default);
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            background: var(--bg-green);
+            color: var(--primary-green);
+            transform: translateX(5px);
+        }
+        .nav-links a.active {
+            background: var(--bg-green);
+            color: var(--primary-green);
+            border-left: 3px solid var(--primary-green);
+        }
+        .nav-icon {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .content-area {
+            flex: 1;
+        }
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e5e7eb;
+            scroll-margin-top: 120px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-green);
+        }
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            color: var(--dark-green);
+            font-size: 1.6rem;
+            margin: 0;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .link-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-default);
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .link-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-green);
+            box-shadow: var(--hover-shadow);
+        }
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .link-card:hover::before {
+            opacity: 1;
+        }
+        .link-card:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .link-card:hover .card-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+        }
+        .card-subtitle {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        .card-description {
+            color: var(--text-dark);
+            margin: 12px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .card-tag {
+            background: var(--bg-green);
+            color: var(--dark-green);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .card-arrow {
+            color: var(--primary-green);
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+        .link-card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .partner-badge, .series-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+        }
+        .partner-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        .series-badge {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+            background: var(--bg-green);
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .empty-state h3 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+        }
+        .empty-state ul {
+            text-align: left;
+            margin-top: 10px;
+            padding-left: 20px;
+            display: inline-block;
+        }
+
+        /* ========== 模态框样式 ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border-top: 6px solid var(--primary-green);
+        }
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-light);
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+        .modal-close:hover {
+            background: #f0f0f0;
+            color: var(--dark-green);
+        }
+        .modal-title {
+            color: var(--dark-green);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            padding-right: 30px;
+        }
+        .modal-body {
+            color: var(--text-dark);
+            font-size: 1rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        .modal-footer {
+            margin-top: 25px;
+            text-align: right;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .modal-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .modal-btn:hover {
+            background: var(--dark-green);
+        }
+        .modal-btn.secondary {
+            background: #f3f4f6;
+            color: var(--text-dark);
+        }
+        .modal-btn.secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .page-container {
+                flex-direction: column;
+            }
+            .sidebar-nav {
+                position: static;
+                width: 100%;
+            }
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .nav-links li {
+                margin-bottom: 0;
+            }
+        }
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 20px 20px 100px;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .section-icon {
+                margin-bottom: 15px;
+            }
+            .modal-footer {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 480px) {
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .card-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部加载进度条 -->
+    <div id="loading-progress"></div>
+
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="index.html">156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="http://156pan.owo.vin">网盘</a></li>
+                <li><a href="blog.html">博客</a></li>
+                <li><a href="link.html">链接</a></li>                
+            </ul>
+        </nav>  
+    </header>
+
+    <div class="container">
+        <header class="page-header">
+            <h1 style="left: 0;">🌐 链接与资源</h1> <!-- 修正内联样式，left:0确保居中 -->
+            <p class="subtitle">汇集友情链接、合作伙伴与156系列相关内容</p>
+        </header>
+
+        <div class="page-container">
+            <aside class="sidebar-nav">
+                <h3>页面导航</h3>
+                <ul class="nav-links">
+                    <li><a href="#friends-link" class="active"><span class="nav-icon">🤝</span> 友情链接</a></li>
+                    <li><a href="#partners"><span class="nav-icon">🤝</span> 合作伙伴</a></li>
+                    <li><a href="#series-156"><span class="nav-icon">🔧</span> 156系列</a></li> <!-- 修改锚点为 series-156 -->
+                </ul>
+            </aside>
+
+            <main class="content-area">
+                <section id="friends-link" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">🤝</div>
+                        <div>
+                            <h2 class="section-title">友情链接</h2>
+                            <p class="section-desc">与其他博客和创作者的互连</p>
+                        </div>
+                    </div>
+                    <div class="links-grid">
+                        <a href="https://nicrozoft.github.io" class="link-card" target="_blank" rel="noopener">
+                            <div class="card-header">
+                                <div class="card-icon" aria-label="Nicrozoft 图标">N</div>
+                                <div>
+                                    <h3 class="card-title">Nicrozoft</h3>
+                                    <p class="card-subtitle">Windows、C++、Python 爱好者的个人博客</p>
+                                </div>
+                            </div>
+                            <p class="card-description">分享个人开发内容的个人博客。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">技术博客</span>
+                                <span class="card-arrow" aria-hidden="true">→</span>
+                            </div>
+                        </a>
+
+                        <button class="link-card" id="friendLinkBtn" aria-label="申请友情链接" data-modal="friend">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">+</div>
+                                <div>
+                                    <h3 class="card-title">申请友链</h3>
+                                    <p class="card-subtitle">点击申请交换友情链接</p>
+                                </div>
+                            </div>
+                            <p class="card-description">欢迎技术、游戏、编程相关的个人博客申请友链！</p>
+                            <div class="card-meta">
+                                <span class="card-tag" style="background: #f0f9ff; color: #0369a1;">点击申请</span>
+                                <span class="card-arrow" aria-hidden="true">+</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="empty-state">
+                        <h3>💡 友链申请说明</h3>
+                        <p>欢迎技术、游戏、编程相关的个人博客申请友链！请确保您的博客有原创内容并保持更新。</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">申请方式：请通过博客中的联系方式与我联系</p>
+                    </div>
+                </section>
+
+                <section id="partners" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">🤝</div>
+                        <div>
+                            <h2 class="section-title">合作伙伴</h2>
+                            <p class="section-desc">与我合作的项目与平台</p>
+                        </div>
+                    </div>
+                    <div class="links-grid">
+                        <a href="javascript:void(0)" class="link-card" id="placeholderPartner" role="button" tabindex="0" data-modal="partner-placeholder">
+                            <span class="partner-badge">合作伙伴</span>
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🌟</div>
+                                <div>
+                                    <h3 class="card-title">占位符</h3>
+                                    <p class="card-subtitle">技术社区合作（占位符）</p>
+                                </div>
+                            </div>
+                            <p class="card-description">（占位符）一个专注于开发者成长的技术社区，提供技术文章、项目实战和经验分享。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">（占位符）技术社区</span>
+                                <span class="card-arrow" aria-hidden="true">→</span>
+                            </div>
+                        </a>
+
+                        <button class="link-card" id="partnerBtn" aria-label="寻求合作机会" data-modal="partner">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #047857);">🤝</div>
+                                <div>
+                                    <h3 class="card-title">合作洽谈</h3>
+                                    <p class="card-subtitle">寻求合作机会</p>
+                                </div>
+                            </div>
+                            <p class="card-description">如果您有合作意向，欢迎联系洽谈技术合作、内容合作等机会。</p>
+                            <div class="card-meta">
+                                <span class="card-tag" style="background: var(--bg-green); color: var(--dark-green);">点击联系</span>
+                                <span class="card-arrow" aria-hidden="true">→</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="empty-state">
+                        <h3>🤝 合作机会</h3>
+                        <p>欢迎技术社区、游戏平台、内容创作者等寻求合作机会。合作领域包括但不限于：</p>
+                        <ul>
+                            <li>技术文章合作与交叉推广</li>
+                            <li>开源项目协作</li>
+                            <li>游戏评测与内容创作</li>
+                            <li>技术社区共建</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 修改id为 series-156，避免数字开头可能的问题 -->
+                <section id="series-156" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">🔧</div>
+                        <div>
+                            <h2 class="section-title">156系列项目</h2>
+                            <p class="section-desc">我开发的软件和工具集合</p>
+                        </div>
+                    </div>
+                    <div class="links-grid">
+                        <a href="javascript:void(0)" class="link-card" id="fanSite" role="button" tabindex="0" data-modal="fan">
+                            <span class="series-badge">156系列</span>
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">⭐</div>
+                                <div>
+                                    <h3 class="card-title">156粉丝站</h3>
+                                    <p class="card-subtitle">粉丝专属的网站</p>
+                                </div>
+                            </div>
+                            <p class="card-description">含有粉丝专属权益<br>想要成为此站点的用户？加入QQ粉丝群即可！</p>
+                            <div class="card-meta">
+                                <span class="card-tag">即将推出</span>
+                                <span class="card-arrow" aria-hidden="true">→</span>
+                            </div>
+                        </a>
+
+                        <a href="https://github.com/bCreeper156" class="link-card" target="_blank" rel="noopener">
+                            <span class="series-badge">156系列</span>
+                            <div class="card-header">
+                                <div class="card-icon" aria-label="GitHub">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="card-title">GitHub仓库</h3>
+                                    <p class="card-subtitle">开源代码与项目</p>
+                                </div>
+                            </div>
+                            <p class="card-description">查看我的博客源码、编程项目和开源贡献。这里是所有技术想法的起点。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">开源项目</span>
+                                <span class="card-arrow" aria-hidden="true">→</span>
+                            </div>
+                        </a>
+
+                        <div class="link-card" aria-label="更多项目筹备中，敬请期待">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #6b7280, #4b5563);">🚧</div>
+                                <div>
+                                    <h3 class="card-title">更多156项目筹备中</h3>
+                                    <p class="card-subtitle">敬请期待</p>
+                                </div>
+                            </div>
+                            <p class="card-description">还有更多156系列的软件工具和项目正在开发和规划中。</p>
+                            <div class="card-meta">
+                                <span class="card-tag">即将推出</span>
+                                <span class="card-arrow" aria-hidden="true">→</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="empty-state">
+                        <h3>🔧 156系列项目</h3>
+                        <p>"156"系列是我个人开发的软件和工具集合，名称来源于我的用户名"bCreeper156"。这些项目主要围绕以下方向：</p>
+                        <ul>
+                            <li>效率工具与实用软件</li>
+                            <li>开发者工具与资源</li>
+                            <li>游戏相关工具</li>
+                            <li>学习与创作辅助工具</li>
+                        </ul>
+                        <p style="margin-top: 15px; font-size: 0.9rem;">所有项目均为开源或免费提供，欢迎使用和贡献代码。</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <!-- 自定义模态框 -->
+    <div class="modal" id="infoModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalClose" aria-label="关闭弹窗">&times;</button>
+            <h2 id="modalTitle" class="modal-title">提示</h2>
+            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="modalCancel">取消</button>
+                <a href="mailto:creeper156@qq.com" class="modal-btn" style="text-decoration: none; display: inline-block; text-align: center;">现在联系</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ========== 顶部进度条逻辑 ==========
+            const progress = document.getElementById('loading-progress');
+            let progressInterval;
+            let currentWidth = 0;
+
+            // 开始模拟进度
+            function startProgress() {
+                progressInterval = setInterval(() => {
+                    if (currentWidth < 90) {
+                        // 逐渐增加宽度，越来越慢
+                        const increment = Math.max(1, (90 - currentWidth) / 10);
+                        currentWidth = Math.min(90, currentWidth + increment);
+                        progress.style.width = currentWidth + '%';
+                    }
+                }, 100);
+            }
+
+            // 完成进度并隐藏
+            function finishProgress() {
+                if (progressInterval) clearInterval(progressInterval);
+                currentWidth = 100;
+                progress.style.width = '100%';
+                progress.classList.add('hide');
+                // 动画结束后移除（可选）
+                setTimeout(() => {
+                    if (progress.parentNode) {
+                        progress.style.display = 'none';
+                    }
+                }, 800);
+            }
+
+            startProgress();
+
+            // 等待页面完全加载
+            window.addEventListener('load', finishProgress);
+
+            // 如果加载超时（比如某些资源卡住），5秒后强制完成
+            setTimeout(() => {
+                if (currentWidth < 100) {
+                    finishProgress();
+                }
+            }, 8000);
+
+            // ========== 原有DOM元素 ==========
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sections = document.querySelectorAll('.content-section');
+            const modal = document.getElementById('infoModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const modalClose = document.getElementById('modalClose');
+            const modalCancel = document.getElementById('modalCancel');
+
+            // 模态框内容映射
+            const modalContentMap = {
+                friend: {
+                    title: '🤝 申请友情链接',
+                    body: '友链申请请通过博客中的联系方式与我联系。\n\n请在邮件中包含：\n1. 博客名称\n2. 博客链接\n3. 博客描述\n4. 您的联系方式\n\n我会尽快审核并添加！'
+                },
+                partner: {
+                    title: '🤝 合作洽谈',
+                    body: '合作洽谈请通过博客中的联系方式与我联系。\n\n请在邮件中包含：\n1. 合作方名称\n2. 合作意向\n3. 合作内容概述\n4. 您的联系方式\n\n期待与您的合作！'
+                },
+                'partner-placeholder': {
+                    title: '🌟 合作伙伴占位符',
+                    body: '该链接暂未配置实际地址，敬请期待。'
+                },
+                fan: {
+                    title: '⭐ 156粉丝站',
+                    body: '该链接暂未配置实际地址，敬请期待。\n\n想要成为此站点的用户？请加入QQ粉丝群获取最新消息。'
+                }
+            };
+
+            // 显示模态框
+            function showModal(type) {
+                const content = modalContentMap[type];
+                if (!content) return;
+                modalTitle.textContent = content.title;
+                modalBody.textContent = content.body;
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // 隐藏模态框
+            function hideModal() {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            // 为所有带 data-modal 属性的元素绑定点击事件
+            document.querySelectorAll('[data-modal]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const modalType = el.getAttribute('data-modal');
+                    showModal(modalType);
+                });
+            });
+
+            // 关闭模态框事件
+            modalClose.addEventListener('click', hideModal);
+            modalCancel.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+
+            // 按 ESC 键关闭
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    hideModal();
+                }
+            });
+
+            // ========== 导航高亮与滚动 ==========
+            function updateActiveNav() {
+                let currentId = '';
+                const scrollY = window.scrollY;
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 130;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    if (scrollY >= sectionTop && scrollY < sectionBottom) {
+                        currentId = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const href = link.getAttribute('href').substring(1);
+                    if (href === currentId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(updateActiveNav);
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
+
+            // ========== 滚动显示动画 ==========
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            sections.forEach(section => observer.observe(section));
+
+        })();
+    </script>
+</body>
+</html>
