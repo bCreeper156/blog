@@ -22,7 +22,7 @@ const articles = [
         id: 3,
         title: "3.【Creeper的软件测评】第一集：我把三大音乐App“装”进了一个软件！免费开源神器Sollin测评",
         excerpt: "免费开源神器Sollin测评",
-        category: "软件测评, 开源工具, 音乐播放器",
+        category: "软件测评 · 开源工具 · 音乐播放器",
         date: "2026-1-17",
         readTime: "1分钟阅读",
         link: "/articles/3/index.html"
@@ -31,10 +31,10 @@ const articles = [
     {
         id: 4,
         title: "4.软件测评#3——Cloudreve",
-        excerpt: "免费开源神器Sollin测评",
-        category: "软件测评, 开源工具, 音乐播放器",
+        excerpt: "免费开源神器Cloudreve测评",
+        category: "教程 · 云存储 · 内网穿透",
         date: "2026-1-17",
-        readTime: "1分钟阅读",
+        readTime: "12分钟阅读",
         link: "/articles/4/index.html"
     }
 ];
