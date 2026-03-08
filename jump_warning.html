@@ -9,8 +9,8 @@
     <!-- 提前检查并跳转：如果是允许的站内域名则直接跳转，避免显示警告 -->
     <script>
         (function() {
-            // 允许的域名前缀（站内链接）
-            const ALLOWED_PREFIX = 'https://156blog.netlify.app';
+            // 修复：动态获取当前站点的 origin（支持自定义域名），不再硬编码
+            const ALLOWED_PREFIX = window.location.origin; // 例如 https://156blog.netlify.app 或你的自定义域名
             // 获取URL参数中的目标链接 (支持常用参数名)
             function getTargetUrl() {
                 const params = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@
             }
 
             const targetHref = getTargetUrl();
-            // 如果存在目标链接且以允许的域名开头，直接跳转（不显示警告）
+            // 如果存在目标链接且以允许的域名开头（当前站点的origin），直接跳转（不显示警告）
             if (targetHref && targetHref.startsWith(ALLOWED_PREFIX)) {
                 // 使用 replace 以避免在历史记录中留下当前警告页面
                 window.location.replace(targetHref);
