@@ -4,12 +4,29 @@
 
 ---
 
+V1.0.1
+
+[Fix] Resolved vulnerability in third-party website access warnings
+
+[Fix & Optimize] Resolved known bugs and improved user experience
+
+[New] Add the "Game" tag and include the first game
+
+---
+
 V1.0.0
 
-[Optimization] Refactoring the blog structure to make the code easier to maintain
-[Fix] Fix some hyperlinks that cannot be used properly
-[Optimization] Refactoring some difficult to maintain code to make subsequent maintenance more convenient
-[Modification] Revise Article 3 by adding more tips and updating interface screenshots, fixing and adding some inappropriate wording, inaccurate descriptions, and unmentioned content.
+[Added] Added warning for third-party website access
+
+[Optimize] Restructure the blog to make the code more maintainable
+
+[Fix] Repair the malfunctioning hyperlinks in the affected section
+
+[Optimization] Refactored some difficult-to-maintain code to facilitate future maintenance
+
+[Revision] Revised Article 3, added more prompt items and updated interface screenshots, fixed and incorporated some inappropriate wording, inaccuracies, and omissions.
+
+[New] Added the 4th article
 
 ---
 
