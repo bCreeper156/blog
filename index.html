@@ -7,17 +7,52 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/common.js"></script>
     <style>
-        /* 原有样式保持不变，只追加进度条样式 */
-        #andy-lau-thaw-progress {
-            font-family: 'Microsoft YaHei', sans-serif;
-            padding: 20px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            border: 1px solid #d1e3ff;
-            max-width: 500px;
-            margin: 20px auto;
-            box-shadow: 0 4px 12px rgba(0, 40, 100, 0.1);
-            display: none; /* 默认隐藏 */
+        .github-loader-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            z-index: 9999;
+            pointer-events: none;
+            background: transparent;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+        .github-loader-wrap.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .github-loader {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #2ea44f, #2f8f3e 55%, #239638);
+            box-shadow: 0 0 8px rgba(46, 164, 79, 0.8);
+            transition: width 0.2s ease;
+        }
+        .github-loader-tip {
+            position: fixed;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            font-size: 0.75rem;
+            border-radius: 999px;
+            padding: 4px 10px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+        .github-loader-tip.show {
+            opacity: 1;
+        }
+
+        .about_me a {
+            color: #058eff;
+            text-decoration: none;
+            font-weight: 500;
         }
         #andy-lau-thaw-progress.show {
             display: block; /* 显示时设为block */
@@ -129,50 +164,32 @@
             border-top: 1px dashed #d1d5db;
             padding-top: 10px;
         }
-
-        /* ========== 新增：页面加载进度条 ========== */
-        #loading-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #10b981, #a7f3d0, #fbbf24);
-            z-index: 9999;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-            transition: width 0.2s ease, opacity 0.3s ease;
-            opacity: 1;
-        }
-        #loading-progress.hide {
-            opacity: 0;
-            transition: opacity 0.3s ease 0.5s;
-        }
     </style>
 </head>
 <body>
-    <!-- 顶部加载进度条 -->
-    <div id="loading-progress"></div>
-
     <header>
         <button class="menu">&#9776;</button>
-        <h1><a href="index.html">156博客</a></h1>
+        <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
-                <li><a href="index.html">首页</a></li>
+                <li><a href="/index.html">首页</a></li>
                 <li><a href="/jump_warning.html?url=http://156pan.owo.vin">网盘</a></li>
-                <li><a href="blog.html">博客</a></li>
-                <li><a href="link.html">链接</a></li>                
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>
             </ul>
         </nav>  
     </header>
-
+    <div class="github-loader-wrap" id="githubLoaderWrap">
+        <div class="github-loader" id="githubLoader"></div>
+    </div>
+    <div class="github-loader-tip" id="githubLoaderTip">加载中 0%</div>
     <!-- 公告区 -->
     <section class="Ad">
-        <p>156粉丝站即将上线，敬请期待！<br />博客站屎山基本清扫完成，博客框架已重构！如有建议，请通过<a href="mailto://creeper156@qq.com">邮箱</a>反馈！</p>
+        <p>156粉丝站即将上线，敬请期待！</p>
     </section>
 
     <!-- 刘德华解冻进度条组件 -->
-    <section class="ldhjd">
+    <!-- <section class="ldhjd">
         <div id="andy-lau-thaw-progress">
             <div class="progress-header">
                 <div class="progress-title">刘德华年度解冻进度</div>
@@ -190,12 +207,12 @@
                 * "解冻"梗源自刘德华歌曲《恭喜发财》每年春节前在各大场所循环播放的现象。进度条为趣味计算，并非官方内容。
             </div>
         </div>
-    </section>
+    </section> -->
 
     <main>
         <section class="about_me">
             <img src="images/LOGO.png" alt="Creeper苦力怕i个人博客LOGO">
-            <p>bilibili游戏区、科技区自媒体，爱玩游戏、编程</p>
+            <p>bilibili游戏区、科技区博主，爱玩游戏、编程</p>
             <div class="social media">
                 <a href="/jump_warning.html?url=https://github.com/bCreeper156">GitHub</a> | 
                 <a href="/jump_warning.html?url=https://space.bilibili.com/3546378363996834">bilibili</a> | 
@@ -209,7 +226,7 @@
         <section class="articles">
             <h1>精选文章</h1>
             <div class="highlight-box">
-                <h3><a href="articles/3/index.html">3.【Creeper的软件测评】第一集：我把三大音乐App“装”进了一个软件！免费开源神器Sollin测评</a></h3>
+                <h3><a href="articles/4/index.html">4.软件测评#3——Cloudreve</a></h3>
             </div>
         </section>
 
@@ -220,7 +237,7 @@
     </main>
 
     <footer>
-        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+        <p><a href ="/jump_warning.html?url=https://github.com/bCreeper156/blog/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
 
     <!-- 刘德华解冻进度条脚本（原有） -->
@@ -378,44 +395,57 @@
             }, millisecondsUntilMidnight);
         });
     </script>
-
-    <!-- 新增：页面加载进度条脚本（独立作用域，避免冲突） -->
     <script>
         (function() {
-            'use strict';
-            const progress = document.getElementById('loading-progress');
-            let progressInterval;
-            let currentWidth = 0;
+            const loaderWrap = document.getElementById('githubLoaderWrap');
+            const loaderBar = document.getElementById('githubLoader');
+            const loaderTip = document.getElementById('githubLoaderTip');
 
-            function startProgress() {
-                progressInterval = setInterval(() => {
-                    if (currentWidth < 90) {
-                        const increment = Math.max(1, (90 - currentWidth) / 10);
-                        currentWidth = Math.min(90, currentWidth + increment);
-                        progress.style.width = currentWidth + '%';
-                    }
-                }, 100);
-            }
-
-            function finishProgress() {
-                if (progressInterval) clearInterval(progressInterval);
-                currentWidth = 100;
-                progress.style.width = '100%';
-                progress.classList.add('hide');
-                setTimeout(() => {
-                    if (progress.parentNode) {
-                        progress.style.display = 'none';
-                    }
-                }, 800);
-            }
-
-            startProgress();
-            window.addEventListener('load', finishProgress);
-            setTimeout(() => {
-                if (currentWidth < 100) {
-                    finishProgress();
+            function setLoaderProgress(percent, text) {
+                const value = Math.min(100, Math.max(0, percent));
+                loaderBar.style.width = value + '%';
+                loaderTip.textContent = text || `加载中 ${value}%`;
+                if (value >= 100) {
+                    loaderWrap.classList.add('hide');
+                    loaderTip.classList.remove('show');
+                } else {
+                    loaderTip.classList.add('show');
                 }
-            }, 8000);
+            }
+
+            function getEstimatedProgress() {
+                const resources = performance.getEntriesByType('resource') || [];
+                if (resources.length === 0) return 0;
+                const loaded = resources.filter(res => res.responseEnd > 0).length;
+                return Math.round((loaded / resources.length) * 80);
+            }
+
+            function runLoader() {
+                const readyState = document.readyState;
+                if (readyState === 'loading') {
+                    setLoaderProgress(10, '开始加载页面...');
+                } else if (readyState === 'interactive') {
+                    const p = Math.max(35, getEstimatedProgress());
+                    setLoaderProgress(p, `DOM已就绪 ${p}%`);
+                } else if (readyState === 'complete') {
+                    setLoaderProgress(95, '正在完成加载...');
+                }
+            }
+
+            const poller = window.setInterval(function() {
+                runLoader();
+                if (document.readyState === 'complete') {
+                    clearInterval(poller);
+                }
+            }, 80);
+
+            window.addEventListener('load', function() {
+                setLoaderProgress(100, '加载完成，欢迎回来！');
+                window.setTimeout(() => {
+                    loaderWrap.classList.add('hide');
+                    loaderTip.classList.remove('show');
+                }, 350);
+            });
         })();
     </script>
 </body>

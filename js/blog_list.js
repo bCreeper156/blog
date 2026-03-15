@@ -6,7 +6,7 @@ const articles = [
         excerpt: "这是我的个人博客，在这里我会分享编程学习心得、技术经验和创作内容",
         category: "公告",
         date: "2025-09-15",
-        readTime: "2分钟阅读",
+        readTime: "1分钟阅读",
         link: "/articles/1/index.html"
     },
     {
@@ -22,8 +22,8 @@ const articles = [
         id: 3,
         title: "3.【Creeper的软件测评】第一集：我把三大音乐App“装”进了一个软件！免费开源神器Sollin测评",
         excerpt: "免费开源神器Sollin测评",
-        category: "软件测评 · 开源工具 · 音乐播放器",
-        date: "2026-1-17",
+        category: "软件测评",
+        date: "2026-01-17",
         readTime: "1分钟阅读",
         link: "/articles/3/index.html"
     },
@@ -31,18 +31,18 @@ const articles = [
         id: 4,
         title: "4.软件测评#3——Cloudreve",
         excerpt: "免费开源神器Cloudreve测评",
-        category: "教程 · 云存储 · 内网穿透",
-        date: "2026-3-7",
+        category: "软件测评",
+        date: "2026-03-07",
         readTime: "12分钟阅读",
         link: "/articles/4/index.html"
     },
     {
         id: 5,   // 修复：添加逗号
         title: "5.几何冲刺（游戏）",
-        excerpt: "免费开源神器Cloudreve测评",  // 注意：此处内容可能需调整，但原样保留
-        category: "Game",
-        date: "2026-3-8",
-        readTime: "网页游戏，没有时间",
+        excerpt: "几何冲刺游戏规则及本体",  // 注意：此处内容可能需调整，但原样保留
+        category: "游戏",
+        date: "2026-03-08",
+        readTime: "1分钟阅读",
         link: "/articles/5/index.html"
     }
 ];
@@ -93,7 +93,6 @@ function renderArticles(articlesToRender, page = 1) {
             </div>
             ${article.category !== '公告' ? `<span class="article-category">${article.category}</span>` : ''}
             <div class="article-actions">
-                <button class="action-btn" title="收藏" onclick="toggleFavorite(${article.id})">⭐</button>
                 <button class="action-btn" title="分享" onclick="shareArticle(${article.id})">↗️</button>
             </div>
         </li>

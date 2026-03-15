@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>安全警告 - 156博客</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/common.css">
     <script src="js/common.js"></script>
     <!-- 提前检查并跳转：如果是允许的站内域名则直接跳转，避免显示警告 -->
     <script>
@@ -157,6 +158,18 @@
     </style>
 </head>
 <body>
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="/index.html">156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><a href="/jump_warning.html?url=http://156pan.owo.vin">网盘</a></li>
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>                
+            </ul>
+        </nav>  
+    </header>
     <!-- 安全警告卡片（仅当非站外链接时显示；若为站内链接，头部脚本已直接跳转） -->
     <section class="warning">
         <h2>安全警告</h2>
@@ -175,7 +188,7 @@
     </section>
 
     <footer>
-        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+        <p><a href ="/jump_warning.html?url=https://github.com/bCreeper156/blog/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
 
     <script>

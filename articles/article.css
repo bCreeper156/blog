@@ -1,6 +1,80 @@
-@import url('common.css');
+@import url('/css/common.css');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+@keyframes shimmer {
+    0% { transform: translateX(-100%) skewX(-20deg); }
+    100% { transform: translateX(200%) skewX(-20deg); }
+}
+
+.progress-text {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    z-index: 10000;
+    display: none;
+}
 
 /* 文章页面样式 */
+header {
+    background-color: black;
+    height: 80px;
+    width: 100%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+header h1 {
+    color: white;
+    position: absolute;
+    left: 120px;
+    top: 0;
+    line-height: 80px;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+header h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+header ul {
+    position: absolute;
+    right: 5vw;
+    top: 0;
+    line-height: 80px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header li {
+    display: inline;
+    margin-right: 4vw;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+header a:hover {
+    color: #11cb5f;
+}
+
+.menu {
+    display: none;
+}
+
 body {
     background-color: #f8f9fa;
     color: #333;
@@ -19,7 +93,7 @@ main {
     width: 100%;
 }
 
-.article-header {
+.header {
     text-align: center;
     margin-bottom: 3rem;
     padding: 2rem 0;
@@ -86,7 +160,7 @@ main {
 }
 
 .highlight-box {
-    background: linear-gradient(135deg, #11cb5f, #11cb84);
+    background: linear-gradient(135deg, #0099ff, #11cb84);
     color: white;
     padding: 1.5rem;
     border-radius: 8px;
@@ -175,8 +249,163 @@ main {
     background: #5a6268;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
+/* 文章内容富文本样式 */
+.article-content pre {
+    background: #f6f8fa;
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border: 1px solid #eaeef2;
+    margin: 1.5em 0;
+}
+
+.article-content code {
+    background: #f0f2f5;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #d14;
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: 0.9rem;
+}
+
+.article-content blockquote {
+    margin: 1.5em 0;
+    padding: 1em 1.5em;
+    background: #f9fafc;
+    border-left: 4px solid #10b981;
+    border-radius: 0 8px 8px 0;
+    color: #2c3e50;
+    font-style: normal;
+}
+
+.article-content blockquote p {
+    margin: 0.5em 0;
+}
+
+.article-content hr {
+    border: none;
+    border-top: 2px dashed #d0d7de;
+    margin: 2em 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.article-content h2 {
+    margin-top: 2em;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5em;
+}
+
+.article-content h3 {
+    margin-top: 1.5em;
+    color: #2d3748;
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 1.8em;
+}
+
+.article-content li {
+    margin: 0.5em 0;
+}
+
+.article-content a {
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.article-content a:hover {
+    text-decoration: underline;
+}
+
+/* 页脚通用样式 */
+footer {
+    background-color: #000000;
+    color: #ffffff;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+footer a {
+    background-color: #000000;
+    color: #ffffff;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    margin-top: auto;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+/* ========== 移动端优化 ========== */
+@media screen and (max-width: 768px) {
+    /* 导航菜单移动端样式 */
+    header ul {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: black;
+        flex-direction: column;
+        padding: 10px 0;
+        z-index: 1000;
+    }
+
+    header ul.show {
+        display: flex;
+    }
+
+    header li {
+        display: block;
+        margin: 0;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    header h1 {
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.3rem;
+    }
+
+    .menu {
+        display: block;
+        background-color: transparent;
+        color: white;
+        font-size: 24px;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 1001;
+    }
+
+    /* 原有文章内容移动端样式 */
     .article-title {
         font-size: 2rem;
     }
@@ -228,16 +457,4 @@ main {
     .article-text {
         font-size: 1rem;
     }
-}
-/* 页脚通用样式 */
-footer {
-    background-color: #000000;
-    color: #ffffff;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    margin-top: auto;
-    flex-shrink: 0;
 }

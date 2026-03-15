@@ -6,97 +6,32 @@
     <title>软件测评#3——Cloudreve - 156博客</title>
     <meta name="description" content="详细的内网穿透与云服务器部署教程，教你自建私有网盘摆脱限速烦恼">
     <link rel="stylesheet" href="/articles/article.css">
-    <script src="js/common.js"></script>
+    <script src="/js/common.js"></script>
     <style>
-        /* 补充代码块与引用样式，确保文章显示美观 */
-        .article-content pre {
-            background: #f6f8fa;
-            border-radius: 8px;
-            padding: 16px;
-            overflow-x: auto;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            border: 1px solid #eaeef2;
-            margin: 1.5em 0;
-        }
-        .article-content code {
-            background: #f0f2f5;
-            padding: 0.2em 0.4em;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9em;
-            color: #d14;
-        }
-        .article-content pre code {
-            background: none;
-            padding: 0;
-            color: inherit;
-            font-size: 0.9rem;
-        }
-        .article-content blockquote {
-            margin: 1.5em 0;
-            padding: 1em 1.5em;
-            background: #f9fafc;
-            border-left: 4px solid #10b981;
-            border-radius: 0 8px 8px 0;
-            color: #2c3e50;
-            font-style: normal;
-        }
-        .article-content blockquote p {
-            margin: 0.5em 0;
-        }
-        .article-content hr {
-            border: none;
-            border-top: 2px dashed #d0d7de;
-            margin: 2em 0;
-        }
-        .article-content img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-        .article-content h2 {
-            margin-top: 2em;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 0.5em;
-        }
-        .article-content h3 {
-            margin-top: 1.5em;
-            color: #2d3748;
-        }
-        .article-content ul, .article-content ol {
-            padding-left: 1.8em;
-        }
-        .article-content li {
-            margin: 0.5em 0;
-        }
-        .article-content a {
-            color: #10b981;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .article-content a:hover {
-            text-decoration: underline;
-        }
-        .feature-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1.5em;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1);
+        #giscus {
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eaeef2;
         }
     </style>
 </head>
 <body>
-    
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="/index.html">156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><a href="/jump_warning.html?url=http://156pan.owo.vin">网盘</a></li>
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>                
+            </ul>
+        </nav>  
+    </header>
     <main>
         <article>
-            <header class="article-header">
-                <!-- 文章主标题从Markdown第一个一级标题提取 -->
+            <section class="header">
                 <h1 class="article-title">软件测评#3——Cloudreve</h1>
                 <div class="article-meta">
                     <span class="meta-item">
@@ -109,20 +44,19 @@
                         <span class="meta-icon">🏷️</span> 教程 · 云存储 · 内网穿透
                     </span>
                 </div>
-            </header>
+            </section>
             
             <div class="article-content">
-                <!-- 以下为转换自 test.md 的 HTML 内容，已调整标题层级：原一级标题除第一个外均降为二级，以此类推 -->
                 <section class="article-section">
                     
-                    <p class="article-text">
+                    <div class="highlight-box">
                         你是否受够了某度网盘的<strong>限速</strong>、<strong>体验差</strong>？那么这期视频教大家如何通过自建云盘摆脱这些烦恼！
-                    </p>
-
-                    <hr />
-
+                    </div>
+                    <p>视频传送门：<a href="/jump_warning.html?url=https://www.bilibili.com/video/BV1rVfuBrEKA">软件测评#3——Cloudreve</a></p>
                     <h2 class="section-title">内网穿透教程</h2>
-
+                    <blockquote>
+                        <p><strong>警告！</strong>使用24×7小时内网穿透方案<strong>容易使你的电脑寿命降低！</strong>请谨慎选择此方案！我们推荐你使用一杯奶茶的钱使用云服务器方案！</p>
+                    </blockquote>
                     <h3>起步</h3>
                     <p class="article-text">
                         首先，打开<a href="/jump_warning.html?url=https://cloudreve.org" target="_blank" rel="noopener">官网</a>或<a href="/jump_warning.html?url=https://github.com/cloudreve/Cloudreve" target="_blank" rel="noopener">GitHub仓库</a>的最新版本。
@@ -321,8 +255,6 @@ WantedBy=multi-user.target</code></pre>
                     <p class="article-text">
                         至此，你已经在雨云服务器上基于 Cloudreve V4 搭建了私有网盘。享受文件存储、分享和离线下载的乐趣吧！记得定期备份 <code>~/cloudreve/data</code>（Docker）或 Cloudreve 安装目录（手动部署）中的数据库和配置文件。
                     </p>
-
-                    <!-- 原模板中的特色卡片区域可以保留，但此处已替换为文章内容，故省略原模板的 features-grid -->
                 </section>
 
                 <div class="article-actions">
@@ -335,11 +267,29 @@ WantedBy=multi-user.target</code></pre>
                 </div>
             </div>
         </article>
+
+        <!-- Giscus评论区容器 -->
+        <div id="giscus"></div>
     </main>
     
     <footer>
-        <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利。</p>
+        <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
-</body>
 
+    <script src="https://giscus.app/client.js"
+            data-repo="bCreeper156/discussion.api.156blog"
+            data-repo-id="R_kgDORnh7hw"
+            data-category="Announcements"
+            data-category-id="DIC_kwDORnh7h84C4b6n"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="light"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+    </script>
+</body>
 </html>

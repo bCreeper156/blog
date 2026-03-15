@@ -23,23 +23,7 @@
             --transition-default: all 0.3s ease;
         }
 
-        /* ========== 新增进度条样式 ========== */
-        #loading-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-green), var(--light-green), #fbbf24);
-            z-index: 9999;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-            transition: width 0.2s ease, opacity 0.3s ease;
-            opacity: 1;
-        }
-        #loading-progress.hide {
-            opacity: 0;
-            transition: opacity 0.3s ease 0.5s; /* 延迟隐藏，让用户看到100%状态 */
-        }
+        
 
         .container {
             max-width: 1200px;
@@ -503,22 +487,18 @@
     </style>
 </head>
 <body>
-    <!-- 顶部加载进度条 -->
-    <div id="loading-progress"></div>
-
     <header>
         <button class="menu">&#9776;</button>
-        <h1><a href="index.html">156博客</a></h1>
+        <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
-                <li><a href="index.html">首页</a></li>
+                <li><a href="/index.html">首页</a></li>
                 <li><a href="/jump_warning.html?url=http://156pan.owo.vin">网盘</a></li>
-                <li><a href="blog.html">博客</a></li>
-                <li><a href="link.html">链接</a></li>                
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>                
             </ul>
         </nav>  
     </header>
-
     <div class="container">
         <header class="page-header">
             <h1 style="left: 0;">🌐 链接与资源</h1> <!-- 修正内联样式，left:0确保居中 -->
@@ -545,17 +525,17 @@
                         </div>
                     </div>
                     <div class="links-grid">
-                        <a href="/jump_warning.html?url=https://nicrozoft.github.io" class="link-card" target="_blank" rel="noopener">
+                        <a href="/jump_warning.html?url=https://ciallo-win.github.io/XD" class="link-card" rel="noopener">
                             <div class="card-header">
-                                <div class="card-icon" aria-label="Nicrozoft 图标">N</div>
+                                <div class="card-icon" aria-label="Ciallo 图标">C</div>
                                 <div>
-                                    <h3 class="card-title">Nicrozoft</h3>
+                                    <h3 class="card-title">Ciallo的个人博客</h3>
                                     <p class="card-subtitle">Windows、C++、Python 爱好者的个人博客</p>
                                 </div>
                             </div>
                             <p class="card-description">分享个人开发内容的个人博客。</p>
                             <div class="card-meta">
-                                <span class="card-tag">技术博客</span>
+                                <span class="card-tag">普通个人博客</span>
                                 <span class="card-arrow" aria-hidden="true">→</span>
                             </div>
                         </a>
@@ -662,7 +642,7 @@
                             </div>
                         </a>
 
-                        <a href="/jump_warning.html?url=https://github.com/bCreeper156" class="link-card" target="_blank" rel="noopener">
+                        <a href="/jump_warning.html?url=https://github.com/bCreeper156" class="link-card" rel="noopener">
                             <span class="series-badge">156系列</span>
                             <div class="card-header">
                                 <div class="card-icon" aria-label="GitHub">
@@ -716,7 +696,7 @@
 
     <footer class="main-footer">
         <div class="footer-container">
-            <p>Copyright © 2025-2037 Creeper苦力怕i的个人博客. 保留所有权利.</p>
+            <p><a href ="/jump_warning.html?url=https://github.com/bCreeper156/blog/LICENSE">Copyright © 2026 Creeper156</a></p>
         </div>
     </footer>
 
@@ -736,50 +716,6 @@
     <script>
         (function() {
             'use strict';
-
-            // ========== 顶部进度条逻辑 ==========
-            const progress = document.getElementById('loading-progress');
-            let progressInterval;
-            let currentWidth = 0;
-
-            // 开始模拟进度
-            function startProgress() {
-                progressInterval = setInterval(() => {
-                    if (currentWidth < 90) {
-                        // 逐渐增加宽度，越来越慢
-                        const increment = Math.max(1, (90 - currentWidth) / 10);
-                        currentWidth = Math.min(90, currentWidth + increment);
-                        progress.style.width = currentWidth + '%';
-                    }
-                }, 100);
-            }
-
-            // 完成进度并隐藏
-            function finishProgress() {
-                if (progressInterval) clearInterval(progressInterval);
-                currentWidth = 100;
-                progress.style.width = '100%';
-                progress.classList.add('hide');
-                // 动画结束后移除（可选）
-                setTimeout(() => {
-                    if (progress.parentNode) {
-                        progress.style.display = 'none';
-                    }
-                }, 800);
-            }
-
-            startProgress();
-
-            // 等待页面完全加载
-            window.addEventListener('load', finishProgress);
-
-            // 如果加载超时（比如某些资源卡住），5秒后强制完成
-            setTimeout(() => {
-                if (currentWidth < 100) {
-                    finishProgress();
-                }
-            }, 8000);
-
             // ========== 原有DOM元素 ==========
             const navLinks = document.querySelectorAll('.nav-links a');
             const sections = document.querySelectorAll('.content-section');
