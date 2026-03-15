@@ -10,6 +10,7 @@
 
 Appeared for many people who want to create their own personal blog at zero cost (I am).
 You can modify any code here according to your preferences.
+The comment section uses Giscus, and the discussion section is stored in the following repository:[https://github.com/bCreeper156/discussion.api.156blog](https://github.com/bCreeper156/discussion.api.156blog)
 If you don't know how to make modifications, please navigate to the 'Modification Guide'!
 If you don't know how to use it, please navigate to the "User Guide"!
 
