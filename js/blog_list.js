@@ -37,9 +37,9 @@ const articles = [
         link: "/articles/4/index.html"
     },
     {
-        id: 5,   // 修复：添加逗号
+        id: 5,
         title: "5.几何冲刺（游戏）",
-        excerpt: "几何冲刺游戏规则及本体",  // 注意：此处内容可能需调整，但原样保留
+        excerpt: "几何冲刺游戏规则及本体",
         category: "游戏",
         date: "2026-03-08",
         readTime: "1分钟阅读",
@@ -123,12 +123,10 @@ function renderPagination(totalArticles, currentPage) {
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
     
-    // 调整起始页，确保显示maxVisiblePages个页码
     if (endPage - startPage + 1 < maxVisiblePages) {
         startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
     
-    // 第一页和省略号
     if (startPage > 1) {
         paginationHTML += `<button class="pagination-btn" data-page="1">1</button>`;
         if (startPage > 2) {
@@ -136,7 +134,6 @@ function renderPagination(totalArticles, currentPage) {
         }
     }
     
-    // 页码
     for (let i = startPage; i <= endPage; i++) {
         if (i === currentPage) {
             paginationHTML += `<button class="pagination-btn active" data-page="${i}">${i}</button>`;
@@ -145,7 +142,6 @@ function renderPagination(totalArticles, currentPage) {
         }
     }
     
-    // 最后一页和省略号
     if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
             paginationHTML += `<span class="pagination-ellipsis">...</span>`;
@@ -153,19 +149,16 @@ function renderPagination(totalArticles, currentPage) {
         paginationHTML += `<button class="pagination-btn" data-page="${totalPages}">${totalPages}</button>`;
     }
     
-    // 下一页按钮
     if (currentPage < totalPages) {
         paginationHTML += `<button class="pagination-btn next-btn" data-page="${currentPage + 1}">下一页 ›</button>`;
     }
     
-    // 添加页面信息
     const startItem = (currentPage - 1) * ARTICLES_PER_PAGE + 1;
     const endItem = Math.min(currentPage * ARTICLES_PER_PAGE, totalArticles);
     paginationHTML += `<div class="pagination-info">显示 ${startItem}-${endItem} 条，共 ${totalArticles} 条</div>`;
     
     paginationContainer.innerHTML = paginationHTML;
     
-    // 添加分页按钮事件监听
     document.querySelectorAll('.pagination-btn').forEach(button => {
         button.addEventListener('click', function() {
             const page = parseInt(this.getAttribute('data-page'));
@@ -178,12 +171,10 @@ function renderPagination(totalArticles, currentPage) {
 function applyFiltersAndSearch(page = 1) {
     let filteredArticles = [...articles];
     
-    // 应用分类筛选
     if (currentFilter !== 'all') {
         filteredArticles = filteredArticles.filter(article => article.category === currentFilter);
     }
     
-    // 应用搜索
     if (currentSearch) {
         filteredArticles = filteredArticles.filter(article => 
             article.title.toLowerCase().includes(currentSearch) || 
@@ -195,37 +186,73 @@ function applyFiltersAndSearch(page = 1) {
     renderArticles(filteredArticles, page);
 }
 
-// 实用功能
-function toggleFavorite(articleId) {
+// 分享功能 - 优化移动端体验
+function shareArticle(articleId) {
     const article = articles.find(a => a.id === articleId);
-    const btn = event.target;
-    btn.classList.toggle('favorited');
-    if (btn.classList.contains('favorited')) {
-        btn.style.color = '#ffd700';
-        alert(`已收藏文章: ${article.title}`);
+    if (!article) return;
+    
+    const shareUrl = window.location.origin + article.link;
+    const shareData = {
+        title: article.title,
+        text: article.excerpt,
+        url: shareUrl
+    };
+    
+    // 如果浏览器支持原生分享，使用原生分享（安卓/iOS均支持）
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch(err => {
+                console.warn('分享失败:', err);
+                // 如果用户取消分享，不提示；如果是其他错误，提供备选方案
+                if (err.name !== 'AbortError') {
+                    fallbackCopyLink(shareUrl);
+                }
+            });
     } else {
-        btn.style.color = '';
+        // 不支持原生分享时，提供复制链接的备选方案
+        fallbackCopyLink(shareUrl);
     }
 }
 
-function shareArticle(articleId) {
-    const article = articles.find(a => a.id === articleId);
-    if (navigator.share) {
-        navigator.share({
-            title: article.title,
-            text: article.excerpt,
-            url: window.location.origin + article.link
-        });
+// 复制链接到剪贴板的备选方案
+function fallbackCopyLink(url) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                alert('链接已复制，可分享给好友！');
+            })
+            .catch(() => {
+                // 降级到传统复制方法
+                copyByTextarea(url);
+            });
     } else {
-        alert(`分享文章: ${article.title}\n链接: ${article.link}`);
+        copyByTextarea(url);
     }
+}
+
+// 传统复制方法（兼容旧浏览器）
+function copyByTextarea(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        const success = document.execCommand('copy');
+        if (success) {
+            alert('链接已复制，可分享给好友！');
+        } else {
+            alert('复制失败，请手动复制链接：' + text);
+        }
+    } catch (e) {
+        alert('复制失败，请手动复制链接：' + text);
+    }
+    document.body.removeChild(textarea);
 }
 
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
     renderArticles(articles, 1);
     
-    // 筛选功能
     document.querySelectorAll('.filter-btn').forEach(button => {
         button.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -234,13 +261,12 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
             
             currentFilter = this.getAttribute('data-filter');
-            applyFiltersAndSearch(1); // 重置到第一页
+            applyFiltersAndSearch(1);
         });
     });
 
-    // 搜索功能
     document.getElementById('search').addEventListener('input', function() {
         currentSearch = this.value.toLowerCase();
-        applyFiltersAndSearch(1); // 重置到第一页
+        applyFiltersAndSearch(1);
     });
 });
