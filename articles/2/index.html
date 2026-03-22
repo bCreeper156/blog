@@ -7,15 +7,6 @@
     <meta name="description" content="欢迎访问156博客，这里分享编程学习、技术经验和创作内容">
     <link rel="stylesheet" href="/articles/article.css">
     <script src="/js/common.js"></script>
-    <style>
-        /* 为Giscus评论区添加一些间距 */
-        #giscus {
-            margin-top: 3rem;
-            margin-bottom: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #eaeef2;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -63,30 +54,28 @@
                 </div>
             </div>
         </article>
-
-        <!-- Giscus评论区容器 -->
+        <!-- 正确的 giscus 评论区容器 -->
         <div id="giscus"></div>
+        <script src="https://giscus.app/client.js"
+                data-repo="bCreeper156/discussion.api.156blog"
+                data-repo-id="R_kgDORtg1Jg"
+                data-category="General"
+                data-category-id="DIC_kwDORtg1Js4C5AeH"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="noborder_light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>
     </main>
     
     <footer>
         <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
 
-    <!-- Giscus脚本 - 请确保参数与你仓库匹配 -->
-    <script src="https://giscus.app/client.js"
-            data-repo="bCreeper156/discussion.api.156blog"
-            data-repo-id="R_kgDORnh7hw"
-            data-category="Announcements"
-            data-category-id="DIC_kwDORnh7h84C4b6n"
-            data-mapping="pathname"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="bottom"
-            data-theme="light"
-            data-lang="zh-CN"
-            crossorigin="anonymous"
-            async>
-    </script>
 </body>
 </html>

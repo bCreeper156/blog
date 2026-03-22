@@ -262,6 +262,115 @@ main {
     margin: 1.5em 0;
 }
 
+.comment-widget {
+    margin-top: 2.5rem;
+    padding: 1.2rem;
+    border: 1px solid #e2e6ea;
+    border-radius: 10px;
+    background-color: #fafbfc;
+}
+
+.comment-widget h3 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.comment-widget form {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.comment-widget input,
+.comment-widget textarea,
+.comment-widget button {
+    font-family: inherit;
+}
+
+.comment-widget input,
+.comment-widget textarea {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 0.65rem 0.8rem;
+}
+
+.comment-widget textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.comment-widget .comment-list {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    max-height: 440px;
+    overflow-y: auto;
+}
+
+.comment-widget .comment-list li {
+    border-bottom: 1px solid #e2e6ea;
+    padding: 0.75rem 0;
+}
+
+.comment-widget .comment-list li:last-child {
+    border-bottom: none;
+}
+
+.comment-widget .comment-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #495057;
+    margin-bottom: 0.35rem;
+}
+
+.comment-widget .comment-body {
+    color: #343a40;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.comment-widget .comment-empty,
+.comment-widget .comment-error {
+    color: #6c757d;
+    font-size: 0.95rem;
+    padding: 0.75rem 0.35rem;
+}
+
+.comment-widget .comment-submit {
+    background: #11cb5f;
+    border: 0;
+    color: white;
+    padding: 0.65rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Giscus 评论区样式 */
+#comments {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e2e6ea;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: #fafbfc;
+    clear: both;
+    position: relative;
+}
+
+#comments iframe {
+    border-radius: 8px;
+    width: 100%;
+    border: none;
+}
+
+.comment-widget .comment-submit:hover {
+    background: #0fa84c;
+}
+
 .article-content code {
     background: #f0f2f5;
     padding: 0.2em 0.4em;

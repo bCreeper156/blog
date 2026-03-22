@@ -38,6 +38,7 @@
                 </div>
             </section>
             <div class="article-content">
+                <!-- 文章内容保持不变 -->
                 <section class="article-section">
                     <div class="highlight-box">
                         <p>🎉 欢迎光临！这里是Creeper苦力怕i的个人博客空间</p>
@@ -96,34 +97,33 @@
                         🏠 返回首页
                     </button>
                 </div>
-                <div id="comments" class="giscus"
-                     data-repo="bCreeper156/discussion.api.156blog"
-                     data-repo-id="R_kgDORtg1Jg"
-                     data-category="General"
-                     data-category-id="DIC_kwDORtg1Js4C5AeH"
-                     data-mapping="pathname"
-                     data-strict="0"
-                     data-reactions-enabled="1"
-                     data-emit-metadata="0"
-                     data-input-position="bottom"
-                     data-theme="noborder_light"
-                     data-lang="zh-CN">
-                </div>
-                </div>
             </div>
         </article>
 
+        <!-- 正确的 giscus 评论区容器 -->
+        <div id="giscus"></div>
+        <script src="https://giscus.app/client.js"
+                data-repo="bCreeper156/discussion.api.156blog"
+                data-repo-id="R_kgDORtg1Jg"
+                data-category="General"
+                data-category-id="DIC_kwDORtg1Js4C5AeH"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="noborder_light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>
     </main>
     
     <footer>
         <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
-    <!-- GitHub Discussion 评论（giscus）
-         配置已移动到 #comments div 中。
-         支持回复、GitHub 表情点赞、发布者删除（通过 GitHub 权限）。 -->
-    <script src="https://giscus.app/client.js"
-            crossorigin="anonymous"
-            async>
-    </script>
+
+    <!-- 正确配置 giscus：所有配置写在 script 标签的 data-* 属性上 -->
+    
 </body>
 </html>

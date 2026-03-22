@@ -101,4 +101,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.transition = 'opacity 0.4s';
         document.body.style.opacity = '1';
     }, 100);
+
+    // 评论区本地存储 + fallback
+    initCommentSection();
 });
+
+function initCommentSection() {
+    // Giscus 会自动在具有 class="giscus" 的元素中加载评论
+    // 无需额外操作
+}

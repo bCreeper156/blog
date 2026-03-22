@@ -10,8 +10,6 @@
 
 为众多想要零成本制作一个属于自己的个人博客的人（我就是）而出现。
 
-评论区使用giscus，讨论区存储仓库：[https://github.com/bCreeper156/discussion.api.156blog](https://github.com/bCreeper156/discussion.api.156blog)
-
 你可以根据自己的喜好来修改这里的任何代码。
 
 如果你不会修改，请定位至“修改指南”！
