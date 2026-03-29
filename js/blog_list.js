@@ -44,6 +44,15 @@ const articles = [
         date: "2026-03-08",
         readTime: "1分钟阅读",
         link: "/articles/5/index.html"
+    },
+    {
+        id: 6,
+        title: "6.每日碳管理（工具）",
+        excerpt: "每日碳管理工具介绍",
+        category: "工具",
+        date: "2026-03-29",
+        readTime: "1分钟阅读",
+        link: "/articles/6/index.html"
     }
 ];
 
