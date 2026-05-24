@@ -15,7 +15,7 @@
         <nav>
             <ul>
                 <li><a href="/index.html">首页</a></li>
-                <li><a href="/jump_warning.html?url=http://156pan.owo.vin">网盘</a></li>
+                <li><a href="/software.html">软件</a></li>
                 <li><a href="/blog.html">博客</a></li>
                 <li><a href="/link.html">链接</a></li>                
             </ul>
@@ -45,10 +45,12 @@
                         你是否受够了某度网盘的<strong>限速</strong>、<strong>体验差</strong>？那么这期视频教大家如何通过自建云盘摆脱这些烦恼！
                     </div>
                     <p>视频传送门：<a href="/jump_warning.html?url=https://www.bilibili.com/video/BV1rVfuBrEKA">软件测评#3——Cloudreve</a></p>
+                    
                     <h2 class="section-title">内网穿透教程</h2>
                     <blockquote>
-                        <p><strong>警告！</strong>使用24×7小时内网穿透方案<strong>容易使你的电脑寿命降低！</strong>请谨慎选择此方案！我们推荐你使用一杯奶茶的钱使用云服务器方案！</p>
+                        <p><strong>⚠️ 警告</strong>：使用24×7小时内网穿透方案<strong>容易使你的电脑寿命降低（频繁读写、持续发热）！</strong>请谨慎选择此方案！我们推荐你使用一杯奶茶的钱使用云服务器方案！</p>
                     </blockquote>
+                    
                     <h3>起步</h3>
                     <p class="article-text">
                         首先，打开<a href="/jump_warning.html?url=https://cloudreve.org" target="_blank" rel="noopener">官网</a>或<a href="/jump_warning.html?url=https://github.com/cloudreve/Cloudreve" target="_blank" rel="noopener">GitHub仓库</a>的最新版本。
@@ -66,7 +68,7 @@
 
                     <h5>2.1 如何添加隧道？</h5>
                     <p class="article-text">
-                        打开<a href="/jump_warning.html?url=https://panel.chmlfrp.net" target="_blank" rel="noopener">chmlfrp面板</a>并登录，如果你没实名认证请先实名。然后点击【<strong>隧道管理 - 隧道列表</strong>】，点击<strong>添加隧道</strong>，选择你心仪的节点（如使用chmlfrp免费域名，请选择<strong>境外节点</strong>！！！），点击继续；端口类型选择<strong>HTTP</strong>，内网端口填5212。如果你没有域名，域名类型选择<strong>免费域名</strong>，选择你喜欢的域名后缀，填写你的域名前缀，点击确定即可！
+                        打开<a href="/jump_warning.html?url=https://panel.chmlfrp.net" target="_blank" rel="noopener">chmlfrp面板</a>并登录，如果你没实名认证请先实名。然后点击【<strong>隧道管理 - 隧道列表</strong>】，点击<strong>添加隧道</strong>，选择你心仪的节点（如使用chmlfrp免费域名，<strong>请选择境外节点！！！</strong>），点击继续；端口类型选择<strong>HTTP</strong>，内网端口填5212。如果你没有域名，域名类型选择<strong>免费域名</strong>，选择你喜欢的域名后缀，填写你的域名前缀，点击确定即可！
                     </p>
 
                     <h5>2.2 如何进行内网穿透？</h5>
@@ -81,14 +83,13 @@
 
                     <h4>完成</h4>
                     <p class="article-text">
-                        接下来，访问你的域名，注册第一个账户（第一个默认管理员账户）并登录，开始你的自定义网盘之旅！
+                        接下来，访问你的域名，注册第一个账户（<strong>第一个注册的用户会自动获得管理员权限</strong>）并登录，开始你的自定义网盘之旅！
                     </p>
 
                     <h2 class="section-title">云服务器教程</h2>
 
                     <blockquote>
                         <p>这里给的示例是<a href="/jump_warning.html?url=https://rainyun.com" target="_blank" rel="noopener">雨云</a>，其他方法见<a href="/jump_warning.html?url=https://docs.cloudreve.org" target="_blank" rel="noopener">Cloudreve官方文档</a></p>
-                        <p>以下内容由AI生成，请注意辨别！</p>
                     </blockquote>
 
                     <h3>📋 准备工作</h3>
@@ -132,8 +133,8 @@ sudo systemctl start docker && sudo systemctl enable docker</code></pre>
                     <h4>方式三：手动下载二进制文件部署</h4>
                     <ol>
                         <li><strong>连接服务器</strong>。</li>
-                        <li><strong>下载最新版 Cloudreve</strong>（以 Linux amd64 为例）：
-                            <pre><code class="language-bash">mkdir -p /www/wwwroot/cloudreve && cd /www/wwwroot/cloudreve
+                        <li><strong>建议固定工作目录</strong>（例如 <code>/opt/cloudreve</code>）：
+                            <pre><code class="language-bash">mkdir -p /opt/cloudreve && cd /opt/cloudreve
 wget https://github.com/cloudreve/Cloudreve/releases/latest/download/cloudreve_linux_amd64.tar.gz
 tar -zxvf cloudreve_*.tar.gz
 chmod +x ./cloudreve</code></pre>
@@ -145,15 +146,15 @@ chmod +x ./cloudreve</code></pre>
                         <li><strong>配置 systemd 服务</strong>（后台运行）：
                             <ul>
                                 <li>创建服务文件：<code>vim /usr/lib/systemd/system/cloudreve.service</code></li>
-                                <li>写入以下内容：
+                                <li>写入以下内容（<strong>使用更健壮的重启策略</strong>）：
                                     <pre><code>[Unit]
 Description=Cloudreve
 After=network.target
 
 [Service]
-WorkingDirectory=/www/wwwroot/cloudreve
-ExecStart=/www/wwwroot/cloudreve/cloudreve
-Restart=always
+WorkingDirectory=/opt/cloudreve
+ExecStart=/opt/cloudreve/cloudreve
+Restart=on-abnormal
 RestartSec=5s
 
 [Install]
@@ -162,8 +163,11 @@ WantedBy=multi-user.target</code></pre>
                                 <li>启动服务：<code>systemctl daemon-reload && systemctl start cloudreve && systemctl enable cloudreve</code></li>
                             </ul>
                         </li>
-                        <li><strong>访问注册</strong>：现在访问 <code>http://&lt;你的服务器IP&gt;:5212</code>，第一个注册的账号即为管理员。</li>
+                        <li><strong>访问注册</strong>：现在访问 <code>http://&lt;你的服务器IP&gt;:5212</code>，<strong>第一个注册的账号即为管理员</strong>。</li>
                     </ol>
+                    <blockquote>
+                        <p>💡 <strong>关于数据库</strong>：以上方式默认使用 SQLite，适合小型或个人使用。<strong>对于生产环境或高并发场景，建议配置 MySQL 或 PostgreSQL</strong>，以获得更好的性能和稳定性。具体方法请参考<a href="/jump_warning.html?url=https://docs.cloudreve.org/" target="_blank" rel="noopener">官方文档</a>。</p>
+                    </blockquote>
 
                     <h3>🔓 第二步：放行端口并访问</h3>
                     <ul>
@@ -215,6 +219,7 @@ WantedBy=multi-user.target</code></pre>
                                         <li><strong>空间类型</strong>：公共读取</li>
                                     </ul>
                                 </li>
+                                <li><strong>提示</strong>：部分 S3 兼容存储可能需要填写 <strong>Bucket URL</strong> 字段，格式通常为 <code>https://bucket.endpoint</code>。如果遇到问题，请查阅雨云 ROS 的官方文档。</li>
                                 <li>点击“跳过”完成。</li>
                             </ul>
                         </li>
@@ -245,7 +250,7 @@ WantedBy=multi-user.target</code></pre>
 
                     <h3>✅ 完成</h3>
                     <p class="article-text">
-                        至此，你已经在雨云服务器上基于 Cloudreve V4 搭建了私有网盘。享受文件存储、分享和离线下载的乐趣吧！记得定期备份 <code>~/cloudreve/data</code>（Docker）或 Cloudreve 安装目录（手动部署）中的数据库和配置文件。
+                        至此，你已经在雨云服务器上基于 Cloudreve V4 搭建了私有网盘。享受文件存储、分享和离线下载的乐趣吧！记得定期备份 <code>/opt/cloudreve/cloudreve.db</code>（SQLite）或导出数据库（MySQL/PostgreSQL），以及配置文件。
                     </p>
                 </section>
 
@@ -259,23 +264,6 @@ WantedBy=multi-user.target</code></pre>
                 </div>
             </div>
         </article>
-        <!-- 正确的 giscus 评论区容器 -->
-        <div id="giscus"></div>
-        <script src="https://giscus.app/client.js"
-                data-repo="bCreeper156/discussion.api.156blog"
-                data-repo-id="R_kgDORtg1Jg"
-                data-category="General"
-                data-category-id="DIC_kwDORtg1Js4C5AeH"
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="top"
-                data-theme="noborder_light"
-                data-lang="zh-CN"
-                crossorigin="anonymous"
-                async>
-        </script>
     </main>
     
     <footer>

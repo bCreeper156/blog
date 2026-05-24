@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件推荐 - 156博客</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <script src="js/common.js"></script>
+    <script src="js/blog_list.js"></script>
+    <script src="js/software_list.js"></script>
+</head>
+<body>
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="/index.html">156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><a href="/software.html">软件</a></li>
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>                
+            </ul>
+        </nav>  
+    </header>
+    
+    <main class="container software-page">
+        <div class="software-panel">
+            <div class="software-header">
+                <div>
+                    <h2>软件推荐</h2>
+                    <p>Google 风格的列表体验，支持缩略图与详细信息两种视图，同时可以搜索当前页面内容。</p>
+                </div>
+                <div class="view-switch" role="group" aria-label="视图切换">
+                    <button class="view-btn active" type="button" data-view="grid">缩略图模式</button>
+                    <button class="view-btn" type="button" data-view="list">详细信息模式</button>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input id="software-search" type="search" placeholder="搜索软件名称、功能或关键词" aria-label="搜索软件">
+                </div>
+            </div>
+
+            <div class="software-list-wrapper">
+                <ul id="software-list" class="software-list"></ul>
+                <div id="software-empty" class="empty-state" hidden>
+                    <h3>未找到匹配的软件</h3>
+                    <p>请换一个关键词，或切换到另一种显示模式试试。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p><a href ="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
+    </footer>
+</body>
+</html>

@@ -160,7 +160,7 @@ main {
 }
 
 .highlight-box {
-    background: linear-gradient(135deg, #0099ff, #11cb84);
+    background: linear-gradient(135deg, #65ffff, #abebff);
     color: white;
     padding: 1.5rem;
     border-radius: 8px;
@@ -172,6 +172,7 @@ main {
     margin: 0;
     font-size: 1.2rem;
     font-weight: 500;
+    color: #0fa84c;
 }
 
 .features-grid {

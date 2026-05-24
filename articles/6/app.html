@@ -1,556 +1,720 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>每日碳足迹</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{background:#f0fdf4;color:#333}
-.page{display:none;min-height:100vh;padding-bottom:80px;transition:all 0.3s ease}
-.page.active{display:block}
-
-/* 启动页 */
-#start-page{text-align:center;background:#fff;padding:20px}
-#start-page h1{font-size:64px;color:#16a34a;margin:40px 0;font-weight:bold}
-.info-card{border:1px solid #bbf7d0;border-radius:16px;padding:24px;margin:0 10px 40px;text-align:left;background:#f0fdf4}
-.info-card h2{text-align:center;margin-bottom:20px;color:#166534;display:flex;align-items:center;justify-content:center;gap:8px}
-.info-card h2::before,
-.info-card h2::after{content:"🍃"}
-.info-card .main-text{font-size:18px;line-height:1.8;margin-bottom:20px;color:#374151}
-.info-card .sub-text{font-size:14px;color:#6b7280;line-height:1.6}
-.btn-start{background:linear-gradient(180deg,#22c55e 0%,#16a34a 100%);color:#fff;border:none;padding:16px 60px;border-radius:30px;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(22,163,74,0.3);transition:all 0.2s ease}
-.btn-start:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(22,163,74,0.4)}
-
-/* 通用头部 */
-.header{display:flex;align-items:center;background:#16a34a;color:#fff;padding:15px 20px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-.header .back{font-size:22px;cursor:pointer;padding:8px;border-radius:50%;transition:background 0.2s}
-.header .back:hover{background:rgba(255,255,255,0.2)}
-.header .title{flex:1;text-align:center;font-size:20px;font-weight:600}
-.header .home{font-size:22px;cursor:pointer;padding:8px;border-radius:50%;transition:background 0.2s}
-.header .home:hover{background:rgba(255,255,255,0.2)}
-
-/* 搜索栏 */
-.search-bar{display:flex;align-items:center;background:#f3f4f6;border-radius:24px;padding:10px 16px;margin:15px 20px;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
-.search-bar span{font-size:18px;color:#6b7280}
-.search-bar input{flex:1;border:none;background:transparent;outline:none;margin-left:8px;font-size:16px;color:#374151}
-.search-bar .search-btn{color:#16a34a;font-weight:500;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background 0.2s}
-.search-bar .search-btn:hover{background:#dcfce7}
-
-/* 计算页布局 */
-.calc-container{display:flex;gap:10px;padding:0 20px}
-.sidebar{width:90px;display:flex;flex-direction:column;gap:8px}
-.sidebar .main-tab{padding:18px 8px;border-radius:30px;text-align:center;color:#fff;font-size:18px;cursor:pointer;margin-bottom:8px;transition:all 0.2s ease;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-.sidebar .main-tab.food{background:#f97316}
-.sidebar .main-tab.travel{background:#94a3b8}
-.sidebar .main-tab.use{background:#94a3b8}
-.sidebar .main-tab:hover{transform:scale(1.05)}
-.sidebar .sub-tab{padding:10px 8px;border-radius:20px;text-align:center;font-size:16px;cursor:pointer;transition:all 0.2s ease}
-.sidebar .sub-tab.active{background:#16a34a;color:#fff;box-shadow:0 2px 4px rgba(22,163,74,0.3)}
-.sidebar .sub-tab:not(.active){color:#64748b;background:#f1f5f9}
-.sidebar .sub-tab:not(.active):hover{background:#e2e8f0}
-
-.content{flex:1}
-.category-title{font-size:18px;font-weight:600;margin-bottom:16px;padding-bottom:4px;border-bottom:3px solid #16a34a;display:inline-block;color:#166534}
-.item-list{display:flex;flex-direction:column;gap:16px}
-.item{display:flex;align-items:center;gap:12px;background:#fff;padding:12px;border-radius:12px;box-shadow:0 2px 4px rgba(0,0,0,0.05);transition:all 0.2s ease}
-.item:hover{box-shadow:0 4px 8px rgba(0,0,0,0.1)}
-.item .icon{font-size:32px;width:40px;text-align:center}
-.item .info{flex:1}
-.item .name{font-size:18px;margin-bottom:4px;font-weight:500;color:#374151}
-.item .factor{font-size:14px;color:#6b7280}
-.item input{width:100px;padding:10px;border:1px solid #e5e7eb;border-radius:12px;text-align:center;font-size:16px;outline:none;transition:border 0.2s}
-.item input:focus{border-color:#16a34a;box-shadow:0 0 0 2px rgba(22,163,74,0.2)}
-.item .unit{font-size:14px;color:#6b7280;font-weight:500}
-
-.btn-calc{position:fixed;bottom:20px;left:20px;right:20px;background:#e5e7eb;color:#9ca3af;text-align:center;padding:16px;border-radius:12px;font-size:18px;font-weight:600;transition:all 0.2s ease}
-.btn-calc.active{background:#16a34a;color:#fff;cursor:pointer;box-shadow:0 4px 12px rgba(22,163,74,0.3)}
-.btn-calc.active:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(22,163,74,0.4)}
-
-/* 结果页 */
-#result-page{text-align:center;background:#fff}
-.chart-container{position:relative;height:220px;margin:30px 0;background:#f9fafb;border-radius:16px;padding:20px}
-.chart-bar{position:absolute;bottom:0;width:80px;background:#f97316;border-radius:8px 8px 0 0;transition:height 0.5s ease}
-.chart-bar.china{left:40%;height:150px;background:#16a34a}
-.chart-bar.world{left:65%;height:100px;background:#3b82f6}
-.chart-label{position:absolute;font-size:16px;font-weight:500;color:#374151}
-.chart-label.user{left:10%;bottom:10px}
-.chart-label.china{left:38%;bottom:160px;color:#166534}
-.chart-label.world{left:63%;bottom:110px;color:#1d4ed8}
-.result-emoji{font-size:60px;margin:20px 0}
-.result-text{font-size:26px;color:#dc2626;font-weight:600;margin-bottom:30px}
-.result-details{background:#fffbeb;border-radius:16px;padding:20px;text-align:left;margin:0 20px 30px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
-.result-details p{font-size:18px;line-height:2;margin:8px 0;color:#374151}
-.result-details p::before{content:"• ";color:#f59e0b;font-weight:bold}
-.btn-group{display:flex;flex-direction:column;gap:16px;padding:0 20px}
-.btn-tip{background:#f97316;color:#fff;border:none;padding:14px;border-radius:30px;font-size:18px;cursor:pointer;font-weight:600;box-shadow:0 4px 12px rgba(249,115,22,0.3);transition:all 0.2s}
-.btn-tip:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(249,115,22,0.4)}
-.btn-reset{background:#16a34a;color:#fff;border:none;padding:14px;border-radius:30px;font-size:18px;cursor:pointer;font-weight:600;box-shadow:0 4px 12px rgba(22,163,74,0.3);transition:all 0.2s}
-.btn-reset:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(22,163,74,0.4)}
-
-/* 小贴士页 */
-#tip-page{background:#fff}
-.tip-card{background:#f0fdf4;border-radius:16px;padding:24px;margin:0 20px 40px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
-.tip-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px}
-.tip-item:last-child{margin-bottom:0}
-.tip-icon{width:36px;height:36px;border:2px solid #16a34a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#16a34a;font-weight:bold;background:#dcfce7}
-.tip-text{flex:1;font-size:18px;line-height:1.6;color:#374151}
-.btn-back{background:linear-gradient(180deg,#22c55e 0%,#16a34a 100%);color:#fff;border:none;padding:16px 60px;border-radius:30px;font-size:20px;cursor:pointer;display:block;margin:0 auto;font-weight:600;box-shadow:0 4px 12px rgba(22,163,74,0.3);transition:all 0.2s}
-.btn-back:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(22,163,74,0.4)}
-
-/* 分类内容切换 */
-.cat-content{display:none}
-.cat-content.active{display:block}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>碳足迹计算器 | 基于CEC体系</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #eef5f0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #1e3a2f;
+        }
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 32px;
+            padding: 24px 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            color: #2b6e4f;
+        }
+        .sub {
+            color: #5f8b74;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            border-left: 3px solid #7ac4a0;
+            padding-left: 14px;
+        }
+        button {
+            background: #2b6e4f;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #1f553f;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #2b6e4f;
+            color: #2b6e4f;
+        }
+        .btn-outline:hover {
+            background: #e6f4ef;
+            transform: none;
+        }
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .welcome-stats {
+            background: #e1f2ea;
+            border-radius: 24px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .calculator-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .sidebar {
+            flex: 1;
+            min-width: 180px;
+            background: white;
+            border-radius: 28px;
+            padding: 20px 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+        .sidebar-item {
+            padding: 12px 16px;
+            margin: 4px 0;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            color: #3a5e4f;
+        }
+        .sidebar-item:hover {
+            background: #eef5f0;
+        }
+        .sidebar-item.active {
+            background: #2b6e4f;
+            color: white;
+        }
+        .main-content {
+            flex: 3;
+            min-width: 260px;
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1f543f;
+            border-left: 5px solid #7ac4a0;
+            padding-left: 16px;
+        }
+        .item-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0ede6;
+        }
+        .item-name {
+            width: 110px;
+            font-weight: 500;
+        }
+        .item-factor {
+            font-size: 0.7rem;
+            color: #7d9a89;
+            width: 130px;
+        }
+        .item-input {
+            flex: 1;
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .item-input input, .item-input select {
+            padding: 8px 12px;
+            border: 1px solid #cbdcd2;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            background: white;
+            width: 110px;
+        }
+        .unit {
+            font-size: 0.75rem;
+            color: #6f8f7c;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            gap: 16px;
+        }
+        .result-card {
+            background: #e1f2ea;
+            border-radius: 28px;
+            padding: 28px;
+            text-align: center;
+        }
+        .big-number {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin: 16px 0;
+            color: #1b4e3a;
+        }
+        .comparison {
+            background: white;
+            border-radius: 24px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .comparison-chart {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: left;
+            color: #1f543f;
+        }
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .bar-label {
+            width: 90px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .bar-bg {
+            flex: 1;
+            height: 32px;
+            background: #e0ede6;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .total-fill {
+            background: #2b6e4f;
+        }
+        .china-fill {
+            background: #e6a017;
+        }
+        .world-fill {
+            background: #4593b0;
+        }
+        .bar-value {
+            width: 70px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: right;
+        }
+        @media (max-width: 600px) {
+            .bar-label { width: 75px; font-size: 0.75rem; }
+            .bar-value { width: 65px; font-size: 0.7rem; }
+        }
+        .carbon-tips {
+            background: #f9f7e8;
+            border-radius: 24px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            border-left: 6px solid #7ac4a0;
+        }
+        .carbon-tips h4 {
+            margin: 0 0 12px 0;
+            color: #1f543f;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tips-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .tips-list li {
+            margin-bottom: 12px;
+            line-height: 1.5;
+            color: #3a5e4f;
+        }
+        .footer-note {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #7e9a89;
+            margin-top: 32px;
+        }
+        .hidden {
+            display: none;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            z-index: 1000;
+            white-space: nowrap;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        .manual-copy-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .manual-copy-card {
+            background: white;
+            border-radius: 32px;
+            max-width: 90%;
+            width: 400px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+        }
+        .manual-copy-card p {
+            margin: 0 0 16px 0;
+            word-break: break-all;
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        .manual-copy-card button {
+            margin: 0 8px;
+        }
+        @media (max-width: 700px) {
+            .sidebar { min-width: 140px; }
+            .item-name { width: 85px; font-size: 0.9rem; }
+            .item-factor { width: 100px; }
+            .card { padding: 18px; }
+        }
+    </style>
 </head>
 <body>
+<div class="app-container">
+    <!-- 欢迎页 -->
+    <div id="welcomePage" class="card">
+        <h1>🌱 每日碳足迹</h1>
+        <div class="sub">基于国家自然资源部、中国信息中心《中国碳排放核算体系（CEC）》公开数据</div>
+        <div class="welcome-stats">
+            <p style="margin: 0 0 8px 0;">🌍 中国承诺2030年前碳达峰，2060年前碳中和</p>
+            <p style="margin: 0; font-size: 0.9rem;">通过记录日常消费与出行，计算你的碳足迹，一起为地球减碳</p>
+        </div>
+        <div style="text-align: center;">
+            <button id="startBtn">开始计算 →</button>
+        </div>
+        <div class="footer-note" style="margin-top: 32px;">本工具基于真实排放因子，涵盖饮食、交通、家庭能耗等场景</div>
+    </div>
 
-<!-- 启动页 -->
-<div id="start-page" class="page active">
-  <h1>每日碳足迹</h1>
-  <div class="info-card">
-    <h2>说明</h2>
-    <p class="main-text">2020年9月，中国向全世界郑重宣布——“中国二氧化碳排放力争于2030年前达到峰值，努力争取2060年前实现碳中和”。让我们一起践行低碳消费，实现“双碳”目标。</p>
-    <p class="sub-text">本程序基于个人日常生活消费、交通出行、能源使用等场景，计算出一天的碳足迹。程序中有关碳足迹的系数参考了国家自然资源部、carbonfootprint、myemissions.green 等网站。</p>
-  </div>
-  <button class="btn-start" onclick="showPage('calc-page')">开始使用</button>
+    <!-- 计算页 -->
+    <div id="calcPage" class="hidden">
+        <div class="calculator-layout">
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-item active" data-cat="drinks">🥤 饮品类</div>
+                <div class="sidebar-item" data-cat="meat">🍖 肉蛋类</div>
+                <div class="sidebar-item" data-cat="vege">🥬 蔬果类</div>
+                <div class="sidebar-item" data-cat="transport">🚗 交通出行</div>
+                <div class="sidebar-item" data-cat="energy">💡 家庭能耗</div>
+            </div>
+            <div class="main-content" id="dynamicForm">
+                <!-- 动态渲染表单 -->
+            </div>
+        </div>
+        <div class="nav-buttons" style="margin-top: 24px;">
+            <button id="backToWelcomeFromCalc" class="btn-outline" style="background: white;">← 返回欢迎页</button>
+            <button id="toResultBtn">查看总结 →</button>
+        </div>
+    </div>
+
+    <!-- 总结页 -->
+    <div id="resultPage" class="hidden">
+        <div class="card">
+            <div class="result-card">
+                <div style="font-weight: bold; font-size: 1.2rem;">您一年的碳足迹</div>
+                <div class="big-number"><span id="resultYearValue">0.00</span> <span style="font-size: 1.2rem;">吨 CO₂e</span></div>
+                <div id="resultDailyMsg" style="font-size: 0.9rem; margin-top: 6px;"></div>
+                <div class="comparison" id="resultComparison"></div>
+                <div class="comparison-chart">
+                    <div class="chart-title">📊 碳足迹对比（单位：吨 CO₂e/年）</div>
+                    <div class="bar-item">
+                        <div class="bar-label">🌟 您的碳足迹</div>
+                        <div class="bar-bg"><div class="bar-fill total-fill" id="totalBar" style="width: 0%;"></div></div>
+                        <div class="bar-value" id="totalValue">0 吨/年</div>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar-label">🇨🇳 中国平均</div>
+                        <div class="bar-bg"><div class="bar-fill china-fill" id="chinaBar" style="width: 0%;"></div></div>
+                        <div class="bar-value" id="chinaValue">7.35 吨/年</div>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar-label">🌍 世界平均</div>
+                        <div class="bar-bg"><div class="bar-fill world-fill" id="worldBar" style="width: 0%;"></div></div>
+                        <div class="bar-value" id="worldValue">4.79 吨/年</div>
+                    </div>
+                </div>
+                <!-- 减碳小贴士区域 - 全部展示 -->
+                <div class="carbon-tips">
+                    <h4>💚 减碳小贴士</h4>
+                    <ul class="tips-list" id="tipsList">
+                        <li>🥗 食：购买本地、当季食物。践行光盘行动。</li>
+                        <li>👕 穿：选择环保面料。少量衣服用手洗。尽量晾晒衣物，少用滚筒烘干。少买一件不必要的衣服。</li>
+                        <li>💧 住：生活用水循环利用。缩短淋浴时间。刷牙时关闭水龙头。使用节能电器。空调调高一度，供暖调低一度。</li>
+                        <li>🚗 行：选择购买小排量或新能源汽车。多乘坐公共交通工具，短距离骑自行车代步。</li>
+                        <li>📄 用：纸张双面打印，采用无纸化办公。减少一次性塑料袋、一次性筷子的使用。及时关闭不用的电气设备。</li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button id="recalculateBtn" class="btn-outline">重新计算</button>
+                    <button id="shareBtn">📤 分享结果</button>
+                </div>
+            </div>
+            <div class="footer-note">排放因子参考《中国碳排放核算体系（CEC）》及公开文献。基础代谢固定为2.0 kg/天。</div>
+        </div>
+    </div>
 </div>
-
-<!-- 计算页 -->
-<div id="calc-page" class="page">
-  <div class="header">
-    <div class="home" onclick="showPage('start-page')">🏠</div>
-    <div class="title">每日碳足迹</div>
-    <div></div>
-  </div>
-  <div class="search-bar">
-    <span>🔍</span>
-    <input type="text" placeholder="请输入搜索名称">
-    <span class="search-btn">搜索</span>
-  </div>
-  <div class="calc-container">
-    <div class="sidebar">
-      <div class="main-tab food active" onclick="switchMainTab('food')">食</div>
-      <div class="sub-tab active" onclick="switchSubTab('drink')">饮品类</div>
-      <div class="sub-tab" onclick="switchSubTab('meat')">肉蛋类</div>
-      <div class="sub-tab" onclick="switchSubTab('fruit')">蔬果类</div>
-      <div class="sub-tab" onclick="switchSubTab('other')">其他</div>
-      <div class="main-tab travel" onclick="switchMainTab('travel')">行</div>
-      <div class="main-tab use" onclick="switchMainTab('use')">用</div>
-    </div>
-    <div class="content">
-      <!-- 饮品类 -->
-      <div id="cat-drink" class="cat-content active">
-        <div class="category-title">饮品类</div>
-        <div class="item-list">
-          <div class="item">
-            <div class="icon">🥛</div>
-            <div class="info">
-              <div class="name">牛奶</div>
-              <div class="factor">0.18kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.18" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-          <div class="item">
-            <div class="icon">🥜</div>
-            <div class="info">
-              <div class="name">豆奶</div>
-              <div class="factor">0.08kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.08" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-          <div class="item">
-            <div class="icon">☕</div>
-            <div class="info">
-              <div class="name">热饮</div>
-              <div class="factor">0.2kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.2" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-          <div class="item">
-            <div class="icon">🍊</div>
-            <div class="info">
-              <div class="name">果汁</div>
-              <div class="factor">0.17kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.17" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-          <div class="item">
-            <div class="icon">🥤</div>
-            <div class="info">
-              <div class="name">可乐软饮</div>
-              <div class="factor">0.07kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.07" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-          <div class="item">
-            <div class="icon">🍷</div>
-            <div class="info">
-              <div class="name">果酒/啤酒</div>
-              <div class="factor">0.14kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.14" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-          <div class="item">
-            <div class="icon">🍸</div>
-            <div class="info">
-              <div class="name">烈酒</div>
-              <div class="factor">0.23kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.23" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-          <div class="item">
-            <div class="icon">💧</div>
-            <div class="info">
-              <div class="name">饮用水</div>
-              <div class="factor">0.03kg/100ml</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.03" data-unit="ml">
-            <span class="unit">ml</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 肉蛋类 -->
-      <div id="cat-meat" class="cat-content">
-        <div class="category-title">肉蛋类</div>
-        <div class="item-list">
-          <div class="item">
-            <div class="icon">🥩</div>
-            <div class="info">
-              <div class="name">牛肉</div>
-              <div class="factor">~27kg/kg</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="27" data-unit="g">
-            <span class="unit">g</span>
-          </div>
-          <div class="item">
-            <div class="icon">🍗</div>
-            <div class="info">
-              <div class="name">鸡肉</div>
-              <div class="factor">~6kg/kg</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="6" data-unit="g">
-            <span class="unit">g</span>
-          </div>
-          <div class="item">
-            <div class="icon">🥚</div>
-            <div class="info">
-              <div class="name">鸡蛋</div>
-              <div class="factor">~0.2kg/个</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.2" data-unit="个">
-            <span class="unit">个</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 蔬果类 -->
-      <div id="cat-fruit" class="cat-content">
-        <div class="category-title">蔬果类</div>
-        <div class="item-list">
-          <div class="item">
-            <div class="icon">🥦</div>
-            <div class="info">
-              <div class="name">蔬菜</div>
-              <div class="factor">~0.4kg/kg</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.4" data-unit="g">
-            <span class="unit">g</span>
-          </div>
-          <div class="item">
-            <div class="icon">🍎</div>
-            <div class="info">
-              <div class="name">水果</div>
-              <div class="factor">~0.6kg/kg</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.6" data-unit="g">
-            <span class="unit">g</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 其他 -->
-      <div id="cat-other" class="cat-content">
-        <div class="category-title">其他</div>
-        <div class="item-list">
-          <div class="item">
-            <div class="icon">🍚</div>
-            <div class="info">
-              <div class="name">米饭</div>
-              <div class="factor">~2.5kg/kg</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="2.5" data-unit="g">
-            <span class="unit">g</span>
-          </div>
-          <div class="item">
-            <div class="icon">🍜</div>
-            <div class="info">
-              <div class="name">面条</div>
-              <div class="factor">~1.8kg/kg</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="1.8" data-unit="g">
-            <span class="unit">g</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 出行类 -->
-      <div id="cat-travel" class="cat-content">
-        <div class="category-title">生活</div>
-        <div class="item-list">
-          <div class="item">
-            <div class="icon">🚗</div>
-            <div class="info">
-              <div class="name">家用燃油车</div>
-              <div class="factor">0.25kg/km</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.25" data-unit="km">
-            <span class="unit">km</span>
-          </div>
-          <div class="item">
-            <div class="icon">🚙</div>
-            <div class="info">
-              <div class="name">家用电动车</div>
-              <div class="factor">0.07kg/km</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.07" data-unit="km">
-            <span class="unit">km</span>
-          </div>
-          <div class="item">
-            <div class="icon">🛵</div>
-            <div class="info">
-              <div class="name">电瓶自行车</div>
-              <div class="factor">0.01kg/km</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.01" data-unit="km">
-            <span class="unit">km</span>
-          </div>
-          <div class="item">
-            <div class="icon">🚲</div>
-            <div class="info">
-              <div class="name">自行车</div>
-              <div class="factor">0kg/km</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0" data-unit="km">
-            <span class="unit">km</span>
-          </div>
-          <div class="item">
-            <div class="icon">👣</div>
-            <div class="info">
-              <div class="name">步行</div>
-              <div class="factor">0kg/km</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0" data-unit="km">
-            <span class="unit">km</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 日用类 -->
-      <div id="cat-use" class="cat-content">
-        <div class="category-title">生活</div>
-        <div class="item-list">
-          <div class="item">
-            <div class="icon">💡</div>
-            <div class="info">
-              <div class="name">用电</div>
-              <div class="factor">0.785kg/度</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.785" data-unit="度">
-            <span class="unit">度</span>
-          </div>
-          <div class="item">
-            <div class="icon">🚿</div>
-            <div class="info">
-              <div class="name">用水</div>
-              <div class="factor">0.91kg/吨</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.91" data-unit="吨">
-            <span class="unit">吨</span>
-          </div>
-          <div class="item">
-            <div class="icon">🍳</div>
-            <div class="info">
-              <div class="name">用气</div>
-              <div class="factor">0.19kg/立方</div>
-            </div>
-            <input type="number" class="item-input" value="0" min="0" data-factor="0.19" data-unit="立方">
-            <span class="unit">立方</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="btn-calc active" onclick="calculate()">算算我的碳足迹</div>
-</div>
-
-<!-- 结果页 -->
-<div id="result-page" class="page">
-  <div class="header">
-    <div class="back" onclick="showPage('calc-page')">←</div>
-    <div class="title">您一年的碳足迹</div>
-    <div></div>
-  </div>
-  <div class="chart-container">
-    <div class="chart-bar user-bar" id="user-bar"></div>
-    <div class="chart-bar china"></div>
-    <div class="chart-bar world"></div>
-    <div class="chart-label user">您的碳足迹<br><span id="user-year">0.0006</span>吨</div>
-    <div class="chart-label china">我国平均值<br>7.35吨</div>
-    <div class="chart-label world">世界平均值<br>4.79吨</div>
-  </div>
-  <div class="result-emoji">😊</div>
-  <div class="result-text" id="result-text">您很棒!</div>
-  <div class="result-details">
-    <p>您一天的碳足迹为 <span id="user-day">0.0000</span> 吨;</p>
-    <p>相当于每年 <span id="user-year-val">0.0006</span> 吨;</p>
-    <p>相当于需要 <span id="tree-count">0</span> 棵树的碳吸收;</p>
-    <p>我国人均碳足迹为 7.35 吨/年;</p>
-    <p>全球人均碳足迹为 4.79 吨/年;</p>
-  </div>
-  <div class="btn-group">
-    <button class="btn-tip" onclick="showPage('tip-page')">减碳小贴士</button>
-    <button class="btn-reset" onclick="resetAndBack()">重新计算</button>
-  </div>
-</div>
-
-<!-- 小贴士页 -->
-<div id="tip-page" class="page">
-  <div class="header">
-    <div class="back" onclick="showPage('result-page')">←</div>
-    <div class="title">践行低碳消费，实现“双碳”目标</div>
-    <div></div>
-  </div>
-  <div class="tip-card">
-    <div class="tip-item">
-      <div class="tip-icon">食</div>
-      <div class="tip-text">购买本地、当季食物。践行光盘行动。</div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-icon">穿</div>
-      <div class="tip-text">选择环保面料。少量衣服用手洗。尽量晾晒衣物，少用滚筒烘干。少买一件不必要的衣服。</div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-icon">住</div>
-      <div class="tip-text">生活用水循环利用。缩短淋浴时间。刷牙时关闭水龙头。使用节能电器。空调调高一度，供暖调低一度。</div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-icon">行</div>
-      <div class="tip-text">选择购买小排量或新能源汽车。多乘坐公共交通工具，短距离骑自行车代步。</div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-icon">用</div>
-      <div class="tip-text">纸张双面打印，采用无纸化办公。减少一次性塑料袋、一次性筷子的使用。及时关闭不用的电气设备。</div>
-    </div>
-  </div>
-  <button class="btn-back" onclick="showPage('result-page')">返回</button>
-</div>
+<div id="toastMsg" class="toast"></div>
 
 <script>
-let currentMain = 'food';
-let currentSub = 'drink';
+    // 排放因子
+    const factors = {
+        milk_per_ml: 1.68 / 1000,
+        soymilk_per_ml: 0.82 / 1000,
+        hotdrink: { blackCoffee: 0.25, latte: 0.55, cappuccino: 0.41, hotChocolate: 0.77 },
+        juice_per_bottle: 0.27,
+        soda_per_ml: 0.51 / 1000,
+        pork_per_g: 5.0 / 1000,
+        beef_per_g: 19.6 / 1000,
+        chicken_per_g: 4.4 / 1000,
+        egg_per_egg: 0.0625,
+        vege_per_g: 0.3 / 1000,
+        fruit_per_g: 0.4 / 1000,
+        car_km: 0.26,
+        bus_km: 0.06,
+        subway_km: 0.03,
+        flight_km: 0.20,
+        electricity_per_kwh: 0.58
+    };
+    const BASE_DAILY_KG = 2.0;
 
-function showPage(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(pageId).classList.add('active');
-}
+    // 用户数据（初始全0）
+    let userInput = {
+        milk_ml: 0, soymilk_ml: 0, hotdrink_type: 'blackCoffee', hotdrink_cups: 0,
+        juice_bottles: 0, soda_ml: 0, pork_g: 0, beef_g: 0, chicken_g: 0, egg_count: 0,
+        vege_g: 0, fruit_g: 0, car_km: 0, bus_km: 0, subway_km: 0, flight_km: 0, electricity_kwh: 0
+    };
 
-function switchMainTab(tab) {
-  currentMain = tab;
-  document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.main-tab.${tab}`).classList.add('active');
+    // 分类配置
+    const categories = {
+        drinks: { name: '饮品类', fields: [
+            { id: 'milk_ml', label: '🥛 牛奶', unit: 'ml', factorNote: '1.68 kg/升', type: 'number', step: 50, default: 0 },
+            { id: 'soymilk_ml', label: '🌱 豆奶', unit: 'ml', factorNote: '0.82 kg/升', type: 'number', step: 50, default: 0 },
+            { id: 'hotdrink', label: '☕ 热饮', unit: '杯', factorNote: '可选类型', type: 'select', options: ['blackCoffee','latte','cappuccino','hotChocolate'], optionLabels: ['黑咖啡','拿铁','卡布奇诺','热巧克力'], default: 'blackCoffee', extraNumberId: 'hotdrink_cups' },
+            { id: 'juice_bottles', label: '🧃 果汁', unit: '瓶(250ml)', factorNote: '0.27 kg/瓶', type: 'number', step: 1, default: 0 },
+            { id: 'soda_ml', label: '🥤 可乐/软饮', unit: 'ml', factorNote: '0.51 kg/升', type: 'number', step: 50, default: 0 }
+        ]},
+        meat: { name: '肉蛋类', fields: [
+            { id: 'pork_g', label: '🐷 猪肉', unit: 'g', factorNote: '5.0 kg/公斤', type: 'number', step: 20, default: 0 },
+            { id: 'beef_g', label: '🐮 牛肉', unit: 'g', factorNote: '19.6 kg/公斤', type: 'number', step: 20, default: 0 },
+            { id: 'chicken_g', label: '🐔 鸡肉', unit: 'g', factorNote: '4.4 kg/公斤', type: 'number', step: 20, default: 0 },
+            { id: 'egg_count', label: '🥚 鸡蛋', unit: '个', factorNote: '约0.0625 kg/个', type: 'number', step: 1, default: 0 }
+        ]},
+        vege: { name: '蔬果类', fields: [
+            { id: 'vege_g', label: '🥬 蔬菜', unit: 'g', factorNote: '0.3 kg/公斤', type: 'number', step: 50, default: 0 },
+            { id: 'fruit_g', label: '🍎 水果', unit: 'g', factorNote: '0.4 kg/公斤', type: 'number', step: 50, default: 0 }
+        ]},
+        transport: { name: '交通出行', fields: [
+            { id: 'car_km', label: '🚗 燃油车', unit: 'km', factorNote: '0.26 kg/km', type: 'number', step: 5, default: 0 },
+            { id: 'bus_km', label: '🚌 公交', unit: 'km', factorNote: '0.06 kg/人·km', type: 'number', step: 5, default: 0 },
+            { id: 'subway_km', label: '🚇 地铁', unit: 'km', factorNote: '0.03 kg/人·km', type: 'number', step: 5, default: 0 },
+            { id: 'flight_km', label: '✈️ 飞机短途', unit: 'km', factorNote: '0.20 kg/人·km', type: 'number', step: 100, default: 0 }
+        ]},
+        energy: { name: '家庭能耗', fields: [
+            { id: 'electricity_kwh', label: '⚡ 用电量', unit: '度/天', factorNote: '0.58 kg/kWh', type: 'number', step: 1, default: 0 }
+        ]}
+    };
 
-  document.querySelectorAll('.cat-content').forEach(c => c.classList.remove('active'));
-  if (tab === 'food') {
-    document.getElementById('cat-drink').classList.add('active');
-    currentSub = 'drink';
-    document.querySelectorAll('.sub-tab').forEach((t, i) => {
-      t.style.display = i < 4 ? 'block' : 'none';
-    });
-  } else if (tab === 'travel') {
-    document.getElementById('cat-travel').classList.add('active');
-    document.querySelectorAll('.sub-tab').forEach(t => t.style.display = 'none');
-  } else if (tab === 'use') {
-    document.getElementById('cat-use').classList.add('active');
-    document.querySelectorAll('.sub-tab').forEach(t => t.style.display = 'none');
-  }
-}
+    let currentCategory = 'drinks';
+    const welcomePage = document.getElementById('welcomePage');
+    const calcPage = document.getElementById('calcPage');
+    const resultPage = document.getElementById('resultPage');
+    const dynamicForm = document.getElementById('dynamicForm');
+    const sidebarItems = document.querySelectorAll('.sidebar-item');
+    const toastEl = document.getElementById('toastMsg');
 
-function switchSubTab(tab) {
-  currentSub = tab;
-  document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-
-  document.querySelectorAll('.cat-content').forEach(c => c.classList.remove('active'));
-  document.getElementById(`cat-${tab}`).classList.add('active');
-}
-
-// 重置并返回计算页
-function resetAndBack() {
-  document.querySelectorAll('.item-input').forEach(input => {
-    input.value = '0';
-  });
-  showPage('calc-page');
-}
-
-function calculate() {
-  let totalKg = 0;
-  document.querySelectorAll('.item-input').forEach(input => {
-    const factor = parseFloat(input.dataset.factor);
-    const value = parseFloat(input.value) || 0;
-    const unit = input.dataset.unit;
-    if (unit === 'ml' || unit === 'g') {
-      totalKg += (value / 100) * factor;
-    } else {
-      totalKg += value * factor;
+    function showToast(msg, duration = 2000) {
+        toastEl.innerText = msg;
+        toastEl.classList.add('show');
+        setTimeout(() => toastEl.classList.remove('show'), duration);
     }
-  });
-  const dayTon = totalKg / 1000;
-  const yearTon = dayTon * 365;
-  const treeCount = Math.round(yearTon / 0.01);
 
-  // 获取显示文字和表情的 DOM 元素
-  const resultTextEl = document.getElementById('result-text');
-  const resultEmojiEl = document.querySelector('#result-page .result-emoji');
+    function showManualCopyModal(text) {
+        const existing = document.querySelector('.manual-copy-modal');
+        if (existing) existing.remove();
+        const modal = document.createElement('div');
+        modal.className = 'manual-copy-modal';
+        modal.innerHTML = `
+            <div class="manual-copy-card">
+                <h3 style="margin-top:0;">📋 无法自动复制</h3>
+                <p>请手动复制下面的内容：</p>
+                <p id="manualCopyText">${escapeHtml(text)}</p>
+                <div style="display:flex; gap:12px; justify-content:center;">
+                    <button id="copyAgainBtn" class="btn-outline" style="background:white;">🔄 再次尝试复制</button>
+                    <button id="closeManualModal" style="background:#2b6e4f;">关闭</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        const close = () => modal.remove();
+        document.getElementById('closeManualModal').addEventListener('click', close);
+        document.getElementById('copyAgainBtn').addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('✅ 复制成功！');
+                close();
+            } catch (err) {
+                showToast('❌ 复制失败，请手动选择文本复制', 1500);
+            }
+        });
+    }
 
-  // 根据年碳排放量修改文字和表情
-  if (yearTon > 7.35) {
-    resultTextEl.innerHTML = '碳排放过高，请多践行低碳生活！';
-    resultEmojiEl.innerHTML = '😔';
-  } else if (yearTon > 4.79) {
-    resultTextEl.innerHTML = '碳排放偏高，继续努力！';
-    resultEmojiEl.innerHTML = '😊';
-  } else {
-    resultTextEl.innerHTML = '您很棒！';
-    resultEmojiEl.innerHTML = '😊';
-  }
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m] || m));
+    }
 
-  document.getElementById('user-day').textContent = dayTon.toFixed(4);
-  document.getElementById('user-year').textContent = yearTon.toFixed(4);
-  document.getElementById('user-year-val').textContent = yearTon.toFixed(4);
-  document.getElementById('tree-count').textContent = treeCount;
+    function resetUserInput() {
+        userInput = {
+            milk_ml: 0, soymilk_ml: 0, hotdrink_type: 'blackCoffee', hotdrink_cups: 0,
+            juice_bottles: 0, soda_ml: 0, pork_g: 0, beef_g: 0, chicken_g: 0, egg_count: 0,
+            vege_g: 0, fruit_g: 0, car_km: 0, bus_km: 0, subway_km: 0, flight_km: 0, electricity_kwh: 0
+        };
+    }
 
-  // 实时更新用户柱状图高度
-  const maxHeight = 220;
-  const userHeight = Math.min((yearTon / 7.35) * maxHeight, maxHeight);
-  const userBar = document.getElementById('user-bar');
-  userBar.style.height = userHeight + 'px';
-  userBar.style.left = '10%';
-  userBar.style.background = '#f97316';
+    function renderForm() {
+        const cat = categories[currentCategory];
+        if (!cat) return;
+        let html = `<div class="category-title">${cat.name}</div>`;
+        for (const field of cat.fields) {
+            if (field.type === 'number') {
+                let value = userInput[field.id] !== undefined ? userInput[field.id] : field.default;
+                html += `
+                    <div class="item-row">
+                        <div class="item-name">${field.label}</div>
+                        <div class="item-factor">${field.factorNote}</div>
+                        <div class="item-input">
+                            <input type="number" id="input_${field.id}" value="${value}" step="${field.step}" min="0">
+                            <span class="unit">${field.unit}</span>
+                        </div>
+                    </div>
+                `;
+            } else if (field.type === 'select') {
+                let selectedVal = userInput[field.id] || field.default;
+                let selectHtml = `<select id="input_${field.id}">`;
+                for (let i=0; i<field.options.length; i++) {
+                    selectHtml += `<option value="${field.options[i]}" ${selectedVal === field.options[i] ? 'selected' : ''}>${field.optionLabels[i]}</option>`;
+                }
+                selectHtml += `</select>`;
+                let cupsVal = userInput[field.extraNumberId] !== undefined ? userInput[field.extraNumberId] : 0;
+                html += `
+                    <div class="item-row">
+                        <div class="item-name">${field.label}</div>
+                        <div class="item-factor">${field.factorNote}</div>
+                        <div class="item-input">
+                            ${selectHtml}
+                            <input type="number" id="input_${field.extraNumberId}" value="${cupsVal}" step="1" min="0" style="width:90px;">
+                            <span class="unit">${field.unit}</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        dynamicForm.innerHTML = html;
 
-  showPage('result-page');
-}
+        for (const field of cat.fields) {
+            if (field.type === 'number') {
+                const inputEl = document.getElementById(`input_${field.id}`);
+                if (inputEl) {
+                    inputEl.addEventListener('input', (e) => {
+                        userInput[field.id] = parseFloat(e.target.value) || 0;
+                    });
+                }
+            } else if (field.type === 'select') {
+                const selectEl = document.getElementById(`input_${field.id}`);
+                const cupsEl = document.getElementById(`input_${field.extraNumberId}`);
+                if (selectEl) {
+                    selectEl.addEventListener('change', (e) => {
+                        userInput[field.id] = e.target.value;
+                    });
+                }
+                if (cupsEl) {
+                    cupsEl.addEventListener('input', (e) => {
+                        userInput[field.extraNumberId] = parseFloat(e.target.value) || 0;
+                    });
+                }
+            }
+        }
+    }
 
-// 初始化
-switchMainTab('food');
+    function switchCategory(catId) {
+        currentCategory = catId;
+        sidebarItems.forEach(item => {
+            if (item.getAttribute('data-cat') === catId) item.classList.add('active');
+            else item.classList.remove('active');
+        });
+        renderForm();
+    }
+
+    function calculateDailyTotal() {
+        let total = BASE_DAILY_KG;
+        total += (userInput.milk_ml || 0) * factors.milk_per_ml;
+        total += (userInput.soymilk_ml || 0) * factors.soymilk_per_ml;
+        const hotType = userInput.hotdrink_type || 'blackCoffee';
+        const hotCups = userInput.hotdrink_cups || 0;
+        total += hotCups * (factors.hotdrink[hotType] || 0.25);
+        total += (userInput.juice_bottles || 0) * factors.juice_per_bottle;
+        total += (userInput.soda_ml || 0) * factors.soda_per_ml;
+        total += (userInput.pork_g || 0) * factors.pork_per_g;
+        total += (userInput.beef_g || 0) * factors.beef_per_g;
+        total += (userInput.chicken_g || 0) * factors.chicken_per_g;
+        total += (userInput.egg_count || 0) * factors.egg_per_egg;
+        total += (userInput.vege_g || 0) * factors.vege_per_g;
+        total += (userInput.fruit_g || 0) * factors.fruit_per_g;
+        total += (userInput.car_km || 0) * factors.car_km;
+        total += (userInput.bus_km || 0) * factors.bus_km;
+        total += (userInput.subway_km || 0) * factors.subway_km;
+        total += (userInput.flight_km || 0) * factors.flight_km;
+        total += (userInput.electricity_kwh || 0) * factors.electricity_per_kwh;
+        return total;
+    }
+
+    function showResult() {
+        const dailyKg = calculateDailyTotal();
+        const yearlyTonnes = (dailyKg * 365) / 1000;
+        const yearlyRounded = Math.round(yearlyTonnes * 100) / 100;
+        document.getElementById('resultYearValue').innerText = yearlyRounded.toFixed(2);
+        document.getElementById('resultDailyMsg').innerHTML = `📅 每日碳足迹：${dailyKg.toFixed(1)} 千克 CO₂e（包含基础代谢 2.0kg）`;
+        const chinaAvg = 7.35, worldAvg = 4.79;
+        let compareHtml = `🇨🇳 中国平均 ${chinaAvg} 吨/年 &nbsp; 🌍 世界平均 ${worldAvg} 吨/年<br>`;
+        if (yearlyRounded < worldAvg) compareHtml += `✨ 优于世界平均水平！非常环保 ✨`;
+        else if (yearlyRounded < chinaAvg) compareHtml += `📉 低于中国平均水平，继续保持 📉`;
+        else compareHtml += `⚠️ 高于中国平均水平，可以尝试更多低碳行动 ⚠️`;
+        document.getElementById('resultComparison').innerHTML = compareHtml;
+        const maxValue = Math.max(yearlyRounded, chinaAvg, worldAvg);
+        document.getElementById('totalBar').style.width = `${(yearlyRounded / maxValue) * 100}%`;
+        document.getElementById('chinaBar').style.width = `${(chinaAvg / maxValue) * 100}%`;
+        document.getElementById('worldBar').style.width = `${(worldAvg / maxValue) * 100}%`;
+        document.getElementById('totalValue').innerHTML = `${yearlyRounded.toFixed(2)} 吨/年`;
+        document.getElementById('chinaValue').innerHTML = `${chinaAvg} 吨/年`;
+        document.getElementById('worldValue').innerHTML = `${worldAvg} 吨/年`;
+        // 小贴士已写在HTML中，无需动态修改
+        welcomePage.classList.add('hidden');
+        calcPage.classList.add('hidden');
+        resultPage.classList.remove('hidden');
+    }
+
+    function showWelcome() {
+        welcomePage.classList.remove('hidden');
+        calcPage.classList.add('hidden');
+        resultPage.classList.add('hidden');
+    }
+
+    function showCalculator() {
+        resetUserInput();
+        switchCategory(currentCategory);
+        welcomePage.classList.add('hidden');
+        calcPage.classList.remove('hidden');
+        resultPage.classList.add('hidden');
+    }
+
+    function init() {
+        document.getElementById('startBtn').addEventListener('click', showCalculator);
+        document.getElementById('backToWelcomeFromCalc').addEventListener('click', showWelcome);
+        document.getElementById('toResultBtn').addEventListener('click', showResult);
+        document.getElementById('recalculateBtn').addEventListener('click', () => {
+            resetUserInput();
+            switchCategory(currentCategory);
+            welcomePage.classList.add('hidden');
+            calcPage.classList.remove('hidden');
+            resultPage.classList.add('hidden');
+        });
+        const shareBtn = document.getElementById('shareBtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async () => {
+                const yearly = document.getElementById('resultYearValue').innerText;
+                const shareText = `🌱 我的年碳足迹为 ${yearly} 吨 CO₂e，一起来计算你的碳足迹吧！\nhttps://156blog.netlify.app/articles/6/app.html`;
+                try {
+                    await navigator.clipboard.writeText(shareText);
+                    showToast('✅ 分享内容已复制到剪贴板！');
+                } catch (err) {
+                    showManualCopyModal(shareText);
+                }
+            });
+        }
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const cat = item.getAttribute('data-cat');
+                if (cat) switchCategory(cat);
+            });
+        });
+        resetUserInput();
+        switchCategory('drinks');
+        welcomePage.classList.remove('hidden');
+        calcPage.classList.add('hidden');
+        resultPage.classList.add('hidden');
+    }
+    init();
 </script>
 </body>
 </html>
