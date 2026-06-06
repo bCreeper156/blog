@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>碳足迹计算器 | 基于CEC体系</title>
+    <title>每日碳管理 - Web版</title>
     <style>
         * {
             box-sizing: border-box;
@@ -20,6 +20,24 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+        }
+        /* 欢迎页垂直居中模式 */
+        body.welcome-mode {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        body.welcome-mode .app-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0;
+            padding: 0;
+        }
+        @media (min-width: 1024px) {
+            body.welcome-mode .app-container {
+                max-width: 700px;
+            }
         }
         .card {
             background: white;
@@ -116,13 +134,102 @@
             padding: 24px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
+        /* 移动端顶部选项卡样式 - 容器无圆角，按钮有圆角 */
+        @media (max-width: 768px) {
+            .calculator-layout {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .sidebar {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background: white;
+                border-radius: 0;
+                padding: 12px 16px;
+                margin: -20px -20px 0 -20px;
+                width: calc(100% + 40px);
+                overflow-x: auto;
+                white-space: nowrap;
+                display: flex;
+                gap: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                scrollbar-width: thin;
+            }
+            .sidebar-item {
+                display: inline-block;
+                padding: 8px 16px;
+                margin: 0;
+                border-radius: 40px;
+                background: #f0f5f2;
+                color: #2b6e4f;
+                white-space: nowrap;
+            }
+            .sidebar-item.active {
+                background: #2b6e4f;
+                color: white;
+            }
+            .main-content {
+                border-radius: 28px;
+                margin-top: 8px;
+            }
+        }
         .category-title {
             font-size: 1.6rem;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             color: #1f543f;
             border-left: 5px solid #7ac4a0;
             padding-left: 16px;
+        }
+        .search-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #f9fefb;
+            border: 1px solid #cbdcd2;
+            border-radius: 40px;
+            padding: 0 12px;
+            transition: 0.2s;
+        }
+        .search-input-wrapper:focus-within {
+            border-color: #2b6e4f;
+            box-shadow: 0 0 0 2px rgba(43,110,79,0.1);
+        }
+        .search-icon {
+            font-size: 1.1rem;
+            margin-right: 8px;
+            color: #7d9a89;
+        }
+        .search-input-wrapper input {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            background: transparent;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .search-area button {
+            background: #2b6e4f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .search-area .clear-btn {
+            background: #e0ede6;
+            color: #2b6e4f;
         }
         .item-row {
             display: flex;
@@ -134,13 +241,13 @@
             border-bottom: 1px solid #e0ede6;
         }
         .item-name {
-            width: 110px;
+            width: 120px;
             font-weight: 500;
         }
         .item-factor {
             font-size: 0.7rem;
             color: #7d9a89;
-            width: 130px;
+            width: 120px;
         }
         .item-input {
             flex: 1;
@@ -150,7 +257,7 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-        .item-input input, .item-input select {
+        .item-input input {
             padding: 8px 12px;
             border: 1px solid #cbdcd2;
             border-radius: 40px;
@@ -161,6 +268,12 @@
         .unit {
             font-size: 0.75rem;
             color: #6f8f7c;
+        }
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: #8aa99a;
+            font-style: italic;
         }
         .nav-buttons {
             display: flex;
@@ -260,9 +373,6 @@
             margin: 0 0 12px 0;
             color: #1f543f;
             font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         .tips-list {
             margin: 0;
@@ -271,7 +381,6 @@
         .tips-list li {
             margin-bottom: 12px;
             line-height: 1.5;
-            color: #3a5e4f;
         }
         .footer-note {
             font-size: 0.7rem;
@@ -293,7 +402,7 @@
             border-radius: 40px;
             font-size: 0.9rem;
             opacity: 0;
-            transition: opacity 0.2s, transform 0.2s;
+            transition: 0.2s;
             pointer-events: none;
             z-index: 1000;
             white-space: nowrap;
@@ -301,6 +410,77 @@
         .toast.show {
             opacity: 1;
             transform: translateX(-50%) scale(1);
+        }
+        /* iOS风格自定义确认弹窗 */
+        .ios-confirm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(2px);
+        }
+        .ios-confirm-dialog {
+            width: 270px;
+            background: rgba(255,255,255,0.98);
+            border-radius: 14px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.2s ease;
+        }
+        .ios-confirm-title {
+            font-weight: 600;
+            font-size: 17px;
+            padding: 20px 16px 8px 16px;
+            color: #000;
+        }
+        .ios-confirm-message {
+            font-size: 13px;
+            padding: 0 16px 20px 16px;
+            color: #555;
+            line-height: 1.4;
+        }
+        .ios-confirm-buttons {
+            display: flex;
+            border-top: 0.5px solid #dbdbdb;
+        }
+        .ios-confirm-buttons button {
+            flex: 1;
+            background: white;
+            border: none;
+            padding: 11px 0;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+            border-radius: 0;
+        }
+        .ios-confirm-buttons button:active {
+            background: #e5e5e5;
+        }
+        .ios-confirm-buttons .cancel-btn {
+            color: #007aff;
+            border-right: 0.5px solid #dbdbdb;
+        }
+        .ios-confirm-buttons .confirm-btn {
+            color: #007aff;
+            font-weight: 600;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
         .manual-copy-modal {
             position: fixed;
@@ -321,7 +501,7 @@
             width: 400px;
             padding: 24px;
             text-align: center;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.2s ease;
         }
         .manual-copy-card p {
             margin: 0 0 16px 0;
@@ -332,14 +512,12 @@
             font-size: 0.85rem;
             text-align: left;
         }
-        .manual-copy-card button {
-            margin: 0 8px;
-        }
         @media (max-width: 700px) {
-            .sidebar { min-width: 140px; }
-            .item-name { width: 85px; font-size: 0.9rem; }
+            .item-name { width: 100px; font-size: 0.9rem; }
             .item-factor { width: 100px; }
             .card { padding: 18px; }
+            .search-area { gap: 8px; }
+            .search-area button { padding: 8px 16px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -348,7 +526,7 @@
     <!-- 欢迎页 -->
     <div id="welcomePage" class="card">
         <h1>🌱 每日碳足迹</h1>
-        <div class="sub">基于国家自然资源部、中国信息中心《中国碳排放核算体系（CEC）》公开数据</div>
+        <div class="sub">基于国家自然资源部、中国信息中心《中国碳排放核算体系（CEC）》公开数据 | 因子已根据最新科学研究校正</div>
         <div class="welcome-stats">
             <p style="margin: 0 0 8px 0;">🌍 中国承诺2030年前碳达峰，2060年前碳中和</p>
             <p style="margin: 0; font-size: 0.9rem;">通过记录日常消费与出行，计算你的碳足迹，一起为地球减碳</p>
@@ -365,7 +543,7 @@
             <div class="sidebar" id="sidebar">
                 <div class="sidebar-item active" data-cat="drinks">🥤 饮品类</div>
                 <div class="sidebar-item" data-cat="meat">🍖 肉蛋类</div>
-                <div class="sidebar-item" data-cat="vege">🥬 蔬果类</div>
+                <div class="sidebar-item" data-cat="vegetables">🥬 蔬果类</div>
                 <div class="sidebar-item" data-cat="transport">🚗 交通出行</div>
                 <div class="sidebar-item" data-cat="energy">💡 家庭能耗</div>
             </div>
@@ -373,9 +551,9 @@
                 <!-- 动态渲染表单 -->
             </div>
         </div>
-        <div class="nav-buttons" style="margin-top: 24px;">
+        <div class="nav-buttons">
             <button id="backToWelcomeFromCalc" class="btn-outline" style="background: white;">← 返回欢迎页</button>
-            <button id="toResultBtn">查看总结 →</button>
+            <button id="toResultBtn">查看结果</button>
         </div>
     </div>
 
@@ -391,24 +569,23 @@
                     <div class="chart-title">📊 碳足迹对比（单位：吨 CO₂e/年）</div>
                     <div class="bar-item">
                         <div class="bar-label">🌟 您的碳足迹</div>
-                        <div class="bar-bg"><div class="bar-fill total-fill" id="totalBar" style="width: 0%;"></div></div>
-                        <div class="bar-value" id="totalValue">0 吨/年</div>
+                        <div class="bar-bg"><div class="bar-fill total-fill" id="totalBar"></div></div>
+                        <div class="bar-value" id="totalValue"></div>
                     </div>
                     <div class="bar-item">
                         <div class="bar-label">🇨🇳 中国平均</div>
-                        <div class="bar-bg"><div class="bar-fill china-fill" id="chinaBar" style="width: 0%;"></div></div>
+                        <div class="bar-bg"><div class="bar-fill china-fill" id="chinaBar"></div></div>
                         <div class="bar-value" id="chinaValue">7.35 吨/年</div>
                     </div>
                     <div class="bar-item">
                         <div class="bar-label">🌍 世界平均</div>
-                        <div class="bar-bg"><div class="bar-fill world-fill" id="worldBar" style="width: 0%;"></div></div>
+                        <div class="bar-bg"><div class="bar-fill world-fill" id="worldBar"></div></div>
                         <div class="bar-value" id="worldValue">4.79 吨/年</div>
                     </div>
                 </div>
-                <!-- 减碳小贴士区域 - 全部展示 -->
                 <div class="carbon-tips">
                     <h4>💚 减碳小贴士</h4>
-                    <ul class="tips-list" id="tipsList">
+                    <ul class="tips-list">
                         <li>🥗 食：购买本地、当季食物。践行光盘行动。</li>
                         <li>👕 穿：选择环保面料。少量衣服用手洗。尽量晾晒衣物，少用滚筒烘干。少买一件不必要的衣服。</li>
                         <li>💧 住：生活用水循环利用。缩短淋浴时间。刷牙时关闭水龙头。使用节能电器。空调调高一度，供暖调低一度。</li>
@@ -421,72 +598,107 @@
                     <button id="shareBtn">📤 分享结果</button>
                 </div>
             </div>
-            <div class="footer-note">排放因子参考《中国碳排放核算体系（CEC）》及公开文献。基础代谢固定为2.0 kg/天。</div>
+            <div class="footer-note">排放因子参考《中国碳排放核算体系（CEC）》及公开文献。基础代谢固定为2.0 kg/天。部分因子为全球估算值，仅供参考。</div>
         </div>
     </div>
 </div>
 <div id="toastMsg" class="toast"></div>
 
 <script>
-    // 排放因子
+    // 排放因子（已根据最新研究校正）
     const factors = {
-        milk_per_ml: 1.68 / 1000,
-        soymilk_per_ml: 0.82 / 1000,
-        hotdrink: { blackCoffee: 0.25, latte: 0.55, cappuccino: 0.41, hotChocolate: 0.77 },
-        juice_per_bottle: 0.27,
-        soda_per_ml: 0.51 / 1000,
+        // 饮品类 (单位: kg CO₂e per 输入单位，注意换算)
+        milk_per_ml: 1.68 / 1000,          // 1.68 kg/L -> per ml
+        soymilk_per_ml: 1.0 / 1000,        // 更新为 1.0 kg/L
+        hotdrink_per_cup: 0.25,            // 更新为 0.25 kg/杯 (250ml黑咖啡)
+        juice_per_bottle: 0.27,            // 0.27 kg/瓶(250ml)
+        cola_per_ml: 0.51 / 1000,          // 0.51 kg/L
+        fruitBeer_per_ml: 0.7 / 1000,      // 更新为 0.7 kg/L
+        liquor_per_ml: 1.0 / 1000,         // 更新为 1.0 kg/L
+        drinkingWater_per_ml: 0.03 / 1000, // 0.03 kg/L (最低估算)
+        // 肉蛋类 (单位: kg CO₂e per gram)
         pork_per_g: 5.0 / 1000,
         beef_per_g: 19.6 / 1000,
         chicken_per_g: 4.4 / 1000,
-        egg_per_egg: 0.0625,
+        egg_per_egg: 0.0625,               // 每个鸡蛋约50g, 1.25 kg/kg
+        // 蔬果类
         vege_per_g: 0.3 / 1000,
         fruit_per_g: 0.4 / 1000,
-        car_km: 0.26,
-        bus_km: 0.06,
-        subway_km: 0.03,
-        flight_km: 0.20,
-        electricity_per_kwh: 0.58
+        // 交通出行 (kg CO₂e per km)
+        car_fuel: 0.25,
+        car_ev: 0.19,                      // 更新为 0.19 kg/km
+        ebike: 0.045,                      // 更新为 0.045 kg/km
+        bicycle: 0,
+        walk: 0,
+        // 家庭能耗
+        electricity_per_kwh: 0.5306,       // 更新为 0.5306 kg/kWh
+        water_per_ton: 0.38,               // 更新为 0.38 kg/吨
+        gas_per_m3: 1.885                  // 更新为 1.885 kg/m³
     };
     const BASE_DAILY_KG = 2.0;
 
-    // 用户数据（初始全0）
     let userInput = {
-        milk_ml: 0, soymilk_ml: 0, hotdrink_type: 'blackCoffee', hotdrink_cups: 0,
-        juice_bottles: 0, soda_ml: 0, pork_g: 0, beef_g: 0, chicken_g: 0, egg_count: 0,
-        vege_g: 0, fruit_g: 0, car_km: 0, bus_km: 0, subway_km: 0, flight_km: 0, electricity_kwh: 0
+        milk_ml: 0, soymilk_ml: 0, hotdrink_cups: 0, juice_bottles: 0, cola_ml: 0, fruitBeer_ml: 0, liquor_ml: 0, drinkingWater_ml: 0,
+        pork_g: 0, beef_g: 0, chicken_g: 0, egg_count: 0,
+        vege_g: 0, fruit_g: 0,
+        car_fuel_km: 0, car_ev_km: 0, ebike_km: 0, bicycle_km: 0, walk_km: 0,
+        electricity_kwh: 0, water_ton: 0, gas_m3: 0
     };
 
-    // 分类配置
     const categories = {
-        drinks: { name: '饮品类', fields: [
-            { id: 'milk_ml', label: '🥛 牛奶', unit: 'ml', factorNote: '1.68 kg/升', type: 'number', step: 50, default: 0 },
-            { id: 'soymilk_ml', label: '🌱 豆奶', unit: 'ml', factorNote: '0.82 kg/升', type: 'number', step: 50, default: 0 },
-            { id: 'hotdrink', label: '☕ 热饮', unit: '杯', factorNote: '可选类型', type: 'select', options: ['blackCoffee','latte','cappuccino','hotChocolate'], optionLabels: ['黑咖啡','拿铁','卡布奇诺','热巧克力'], default: 'blackCoffee', extraNumberId: 'hotdrink_cups' },
-            { id: 'juice_bottles', label: '🧃 果汁', unit: '瓶(250ml)', factorNote: '0.27 kg/瓶', type: 'number', step: 1, default: 0 },
-            { id: 'soda_ml', label: '🥤 可乐/软饮', unit: 'ml', factorNote: '0.51 kg/升', type: 'number', step: 50, default: 0 }
-        ]},
-        meat: { name: '肉蛋类', fields: [
-            { id: 'pork_g', label: '🐷 猪肉', unit: 'g', factorNote: '5.0 kg/公斤', type: 'number', step: 20, default: 0 },
-            { id: 'beef_g', label: '🐮 牛肉', unit: 'g', factorNote: '19.6 kg/公斤', type: 'number', step: 20, default: 0 },
-            { id: 'chicken_g', label: '🐔 鸡肉', unit: 'g', factorNote: '4.4 kg/公斤', type: 'number', step: 20, default: 0 },
-            { id: 'egg_count', label: '🥚 鸡蛋', unit: '个', factorNote: '约0.0625 kg/个', type: 'number', step: 1, default: 0 }
-        ]},
-        vege: { name: '蔬果类', fields: [
-            { id: 'vege_g', label: '🥬 蔬菜', unit: 'g', factorNote: '0.3 kg/公斤', type: 'number', step: 50, default: 0 },
-            { id: 'fruit_g', label: '🍎 水果', unit: 'g', factorNote: '0.4 kg/公斤', type: 'number', step: 50, default: 0 }
-        ]},
-        transport: { name: '交通出行', fields: [
-            { id: 'car_km', label: '🚗 燃油车', unit: 'km', factorNote: '0.26 kg/km', type: 'number', step: 5, default: 0 },
-            { id: 'bus_km', label: '🚌 公交', unit: 'km', factorNote: '0.06 kg/人·km', type: 'number', step: 5, default: 0 },
-            { id: 'subway_km', label: '🚇 地铁', unit: 'km', factorNote: '0.03 kg/人·km', type: 'number', step: 5, default: 0 },
-            { id: 'flight_km', label: '✈️ 飞机短途', unit: 'km', factorNote: '0.20 kg/人·km', type: 'number', step: 100, default: 0 }
-        ]},
-        energy: { name: '家庭能耗', fields: [
-            { id: 'electricity_kwh', label: '⚡ 用电量', unit: '度/天', factorNote: '0.58 kg/kWh', type: 'number', step: 1, default: 0 }
-        ]}
+        drinks: {
+            name: '饮品类',
+            fields: [
+                { id: 'milk_ml', label: '🥛 牛奶', unit: 'ml', factorNote: '1.68 kg/升', step: 50 },
+                { id: 'soymilk_ml', label: '🌱 豆奶', unit: 'ml', factorNote: '1.00 kg/升', step: 50 },
+                { id: 'hotdrink_cups', label: '☕ 热饮', unit: '杯', factorNote: '0.25 kg/杯', step: 1 },
+                { id: 'juice_bottles', label: '🧃 果汁', unit: '瓶(250ml)', factorNote: '0.27 kg/瓶', step: 1 },
+                { id: 'cola_ml', label: '🥤 可乐/软饮', unit: 'ml', factorNote: '0.51 kg/升', step: 50 },
+                { id: 'fruitBeer_ml', label: '🍺 果酒/啤酒', unit: 'ml', factorNote: '0.70 kg/升', step: 50 },
+                { id: 'liquor_ml', label: '🍸 烈酒', unit: 'ml', factorNote: '1.00 kg/升', step: 50 },
+                { id: 'drinkingWater_ml', label: '💧 饮用水', unit: 'ml', factorNote: '0.03 kg/升(最低估算)', step: 50 }
+            ]
+        },
+        meat: {
+            name: '肉蛋类',
+            fields: [
+                { id: 'pork_g', label: '🐷 猪肉', unit: 'g', factorNote: '5.0 kg/kg', step: 20 },
+                { id: 'beef_g', label: '🐮 牛肉', unit: 'g', factorNote: '19.6 kg/kg', step: 20 },
+                { id: 'chicken_g', label: '🐔 鸡肉', unit: 'g', factorNote: '4.4 kg/kg', step: 20 },
+                { id: 'egg_count', label: '🥚 鸡蛋', unit: '个', factorNote: '0.0625 kg/个', step: 1 }
+            ]
+        },
+        vegetables: {
+            name: '蔬果类',
+            fields: [
+                { id: 'vege_g', label: '🥬 蔬菜', unit: 'g', factorNote: '0.3 kg/kg', step: 50 },
+                { id: 'fruit_g', label: '🍎 水果', unit: 'g', factorNote: '0.4 kg/kg', step: 50 }
+            ]
+        },
+        transport: {
+            name: '交通出行',
+            fields: [
+                { id: 'car_fuel_km', label: '🚗 家用燃油车', unit: 'km', factorNote: '0.25 kg/km', step: 5 },
+                { id: 'car_ev_km', label: '🔋 家用电动车', unit: 'km', factorNote: '0.19 kg/km', step: 5 },
+                { id: 'ebike_km', label: '🛵 电瓶自行车', unit: 'km', factorNote: '0.045 kg/km', step: 5 },
+                { id: 'bicycle_km', label: '🚲 自行车', unit: 'km', factorNote: '0 kg/km', step: 5 },
+                { id: 'walk_km', label: '🚶 步行', unit: 'km', factorNote: '0 kg/km', step: 5 }
+            ]
+        },
+        energy: {
+            name: '家庭能耗',
+            fields: [
+                { id: 'electricity_kwh', label: '⚡ 用电量', unit: '度', factorNote: '0.5306 kg/度', step: 1 },
+                { id: 'water_ton', label: '💧 用水量', unit: '吨', factorNote: '0.38 kg/吨', step: 0.5 },
+                { id: 'gas_m3', label: '🔥 天然气', unit: '立方米', factorNote: '1.885 kg/立方米', step: 0.5 }
+            ]
+        }
     };
 
     let currentCategory = 'drinks';
+    let currentSearchKeyword = '';
+    let tempSearchKeyword = '';
+
     const welcomePage = document.getElementById('welcomePage');
     const calcPage = document.getElementById('calcPage');
     const resultPage = document.getElementById('resultPage');
@@ -500,6 +712,44 @@
         setTimeout(() => toastEl.classList.remove('show'), duration);
     }
 
+    function showConfirm(title, message, onConfirm, onCancel) {
+        const modalDiv = document.createElement('div');
+        modalDiv.className = 'ios-confirm';
+        modalDiv.innerHTML = `
+            <div class="ios-confirm-dialog">
+                <div class="ios-confirm-title">${escapeHtml(title)}</div>
+                <div class="ios-confirm-message">${escapeHtml(message)}</div>
+                <div class="ios-confirm-buttons">
+                    <button class="cancel-btn">取消</button>
+                    <button class="confirm-btn">确定</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modalDiv);
+        const cancelBtn = modalDiv.querySelector('.cancel-btn');
+        const confirmBtn = modalDiv.querySelector('.confirm-btn');
+        const removeModal = () => modalDiv.remove();
+        cancelBtn.addEventListener('click', () => {
+            removeModal();
+            if (onCancel) onCancel();
+        });
+        confirmBtn.addEventListener('click', () => {
+            removeModal();
+            if (onConfirm) onConfirm();
+        });
+        modalDiv.addEventListener('click', (e) => {
+            if (e.target === modalDiv) {
+                removeModal();
+                if (onCancel) onCancel();
+            }
+        });
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m] || m));
+    }
+
     function showManualCopyModal(text) {
         const existing = document.querySelector('.manual-copy-modal');
         if (existing) existing.remove();
@@ -511,8 +761,8 @@
                 <p>请手动复制下面的内容：</p>
                 <p id="manualCopyText">${escapeHtml(text)}</p>
                 <div style="display:flex; gap:12px; justify-content:center;">
-                    <button id="copyAgainBtn" class="btn-outline" style="background:white;">🔄 再次尝试复制</button>
-                    <button id="closeManualModal" style="background:#2b6e4f;">关闭</button>
+                    <button id="copyAgainBtn" class="btn-outline">🔄 再次尝试复制</button>
+                    <button id="closeManualModal">关闭</button>
                 </div>
             </div>
         `;
@@ -530,25 +780,58 @@
         });
     }
 
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m] || m));
-    }
-
     function resetUserInput() {
         userInput = {
-            milk_ml: 0, soymilk_ml: 0, hotdrink_type: 'blackCoffee', hotdrink_cups: 0,
-            juice_bottles: 0, soda_ml: 0, pork_g: 0, beef_g: 0, chicken_g: 0, egg_count: 0,
-            vege_g: 0, fruit_g: 0, car_km: 0, bus_km: 0, subway_km: 0, flight_km: 0, electricity_kwh: 0
+            milk_ml: 0, soymilk_ml: 0, hotdrink_cups: 0, juice_bottles: 0, cola_ml: 0, fruitBeer_ml: 0, liquor_ml: 0, drinkingWater_ml: 0,
+            pork_g: 0, beef_g: 0, chicken_g: 0, egg_count: 0,
+            vege_g: 0, fruit_g: 0,
+            car_fuel_km: 0, car_ev_km: 0, ebike_km: 0, bicycle_km: 0, walk_km: 0,
+            electricity_kwh: 0, water_ton: 0, gas_m3: 0
         };
+    }
+
+    function hasUserInput() {
+        for (let key in userInput) {
+            if (typeof userInput[key] === 'number' && userInput[key] !== 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function applySearchAndRender() {
+        currentSearchKeyword = tempSearchKeyword;
+        renderForm();
+    }
+
+    function clearSearch() {
+        tempSearchKeyword = '';
+        currentSearchKeyword = '';
+        renderForm();
     }
 
     function renderForm() {
         const cat = categories[currentCategory];
         if (!cat) return;
+        let filteredFields = cat.fields;
+        if (currentSearchKeyword.trim() !== '') {
+            const kw = currentSearchKeyword.trim().toLowerCase();
+            filteredFields = cat.fields.filter(field => field.label.toLowerCase().includes(kw));
+        }
         let html = `<div class="category-title">${cat.name}</div>`;
-        for (const field of cat.fields) {
-            if (field.type === 'number') {
-                let value = userInput[field.id] !== undefined ? userInput[field.id] : field.default;
+        html += `<div class="search-area">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="searchInput" placeholder="搜索此分类下的项目..." value="${escapeHtml(tempSearchKeyword)}">
+                    </div>
+                    <button id="searchBtn">搜索</button>
+                    <button id="clearSearchBtn" class="clear-btn">清空</button>
+                </div>`;
+        if (filteredFields.length === 0) {
+            html += `<div class="no-results">😢 没有找到匹配的项目</div>`;
+        } else {
+            for (const field of filteredFields) {
+                let value = userInput[field.id] !== undefined ? userInput[field.id] : 0;
                 html += `
                     <div class="item-row">
                         <div class="item-name">${field.label}</div>
@@ -559,56 +842,49 @@
                         </div>
                     </div>
                 `;
-            } else if (field.type === 'select') {
-                let selectedVal = userInput[field.id] || field.default;
-                let selectHtml = `<select id="input_${field.id}">`;
-                for (let i=0; i<field.options.length; i++) {
-                    selectHtml += `<option value="${field.options[i]}" ${selectedVal === field.options[i] ? 'selected' : ''}>${field.optionLabels[i]}</option>`;
-                }
-                selectHtml += `</select>`;
-                let cupsVal = userInput[field.extraNumberId] !== undefined ? userInput[field.extraNumberId] : 0;
-                html += `
-                    <div class="item-row">
-                        <div class="item-name">${field.label}</div>
-                        <div class="item-factor">${field.factorNote}</div>
-                        <div class="item-input">
-                            ${selectHtml}
-                            <input type="number" id="input_${field.extraNumberId}" value="${cupsVal}" step="1" min="0" style="width:90px;">
-                            <span class="unit">${field.unit}</span>
-                        </div>
-                    </div>
-                `;
             }
         }
         dynamicForm.innerHTML = html;
 
-        for (const field of cat.fields) {
-            if (field.type === 'number') {
-                const inputEl = document.getElementById(`input_${field.id}`);
-                if (inputEl) {
-                    inputEl.addEventListener('input', (e) => {
-                        userInput[field.id] = parseFloat(e.target.value) || 0;
-                    });
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const clearBtn = document.getElementById('clearSearchBtn');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                tempSearchKeyword = e.target.value;
+            });
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    applySearchAndRender();
                 }
-            } else if (field.type === 'select') {
-                const selectEl = document.getElementById(`input_${field.id}`);
-                const cupsEl = document.getElementById(`input_${field.extraNumberId}`);
-                if (selectEl) {
-                    selectEl.addEventListener('change', (e) => {
-                        userInput[field.id] = e.target.value;
-                    });
-                }
-                if (cupsEl) {
-                    cupsEl.addEventListener('input', (e) => {
-                        userInput[field.extraNumberId] = parseFloat(e.target.value) || 0;
-                    });
-                }
+            });
+        }
+        if (searchBtn) {
+            searchBtn.addEventListener('click', () => {
+                applySearchAndRender();
+            });
+        }
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                clearSearch();
+            });
+        }
+
+        for (const field of filteredFields) {
+            const inputEl = document.getElementById(`input_${field.id}`);
+            if (inputEl) {
+                inputEl.addEventListener('input', (e) => {
+                    userInput[field.id] = parseFloat(e.target.value) || 0;
+                });
             }
         }
     }
 
     function switchCategory(catId) {
         currentCategory = catId;
+        currentSearchKeyword = '';
+        tempSearchKeyword = '';
         sidebarItems.forEach(item => {
             if (item.getAttribute('data-cat') === catId) item.classList.add('active');
             else item.classList.remove('active');
@@ -618,64 +894,99 @@
 
     function calculateDailyTotal() {
         let total = BASE_DAILY_KG;
-        total += (userInput.milk_ml || 0) * factors.milk_per_ml;
-        total += (userInput.soymilk_ml || 0) * factors.soymilk_per_ml;
-        const hotType = userInput.hotdrink_type || 'blackCoffee';
-        const hotCups = userInput.hotdrink_cups || 0;
-        total += hotCups * (factors.hotdrink[hotType] || 0.25);
-        total += (userInput.juice_bottles || 0) * factors.juice_per_bottle;
-        total += (userInput.soda_ml || 0) * factors.soda_per_ml;
-        total += (userInput.pork_g || 0) * factors.pork_per_g;
-        total += (userInput.beef_g || 0) * factors.beef_per_g;
-        total += (userInput.chicken_g || 0) * factors.chicken_per_g;
-        total += (userInput.egg_count || 0) * factors.egg_per_egg;
-        total += (userInput.vege_g || 0) * factors.vege_per_g;
-        total += (userInput.fruit_g || 0) * factors.fruit_per_g;
-        total += (userInput.car_km || 0) * factors.car_km;
-        total += (userInput.bus_km || 0) * factors.bus_km;
-        total += (userInput.subway_km || 0) * factors.subway_km;
-        total += (userInput.flight_km || 0) * factors.flight_km;
-        total += (userInput.electricity_kwh || 0) * factors.electricity_per_kwh;
+        // 饮品类
+        total += userInput.milk_ml * factors.milk_per_ml;
+        total += userInput.soymilk_ml * factors.soymilk_per_ml;
+        total += userInput.hotdrink_cups * factors.hotdrink_per_cup;
+        total += userInput.juice_bottles * factors.juice_per_bottle;
+        total += userInput.cola_ml * factors.cola_per_ml;
+        total += userInput.fruitBeer_ml * factors.fruitBeer_per_ml;
+        total += userInput.liquor_ml * factors.liquor_per_ml;
+        total += userInput.drinkingWater_ml * factors.drinkingWater_per_ml;
+        // 肉蛋类
+        total += userInput.pork_g * factors.pork_per_g;
+        total += userInput.beef_g * factors.beef_per_g;
+        total += userInput.chicken_g * factors.chicken_per_g;
+        total += userInput.egg_count * factors.egg_per_egg;
+        // 蔬果类
+        total += userInput.vege_g * factors.vege_per_g;
+        total += userInput.fruit_g * factors.fruit_per_g;
+        // 交通出行
+        total += userInput.car_fuel_km * factors.car_fuel;
+        total += userInput.car_ev_km * factors.car_ev;
+        total += userInput.ebike_km * factors.ebike;
+        total += userInput.bicycle_km * factors.bicycle;
+        total += userInput.walk_km * factors.walk;
+        // 家庭能耗
+        total += userInput.electricity_kwh * factors.electricity_per_kwh;
+        total += userInput.water_ton * factors.water_per_ton;
+        total += userInput.gas_m3 * factors.gas_per_m3;
         return total;
     }
 
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setWelcomeMode(isWelcome) {
+        if (isWelcome) {
+            document.body.classList.add('welcome-mode');
+        } else {
+            document.body.classList.remove('welcome-mode');
+        }
+    }
+
     function showResult() {
-        const dailyKg = calculateDailyTotal();
-        const yearlyTonnes = (dailyKg * 365) / 1000;
-        const yearlyRounded = Math.round(yearlyTonnes * 100) / 100;
-        document.getElementById('resultYearValue').innerText = yearlyRounded.toFixed(2);
-        document.getElementById('resultDailyMsg').innerHTML = `📅 每日碳足迹：${dailyKg.toFixed(1)} 千克 CO₂e（包含基础代谢 2.0kg）`;
-        const chinaAvg = 7.35, worldAvg = 4.79;
-        let compareHtml = `🇨🇳 中国平均 ${chinaAvg} 吨/年 &nbsp; 🌍 世界平均 ${worldAvg} 吨/年<br>`;
-        if (yearlyRounded < worldAvg) compareHtml += `✨ 优于世界平均水平！非常环保 ✨`;
-        else if (yearlyRounded < chinaAvg) compareHtml += `📉 低于中国平均水平，继续保持 📉`;
-        else compareHtml += `⚠️ 高于中国平均水平，可以尝试更多低碳行动 ⚠️`;
-        document.getElementById('resultComparison').innerHTML = compareHtml;
-        const maxValue = Math.max(yearlyRounded, chinaAvg, worldAvg);
-        document.getElementById('totalBar').style.width = `${(yearlyRounded / maxValue) * 100}%`;
-        document.getElementById('chinaBar').style.width = `${(chinaAvg / maxValue) * 100}%`;
-        document.getElementById('worldBar').style.width = `${(worldAvg / maxValue) * 100}%`;
-        document.getElementById('totalValue').innerHTML = `${yearlyRounded.toFixed(2)} 吨/年`;
-        document.getElementById('chinaValue').innerHTML = `${chinaAvg} 吨/年`;
-        document.getElementById('worldValue').innerHTML = `${worldAvg} 吨/年`;
-        // 小贴士已写在HTML中，无需动态修改
-        welcomePage.classList.add('hidden');
-        calcPage.classList.add('hidden');
-        resultPage.classList.remove('hidden');
+        if (!hasUserInput()) {
+            showToast('请至少输入一项数据后再查看结果');
+            return;
+        }
+        showConfirm('确认提交', '确认提交并查看结果吗？', () => {
+            const dailyKg = calculateDailyTotal();
+            const yearlyTonnes = (dailyKg * 365) / 1000;
+            const yearlyRounded = Math.round(yearlyTonnes * 100) / 100;
+            document.getElementById('resultYearValue').innerText = yearlyRounded.toFixed(2);
+            document.getElementById('resultDailyMsg').innerHTML = `📅 每日碳足迹：${dailyKg.toFixed(1)} 千克 CO₂e（包含基础代谢 2.0kg）`;
+            const chinaAvg = 7.35, worldAvg = 4.79;
+            let compareHtml = `🇨🇳 中国平均 ${chinaAvg} 吨/年 &nbsp; 🌍 世界平均 ${worldAvg} 吨/年<br>`;
+            if (yearlyRounded < worldAvg) compareHtml += `✨ 优于世界平均水平！非常环保 ✨`;
+            else if (yearlyRounded < chinaAvg) compareHtml += `📉 低于中国平均水平，继续保持 📉`;
+            else compareHtml += `⚠️ 高于中国平均水平，可以尝试更多低碳行动 ⚠️`;
+            document.getElementById('resultComparison').innerHTML = compareHtml;
+            const maxValue = Math.max(yearlyRounded, chinaAvg, worldAvg);
+            document.getElementById('totalBar').style.width = `${(yearlyRounded / maxValue) * 100}%`;
+            document.getElementById('chinaBar').style.width = `${(chinaAvg / maxValue) * 100}%`;
+            document.getElementById('worldBar').style.width = `${(worldAvg / maxValue) * 100}%`;
+            document.getElementById('totalValue').innerHTML = `${yearlyRounded.toFixed(2)} 吨/年`;
+            document.getElementById('chinaValue').innerHTML = `${chinaAvg} 吨/年`;
+            document.getElementById('worldValue').innerHTML = `${worldAvg} 吨/年`;
+
+            welcomePage.classList.add('hidden');
+            calcPage.classList.add('hidden');
+            resultPage.classList.remove('hidden');
+            setWelcomeMode(false);
+            scrollToTop();
+        });
     }
 
     function showWelcome() {
         welcomePage.classList.remove('hidden');
         calcPage.classList.add('hidden');
         resultPage.classList.add('hidden');
+        setWelcomeMode(true);
+        scrollToTop();
     }
 
     function showCalculator() {
         resetUserInput();
+        currentSearchKeyword = '';
+        tempSearchKeyword = '';
         switchCategory(currentCategory);
         welcomePage.classList.add('hidden');
         calcPage.classList.remove('hidden');
         resultPage.classList.add('hidden');
+        setWelcomeMode(false);
+        scrollToTop();
     }
 
     function init() {
@@ -684,10 +995,14 @@
         document.getElementById('toResultBtn').addEventListener('click', showResult);
         document.getElementById('recalculateBtn').addEventListener('click', () => {
             resetUserInput();
+            currentSearchKeyword = '';
+            tempSearchKeyword = '';
             switchCategory(currentCategory);
             welcomePage.classList.add('hidden');
             calcPage.classList.remove('hidden');
             resultPage.classList.add('hidden');
+            setWelcomeMode(false);
+            scrollToTop();
         });
         const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
@@ -713,6 +1028,8 @@
         welcomePage.classList.remove('hidden');
         calcPage.classList.add('hidden');
         resultPage.classList.add('hidden');
+        setWelcomeMode(true);
+        scrollToTop();
     }
     init();
 </script>
