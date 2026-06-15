@@ -1,11 +1,11 @@
 // software_list.js
 const softwareData = [
-    { name: "Firefox", desc: "自由、开源的浏览器，注重隐私与定制性。", tags: ["浏览器", "开源", "隐私"], icon: "🦊" },
-    { name: "Visual Studio Code", desc: "轻量但强大的代码编辑器，支持海量扩展。", tags: ["开发工具", "编辑器", "微软"], icon: "📝" },
-    { name: "7-Zip", desc: "高压缩率、开源免费的文件归档工具。", tags: ["压缩工具", "开源"], icon: "🗜️" },
-    { name: "Bitwarden", desc: "跨平台密码管理器，端到端加密。", tags: ["安全", "密码管理", "开源"], icon: "🔐" },
-    { name: "OBS Studio", desc: "免费开源的直播和录制软件。", tags: ["录屏", "直播", "开源"], icon: "🎥" },
-    { name: "GIMP", desc: "功能强大的开源图像处理软件。", tags: ["图像处理", "开源"], icon: "🎨" }
+    { name: "Firefox", desc: "自由、开源的浏览器，注重隐私与定制性。", tags: ["浏览器", "开源", "隐私"], icon: "🦊", downloadUrl: "https://www.mozilla.org/firefox/" },
+    { name: "Visual Studio Code", desc: "轻量但强大的代码编辑器，支持海量扩展。", tags: ["开发工具", "编辑器", "微软"], icon: "📝", downloadUrl: "https://code.visualstudio.com/" },
+    { name: "7-Zip", desc: "高压缩率、开源免费的文件归档工具。", tags: ["压缩工具", "开源"], icon: "🗜️", downloadUrl: "https://www.7-zip.org/" },
+    { name: "Bitwarden", desc: "跨平台密码管理器，端到端加密。", tags: ["安全", "密码管理", "开源"], icon: "🔐", downloadUrl: "https://bitwarden.com/" },
+    { name: "OBS Studio", desc: "免费开源的直播和录制软件。", tags: ["录屏", "直播", "开源"], icon: "🎥", downloadUrl: "https://obsproject.com/" },
+    { name: "GIMP", desc: "功能强大的开源图像处理软件。", tags: ["图像处理", "开源"], icon: "🎨", downloadUrl: "https://www.gimp.org/" }
 ];
 
 let currentView = 'grid';
@@ -41,10 +41,12 @@ function renderSoftwareList() {
         const li = document.createElement('li');
         li.className = 'software-card';
 
+        // 图标
         const iconDiv = document.createElement('div');
         iconDiv.className = 'software-icon';
         iconDiv.textContent = soft.icon || '📦';
 
+        // 信息区
         const infoDiv = document.createElement('div');
         infoDiv.className = 'software-info';
 
@@ -56,6 +58,7 @@ function renderSoftwareList() {
         descDiv.className = 'software-desc';
         descDiv.textContent = soft.desc;
 
+        // 标签区（居中）
         const tagsDiv = document.createElement('div');
         tagsDiv.className = 'software-tags';
         soft.tags.forEach(tag => {
@@ -65,9 +68,19 @@ function renderSoftwareList() {
             tagsDiv.appendChild(span);
         });
 
+        // 下载链接
+        const downloadLink = document.createElement('a');
+        downloadLink.href = soft.downloadUrl || '#';
+        downloadLink.className = 'download-link';
+        downloadLink.textContent = '访问官网 / 下载';
+        downloadLink.target = '_blank';
+        downloadLink.rel = 'noopener noreferrer';
+
         infoDiv.appendChild(nameDiv);
         infoDiv.appendChild(descDiv);
         infoDiv.appendChild(tagsDiv);
+        infoDiv.appendChild(downloadLink);
+
         li.appendChild(iconDiv);
         li.appendChild(infoDiv);
         container.appendChild(li);
