@@ -1,93 +1,110 @@
-const softwareItems = [
-    {
-        id: 1,
-        title: 'Sollin 开源音乐伴侣',
-        description: '将多个音乐应用与播放体验整合为一个开源客户端，支持快速搜索、远程播放和离线缓存。',
-        tags: ['音乐', '开源', '助手'],
-        meta: '音频·助手·2026',
-        link: '/articles/3/index.html',
-        icon: '♪'
-    },
-    {
-        id: 2,
-        title: 'Cloudreve 私有云盘',
-        description: '一款轻量级个人云盘系统，适合自建存储、文件共享和媒体管理。',
-        tags: ['云盘', '私有云', '同步'],
-        meta: '存储·自托管·2026',
-        link: '/articles/4/index.html',
-        icon: '☁'
-    }
+// software_list.js
+const softwareData = [
+    { name: "Firefox", desc: "自由、开源的浏览器，注重隐私与定制性。", tags: ["浏览器", "开源", "隐私"], icon: "🦊" },
+    { name: "Visual Studio Code", desc: "轻量但强大的代码编辑器，支持海量扩展。", tags: ["开发工具", "编辑器", "微软"], icon: "📝" },
+    { name: "7-Zip", desc: "高压缩率、开源免费的文件归档工具。", tags: ["压缩工具", "开源"], icon: "🗜️" },
+    { name: "Bitwarden", desc: "跨平台密码管理器，端到端加密。", tags: ["安全", "密码管理", "开源"], icon: "🔐" },
+    { name: "OBS Studio", desc: "免费开源的直播和录制软件。", tags: ["录屏", "直播", "开源"], icon: "🎥" },
+    { name: "GIMP", desc: "功能强大的开源图像处理软件。", tags: ["图像处理", "开源"], icon: "🎨" }
 ];
 
 let currentView = 'grid';
-let currentQuery = '';
+let filteredData = [...softwareData];
 
-function renderSoftwareCards() {
-    const listElement = document.getElementById('software-list');
-    const emptyElement = document.getElementById('software-empty');
-    const sanitizedQuery = currentQuery.trim().toLowerCase();
-    const filteredItems = softwareItems.filter(item => {
-        if (!sanitizedQuery) return true;
-        const searchable = `${item.title} ${item.description} ${item.tags.join(' ')}`.toLowerCase();
-        return searchable.includes(sanitizedQuery);
-    });
+function renderSoftwareList() {
+    const container = document.getElementById('software-list');
+    const emptyDiv = document.getElementById('software-empty');
+    const searchKeyword = document.getElementById('software-search').value.trim().toLowerCase();
 
-    if (filteredItems.length === 0) {
-        listElement.innerHTML = '';
-        emptyElement.hidden = false;
-        return;
+    if (searchKeyword) {
+        filteredData = softwareData.filter(soft =>
+            soft.name.toLowerCase().includes(searchKeyword) ||
+            soft.desc.toLowerCase().includes(searchKeyword) ||
+            soft.tags.some(tag => tag.toLowerCase().includes(searchKeyword))
+        );
+    } else {
+        filteredData = [...softwareData];
     }
 
-    emptyElement.hidden = true;
-    listElement.className = `software-list ${currentView}`;
-    listElement.innerHTML = filteredItems.map(item => {
-        const tagHtml = item.tags.map(tag => `<span class="software-tag">${tag}</span>`).join('');
-        const cardClass = currentView === 'list' ? 'software-card list' : 'software-card';
-        const description = currentView === 'list'
-            ? `<p class="software-desc">${item.description}</p>`
-            : `<p class="software-desc">${item.description}</p>`;
+    if (!container) return;
 
-        return `
-            <li class="${cardClass}">
-                <div class="software-thumb">${item.icon}</div>
-                <div class="software-content">
-                    <div>
-                        <h3 class="software-title"><a href="${item.link}">${item.title}</a></h3>
-                        ${description}
-                    </div>
-                    <div class="software-meta">
-                        <span class="software-badge">${item.meta}</span>
-                        <div class="software-tags">${tagHtml}</div>
-                    </div>
-                </div>
-                <div class="software-actions">
-                    <a href="${item.link}">查看详情</a>
-                </div>
-            </li>
-        `;
-    }).join('');
+    container.innerHTML = '';
+    container.className = `software-list ${currentView === 'grid' ? 'grid-view' : 'list-view'}`;
+
+    if (filteredData.length === 0) {
+        emptyDiv.style.display = 'block';
+        return;
+    }
+    emptyDiv.style.display = 'none';
+
+    filteredData.forEach(soft => {
+        const li = document.createElement('li');
+        li.className = 'software-card';
+
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'software-icon';
+        iconDiv.textContent = soft.icon || '📦';
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'software-info';
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'software-name';
+        nameDiv.textContent = soft.name;
+
+        const descDiv = document.createElement('div');
+        descDiv.className = 'software-desc';
+        descDiv.textContent = soft.desc;
+
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'software-tags';
+        soft.tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            tagsDiv.appendChild(span);
+        });
+
+        infoDiv.appendChild(nameDiv);
+        infoDiv.appendChild(descDiv);
+        infoDiv.appendChild(tagsDiv);
+        li.appendChild(iconDiv);
+        li.appendChild(infoDiv);
+        container.appendChild(li);
+    });
 }
 
-function initializeSoftwarePage() {
-    const searchInput = document.getElementById('software-search');
-    const viewButtons = document.querySelectorAll('.view-btn');
-
-    if (!searchInput) return;
-
-    searchInput.addEventListener('input', event => {
-        currentQuery = event.target.value;
-        renderSoftwareCards();
+function setSoftwareView(view) {
+    currentView = view;
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        if (btn.getAttribute('data-view') === view) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
     });
+    renderSoftwareList();
+}
 
-    viewButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            currentView = button.dataset.view || 'grid';
-            viewButtons.forEach(btn => btn.classList.toggle('active', btn === button));
-            renderSoftwareCards();
+function initSoftwarePage() {
+    renderSoftwareList();
+
+    const searchInput = document.getElementById('software-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', renderSoftwareList);
+    }
+
+    const viewBtns = document.querySelectorAll('.view-btn');
+    viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const view = btn.getAttribute('data-view');
+            if (view === 'grid' || view === 'list') setSoftwareView(view);
         });
     });
-
-    renderSoftwareCards();
 }
 
-window.addEventListener('DOMContentLoaded', initializeSoftwarePage);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSoftwarePage);
+} else {
+    initSoftwarePage();
+}
