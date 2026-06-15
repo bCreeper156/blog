@@ -205,3 +205,32 @@
         grid-template-columns: 1fr;
     }
 }
+/* 标签居中 */
+.software-tags {
+    justify-content: center;
+}
+
+/* 下载链接样式 */
+.download-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.4rem 1rem;
+    background: #eef2ff;
+    color: #1e40af;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.download-link:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+/* 列表视图下，下载链接位置调整 */
+.list-view .download-link {
+    align-self: flex-start;
+}
