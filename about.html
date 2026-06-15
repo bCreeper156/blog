@@ -8,124 +8,26 @@
     <link rel="stylesheet" href="css/common.css">
     <script src="js/common.js" defer></script>
     <style>
-        /* 关于页面额外样式 */
-        .about-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-        .about-card {
-            background: white;
-            border-radius: 2rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-        }
-        .about-header {
-            background: linear-gradient(135deg, #0f3b1f, #2b6e4f);
-            padding: 2rem 2rem 1.5rem;
-            text-align: center;
-            color: white;
-        }
-        .about-header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
-        }
-        .about-header .tagline {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        .about-content {
-            padding: 2rem;
-        }
-        .bio {
-            margin-bottom: 2rem;
-            line-height: 1.7;
-            color: #2d3e3a;
-        }
-        .bio p {
-            margin-bottom: 1rem;
-        }
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1f543f;
-            margin: 1.5rem 0 1rem;
-            border-left: 4px solid #7ac4a0;
-            padding-left: 1rem;
-        }
-        .interests {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin: 1rem 0;
-        }
-        .interest-tag {
-            background: #eef5f0;
-            color: #2b6e4f;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        .philosophy {
-            background: #f8faf6;
-            border-radius: 1rem;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-            border-left: 3px solid #2b6e4f;
-            font-style: italic;
-            color: #2c5a47;
-            min-height: 5rem;
-        }
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            background-color: #2b6e4f;
-            margin-left: 2px;
-            animation: blink 1s step-end infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .contact-links a {
-            background: #f0f5f2;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            color: #2b6e4f;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .contact-links a:hover {
-            background: #2b6e4f;
-            color: white;
-            transform: translateY(-2px);
-        }
-        .footer-note {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            color: #7e9a89;
-            border-top: 1px solid #e0ede6;
-            padding-top: 1.5rem;
-        }
-        @media (max-width: 640px) {
-            .about-header { padding: 1.5rem; }
-            .about-content { padding: 1.5rem; }
-            .section-title { font-size: 1.3rem; }
-        }
+        /* 样式代码保持不变（省略，与原代码一致） */
+        .about-container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .about-card { background: white; border-radius: 2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; }
+        .about-header { background: linear-gradient(135deg, #0f3b1f, #2b6e4f); padding: 2rem 2rem 1.5rem; text-align: center; color: white; }
+        .about-header h1 { font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+        .about-header .tagline { font-size: 1rem; opacity: 0.9; }
+        .about-content { padding: 2rem; }
+        .bio { margin-bottom: 2rem; line-height: 1.7; color: #2d3e3a; }
+        .bio p { margin-bottom: 1rem; }
+        .section-title { font-size: 1.5rem; font-weight: 600; color: #1f543f; margin: 1.5rem 0 1rem; border-left: 4px solid #7ac4a0; padding-left: 1rem; }
+        .interests { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; }
+        .interest-tag { background: #eef5f0; color: #2b6e4f; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.85rem; font-weight: 500; }
+        .philosophy { background: #f8faf6; border-radius: 1rem; padding: 1.2rem; margin: 1.5rem 0; border-left: 3px solid #2b6e4f; font-style: italic; color: #2c5a47; min-height: 5rem; }
+        .typing-cursor { display: inline-block; width: 2px; background-color: #2b6e4f; margin-left: 2px; animation: blink 1s step-end infinite; }
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+        .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+        .contact-links a { background: #f0f5f2; padding: 0.5rem 1.2rem; border-radius: 40px; color: #2b6e4f; text-decoration: none; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .contact-links a:hover { background: #2b6e4f; color: white; transform: translateY(-2px); }
+        .footer-note { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: #7e9a89; border-top: 1px solid #e0ede6; padding-top: 1.5rem; }
+        @media (max-width: 640px) { .about-header { padding: 1.5rem; } .about-content { padding: 1.5rem; } .section-title { font-size: 1.3rem; } }
     </style>
 </head>
 <body>
@@ -178,8 +80,8 @@
 
                 <div class="section-title">🔗 找到我</div>
                 <div class="contact-links" id="contact-links">
-                    <!-- 所有外部链接将会通过JS自动添加跳转前缀，此处保留原始链接便于阅读 -->
-                    <a href="https://github.com/bCreeper156" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
+                    <!-- GitHub 链接去掉章鱼emoji，只保留文字 -->
+                    <a href="https://github.com/bCreeper156" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://space.bilibili.com/3546378363996834" target="_blank" rel="noopener noreferrer">📺 Bilibili</a>
                     <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
                     <a href="mailto:creeper156@qq.com">📧 邮箱</a>
@@ -188,7 +90,7 @@
                 </div>
 
                 <div class="footer-note">
-                    © 2026 Creeper156 · 博客源码在 <a href="https://github.com/bCreeper156/blog" target="_blank" style="color:green;">GitHub</a> 开源 · 由 Netlify + Cloudflare Pages 驱动
+                    © 2026 Creeper156 · 博客源码在 <a href="https://github.com/bCreeper156/blog" target="_blank">GitHub</a> 开源 · 由 Netlify + Cloudflare Pages 驱动
                 </div>
             </div>
         </div>
@@ -226,17 +128,14 @@
                 allLinks.forEach(link => {
                     const originalHref = link.getAttribute('href');
                     if (!originalHref) return;
-                    // 排除：mailto、站内绝对路径（以/开头）、页面内锚点（#）、javascript、已经包含 jump_warning 的链接
                     if (originalHref.startsWith('mailto:')) return;
                     if (originalHref.startsWith('/')) return;
                     if (originalHref.startsWith('#')) return;
                     if (originalHref.startsWith('javascript:')) return;
                     if (originalHref.includes('/jump_warning?url=')) return;
 
-                    // 对原URL进行编码，防止特殊字符干扰
                     const encodedUrl = encodeURIComponent(originalHref);
                     link.setAttribute('href', jumpWarningBase + encodedUrl);
-                    // 确保 target 和 rel 属性保留安全设置
                     if (!link.getAttribute('target')) link.setAttribute('target', '_blank');
                     link.setAttribute('rel', 'noopener noreferrer');
                 });
