@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>关于我 - 156博客</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/common.js" defer></script>
+    <style>
+        /* 关于页面额外样式 */
+        .about-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .about-card {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .about-header {
+            background: linear-gradient(135deg, #0f3b1f, #2b6e4f);
+            padding: 2rem 2rem 1.5rem;
+            text-align: center;
+            color: white;
+        }
+        .about-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        .about-header .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .about-content {
+            padding: 2rem;
+        }
+        .bio {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            color: #2d3e3a;
+        }
+        .bio p {
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f543f;
+            margin: 1.5rem 0 1rem;
+            border-left: 4px solid #7ac4a0;
+            padding-left: 1rem;
+        }
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+        .interest-tag {
+            background: #eef5f0;
+            color: #2b6e4f;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .philosophy {
+            background: #f8faf6;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid #2b6e4f;
+            font-style: italic;
+            color: #2c5a47;
+        }
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .contact-links a {
+            background: #f0f5f2;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: #2b6e4f;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .contact-links a:hover {
+            background: #2b6e4f;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #7e9a89;
+            border-top: 1px solid #e0ede6;
+            padding-top: 1.5rem;
+        }
+        @media (max-width: 640px) {
+            .about-header { padding: 1.5rem; }
+            .about-content { padding: 1.5rem; }
+            .section-title { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu">☰</button>
+        <h1><a href='/'>156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href='/'>首页</a></li>
+                <li><a href='/blog'>博客</a></li>
+                <li><a href='/link'>链接</a></li>
+                <li><a href='/about'>关于</a></li>
+            </ul>
+        </nav>  
+    </header>
+
+    <main class="about-container">
+        <div class="about-card">
+            <div class="about-header">
+                <h1>Creeper156</h1>
+                <div class="tagline">数字生活的实践者 · 内卷旁观者 · 代码爱好者</div>
+            </div>
+            <div class="about-content">
+                <div class="bio">
+                    <p>👋 你好，我是 Creeper156，一名六年级学生（正在等补考），也是这个博客的作者。  
+                    我喜欢摆弄软件、拆解工具、在方块世界里搭服务器，以及吐槽那些“反人类”的产品设计。</p>
+                    <p>💻 我的数字哲学很简单：<strong>能 Web 就不 App，能本地就不上云，能开源就不闭源。</strong>  
+                    这个博客是我分享技术笔记、软件测评、折腾心得的地方，偶尔也记录一些对教育和内卷的清醒吐槽。</p>
+                </div>
+
+                <div class="section-title">🎯 兴趣领域</div>
+                <div class="interests">
+                    <span class="interest-tag">Minecraft 红石/生电</span>
+                    <span class="interest-tag">开源软件</span>
+                    <span class="interest-tag">Web 开发</span>
+                    <span class="interest-tag">隐私 & 数字主权</span>
+                    <span class="interest-tag">碳足迹计算器</span>
+                    <span class="interest-tag">独立博客</span>
+                </div>
+
+                <div class="section-title">📖 博客定位</div>
+                <p>这里没有算法推荐，没有广告弹窗，也没有“猜你喜欢”。每一篇文章都是我自己写、自己改、自己部署的。  
+                我记录过 IDM 的激活脚本、QQ 聊天记录迁移、纯血鸿蒙上装开源音乐软件、碳足迹计算器的数据溯源……  
+                未来还会继续写关于软件筛选、服务器搭建、以及那些“只有折腾过才懂”的踩坑经验。</p>
+
+                <div class="philosophy">
+                    “工具应该是人的延伸，而不是捆绑。我选择用键盘和代码，守护自己的数字主权。”
+                </div>
+
+                <div class="section-title">🔗 找到我</div>
+                <div class="contact-links">
+                    <a href="https://github.com/bCreeper156" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
+                    <a href="https://space.bilibili.com/3546378363996834" target="_blank" rel="noopener noreferrer">📺 Bilibili</a>
+                    <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+                    <a href="mailto:creeper156@qq.com">📧 邮箱</a>
+                    <a href="https://qm.qq.com/q/3xAA2pN0bm" target="_blank" rel="noopener noreferrer">💬 QQ群</a>
+                    <a href="http://ifdian.net/a/bcdogs156" target="_blank" rel="noopener noreferrer">❤️ 爱发电</a>
+                </div>
+
+                <div class="footer-note">
+                    © 2026 Creeper156 · 博客源码在 <a href="https://github.com/bCreeper156/blog" target="_blank" style="color:#2b6e4f;">GitHub</a> 开源 · 由 Netlify + Cloudflare Pages 驱动
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><a href='/jump_warning?url=https://github.com/bCreeper156/blog/blob/main/LICENSE'>Copyright © 2026 Creeper156</a></p>
+    </footer>
+</body>
+</html>
