@@ -77,6 +77,20 @@
             border-left: 3px solid #2b6e4f;
             font-style: italic;
             color: #2c5a47;
+            min-height: 5rem;
+            position: relative;
+        }
+        /* 打字机光标样式 */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #2b6e4f;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
         .contact-links {
             display: flex;
@@ -160,7 +174,8 @@
                 未来还会继续写关于软件筛选、服务器搭建、以及那些“只有折腾过才懂”的踩坑经验。</p>
 
                 <div class="philosophy">
-                    “工具应该是人的延伸，而不是捆绑。我选择用键盘和代码，守护自己的数字主权。”
+                    <span id="dynamic-philosophy"></span>
+                    <span class="typing-cursor" id="cursor"></span>
                 </div>
 
                 <div class="section-title">🔗 找到我</div>
@@ -183,5 +198,31 @@
     <footer>
         <p><a href='/jump_warning?url=https://github.com/bCreeper156/blog/blob/main/LICENSE'>Copyright © 2026 Creeper156</a></p>
     </footer>
+
+    <script>
+        (function() {
+            const philosophyText = "“工具应该是人的延伸，而不是捆绑。我选择用键盘和代码，守护自己的数字主权。”";
+            const dynamicSpan = document.getElementById('dynamic-philosophy');
+            const cursorSpan = document.getElementById('cursor');
+            let index = 0;
+            
+            function typeNext() {
+                if (index < philosophyText.length) {
+                    dynamicSpan.textContent += philosophyText.charAt(index);
+                    index++;
+                    setTimeout(typeNext, 50);
+                } else {
+                    // 打字结束后，让光标持续闪烁即可（保持显示）
+                    if (cursorSpan) cursorSpan.style.animation = 'blink 1s step-end infinite';
+                }
+            }
+            
+            // 清空并开始打字
+            if (dynamicSpan) {
+                dynamicSpan.textContent = '';
+                typeNext();
+            }
+        })();
+    </script>
 </body>
 </html>
