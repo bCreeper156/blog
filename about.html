@@ -78,9 +78,7 @@
             font-style: italic;
             color: #2c5a47;
             min-height: 5rem;
-            position: relative;
         }
-        /* 打字机光标样式 */
         .typing-cursor {
             display: inline-block;
             width: 2px;
@@ -179,7 +177,8 @@
                 </div>
 
                 <div class="section-title">🔗 找到我</div>
-                <div class="contact-links">
+                <div class="contact-links" id="contact-links">
+                    <!-- 所有外部链接将会通过JS自动添加跳转前缀，此处保留原始链接便于阅读 -->
                     <a href="https://github.com/bCreeper156" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
                     <a href="https://space.bilibili.com/3546378363996834" target="_blank" rel="noopener noreferrer">📺 Bilibili</a>
                     <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
@@ -189,39 +188,60 @@
                 </div>
 
                 <div class="footer-note">
-                    © 2026 Creeper156 · 博客源码在 <a href="https://github.com/bCreeper156/blog" target="_blank" style="color:#2b6e4f;">GitHub</a> 开源 · 由 Netlify + Cloudflare Pages 驱动
+                    © 2026 Creeper156 · 博客源码在 <a href="https://github.com/bCreeper156/blog" target="_blank">GitHub</a> 开源 · 由 Netlify + Cloudflare Pages 驱动
                 </div>
             </div>
         </div>
     </main>
 
     <footer>
-        <p><a href='/jump_warning?url=https://github.com/bCreeper156/blog/blob/main/LICENSE'>Copyright © 2026 Creeper156</a></p>
+        <p><a href="https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
 
     <script>
         (function() {
+            // 动态哲学宣言打字效果
             const philosophyText = "“工具应该是人的延伸，而不是捆绑。我选择用键盘和代码，守护自己的数字主权。”";
             const dynamicSpan = document.getElementById('dynamic-philosophy');
             const cursorSpan = document.getElementById('cursor');
             let index = 0;
-            
             function typeNext() {
                 if (index < philosophyText.length) {
                     dynamicSpan.textContent += philosophyText.charAt(index);
                     index++;
                     setTimeout(typeNext, 50);
                 } else {
-                    // 打字结束后，让光标持续闪烁即可（保持显示）
                     if (cursorSpan) cursorSpan.style.animation = 'blink 1s step-end infinite';
                 }
             }
-            
-            // 清空并开始打字
             if (dynamicSpan) {
                 dynamicSpan.textContent = '';
                 typeNext();
             }
+
+            // 为所有外部链接添加 /jump_warning?url= 前缀（保留 mailto 和站内链接）
+            function addJumpWarningToExternalLinks() {
+                const allLinks = document.querySelectorAll('a');
+                const jumpWarningBase = '/jump_warning?url=';
+                allLinks.forEach(link => {
+                    const originalHref = link.getAttribute('href');
+                    if (!originalHref) return;
+                    // 排除：mailto、站内绝对路径（以/开头）、页面内锚点（#）、javascript、已经包含 jump_warning 的链接
+                    if (originalHref.startsWith('mailto:')) return;
+                    if (originalHref.startsWith('/')) return;
+                    if (originalHref.startsWith('#')) return;
+                    if (originalHref.startsWith('javascript:')) return;
+                    if (originalHref.includes('/jump_warning?url=')) return;
+
+                    // 对原URL进行编码，防止特殊字符干扰
+                    const encodedUrl = encodeURIComponent(originalHref);
+                    link.setAttribute('href', jumpWarningBase + encodedUrl);
+                    // 确保 target 和 rel 属性保留安全设置
+                    if (!link.getAttribute('target')) link.setAttribute('target', '_blank');
+                    link.setAttribute('rel', 'noopener noreferrer');
+                });
+            }
+            addJumpWarningToExternalLinks();
         })();
     </script>
 </body>
