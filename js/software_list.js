@@ -68,9 +68,10 @@ function renderSoftwareList() {
             tagsDiv.appendChild(span);
         });
 
-        // 下载链接
+        // 下载链接（添加跳转警告前缀）
         const downloadLink = document.createElement('a');
-        downloadLink.href = soft.downloadUrl || '#';
+        const encodedUrl = encodeURIComponent(soft.downloadUrl);
+        downloadLink.href = `/jump_warning.html?url=${encodedUrl}`;
         downloadLink.className = 'download-link';
         downloadLink.textContent = '访问官网 / 下载';
         downloadLink.target = '_blank';
