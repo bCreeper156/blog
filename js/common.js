@@ -110,3 +110,81 @@ function initCommentSection() {
     // Giscus 会自动在具有 class="giscus" 的元素中加载评论
     // 无需额外操作
 }
+// ==================== 自动给所有外部链接添加安全跳转 ====================
+(function() {
+    'use strict';
+
+    const JUMP_BASE = '/jump_warning?url=';
+    // 判断是否为需要处理的链接（http/https 且不是站内）
+    function shouldProcess(href) {
+        if (!href) return false;
+        // 已经是跳转链接，跳过
+        if (href.startsWith(JUMP_BASE)) return false;
+        // 站内链接：以 '/' 开头、'#'、javascript:、mailto:、tel: 等
+        if (href.startsWith('/') || href.startsWith('#') || href.startsWith('javascript:') ||
+            href.startsWith('mailto:') || href.startsWith('tel:')) {
+            return false;
+        }
+        // 只处理 http:// 或 https:// 开头的链接
+        return (href.startsWith('http://') || href.startsWith('https://'));
+    }
+
+    // 处理单个链接元素
+    function processLink(link) {
+        let href = link.getAttribute('href');
+        if (!shouldProcess(href)) return;
+        // 避免重复处理已带有跳转前缀的（保险）
+        if (href.startsWith(JUMP_BASE)) return;
+        const encoded = encodeURIComponent(href);
+        link.setAttribute('href', JUMP_BASE + encoded);
+        if (!link.getAttribute('target')) link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+    }
+
+    // 扫描并处理当前文档中的所有 <a> 标签
+    function processAllLinks() {
+        const links = document.querySelectorAll('a[href]');
+        links.forEach(processLink);
+    }
+
+    // 使用 MutationObserver 监听动态添加的节点，处理新加入的链接
+    const observer = new MutationObserver((mutations) => {
+        let shouldUpdate = false;
+        for (const mutation of mutations) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length) {
+                for (const node of mutation.addedNodes) {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        // 如果新节点本身是 <a> 标签
+                        if (node.matches && node.matches('a[href]')) {
+                            processLink(node);
+                        }
+                        // 如果新节点包含子元素中的 <a> 标签
+                        if (node.querySelectorAll) {
+                            const childLinks = node.querySelectorAll('a[href]');
+                            childLinks.forEach(processLink);
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 启动观察器（监听整个文档的子树变化）
+    function startObserver() {
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    // 页面加载完成后执行一次，并启动观察器
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            processAllLinks();
+            startObserver();
+        });
+    } else {
+        processAllLinks();
+        startObserver();
+    }
+})();
