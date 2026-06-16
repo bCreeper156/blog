@@ -201,19 +201,40 @@
             const cancelBtn = document.getElementById('cancelBtn');
             const extraNote = document.getElementById('js-extra-note');
 
-            // 辅助函数：安全解析URL参数 (与头部保持一致)
+            // 辅助函数：安全解析URL参数（支持多级解码）
             function getTargetUrlFromQuery() {
                 const params = new URLSearchParams(window.location.search);
-                let url = params.get('url') || params.get('target') || params.get('link') || params.get('to');
-                if (!url) return null;
-                url = url.trim();
+                let rawUrl = params.get('url') || params.get('target') || params.get('link') || params.get('to');
+                if (!rawUrl) return null;
+                rawUrl = rawUrl.trim();
+                if (rawUrl === '') return null;
+                
+                // 尝试解码（可能被 encodeURIComponent 编码过一次或多次）
+                let decoded = rawUrl;
                 try {
-                    const base = window.location.origin;
-                    const parsed = new URL(url, base);
-                    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
-                        return null;
-                    }
-                    return parsed.href;
+                    // 先解码一次
+                    decoded = decodeURIComponent(decoded);
+                    // 如果解码后仍然包含 %，可能是二次编码，继续解码直到稳定
+                    let prev;
+                    do {
+                        prev = decoded;
+                        decoded = decodeURIComponent(decoded);
+                    } while (decoded !== prev);
+                } catch (e) {
+                    // 解码失败，保留原字符串
+                    decoded = rawUrl;
+                }
+                
+                // 确保是 http/https 协议
+                if (!decoded.startsWith('http://') && !decoded.startsWith('https://')) {
+                    // 如果是相对路径或其它协议，视为站内或无效
+                    return null;
+                }
+                
+                try {
+                    // 验证是否为有效 URL（可选）
+                    new URL(decoded);
+                    return decoded;
                 } catch (e) {
                     return null;
                 }
