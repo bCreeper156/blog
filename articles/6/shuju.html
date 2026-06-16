@@ -26,6 +26,28 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.05);
             overflow: hidden;
             padding: 24px 28px;
+            position: relative;
+        }
+        /* 返回按钮样式 */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eef5f0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            color: #2b6e4f;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+            border: 1px solid #d0e6da;
+        }
+        .back-link:hover {
+            background: #2b6e4f;
+            color: white;
+            border-color: #2b6e4f;
         }
         h1 {
             font-size: 1.8rem;
@@ -142,73 +164,79 @@
     </style>
 </head>
 <body>
+    <div class="github-loader-wrap" id="githubLoaderWrap">
+        <div class="github-loader" id="githubLoader"></div>
+    </div>
+    <div class="github-loader-tip" id="githubLoaderTip">加载中 0%</div>
     <div class="container">
-    <h1>
-        📊 碳足迹计算器 · 排放因子数据溯源
-        <span style="font-size: 0.8rem; background: #e1f2ea; padding: 4px 12px; border-radius: 40px; font-weight: normal;">基于公开权威数据</span>
-    </h1>
-    <div class="sub">所有排放因子均来自官方机构、学术期刊及行业标准，确保计算科学可信。</div>
+        <!-- 返回按钮 -->
+        <a href="/articles/6/index.html" class="back-link">← 返回文章6</a>
+        <h1>
+            📊 碳足迹计算器 · 排放因子数据溯源
+            <span style="font-size: 0.8rem; background: #e1f2ea; padding: 4px 12px; border-radius: 40px; font-weight: normal;">基于公开权威数据</span>
+        </h1>
+        <div class="sub">所有排放因子均来自官方机构、学术期刊及行业标准，确保计算科学可信。</div>
 
-    <div class="info-note">
-        💡 <strong>说明</strong>：本表格列出了碳足迹计算器中每一项活动数据的碳排放因子及其权威来源。部分因子为综合估算值（已标注），以反映真实生命周期影响。点击链接可查阅原始报告或标准文件。
+        <div class="info-note">
+            💡 <strong>说明</strong>：本表格列出了碳足迹计算器中每一项活动数据的碳排放因子及其权威来源。部分因子为综合估算值（已标注），以反映真实生命周期影响。点击链接可查阅原始报告或标准文件。
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>类别</th>
+                        <th>项目</th>
+                        <th>数值<br>(最新)</th>
+                        <th>单位</th>
+                        <th>数据来源机构/渠道</th>
+                        <th>说明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 家庭能耗 -->
+                    <tr><td class="category-cell" rowspan="3">家庭能耗</td><td>用电量</td><td><strong>0.5777</strong></td><td>千克CO₂e / 度</td><td class="ref-link"><a href="https://sthjt.sc.gov.cn/sthjt/c108895/2025/10/29/dbe0f2954c5d4cbfb75dd1721b662290.shtml" target="_blank" rel="noopener">生态环境部、国家统计局、国家能源局</a> / <a href="https://env.people.com.cn/BIG5/n1/2025/1105/c1010-40597268.html" target="_blank" rel="noopener">人民日报</a></td><td>全国电力平均碳足迹因子。2024年最新数据，比2023年的0.6205下降了6.9%。</td></tr>
+                    <tr><td>用水量</td><td><strong>0.38</strong></td><td>千克CO₂e / 吨</td><td class="ref-link">生态环境部等</td><td>综合参考《关于发布2024年电力碳足迹因子数据的公告》及供水行业碳减排研究。</td></tr>
+                    <tr><td>天然气</td><td><strong>1.885</strong></td><td>千克CO₂e / 立方米</td><td class="ref-link"><a href="https://gdee.gd.gov.cn/hdjlpt/detail?pid=2890743" target="_blank" rel="noopener">广东省生态环境厅</a></td><td>引用自国家碳强度考核及碳达峰编制指南。折合为1.56吨CO₂/吨标煤，按1吨标煤≈0.001吨计算，实际值约为1.56 kg/m³。</td></tr>
+
+                    <!-- 交通出行 -->
+                    <tr><td class="category-cell" rowspan="5">交通出行</td><td>家用燃油车</td><td><strong>0.25</strong></td><td>千克CO₂e / 公里</td><td class="ref-link">《中国公布近1400款车型碳足迹数据》</td><td>近1400款车型碳足迹平均值约0.25967 kg/km，本工具采用0.25作为近似值。</td></tr>
+                    <tr><td>家用电动车</td><td><strong>0.19</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://mse.cufe.edu.cn/info/1823/10605.htm" target="_blank" rel="noopener">常远教授团队</a> / <a href="https://scholar.oversea.cnki.net/en/Detail/index/GARJ2021_4/SJES03CA04B57CA204792D3ACB7EFEDB124C" target="_blank" rel="noopener">学术论文</a></td><td>论文数据显示为“0.19”，此数值在学术研究中较为典型。</td></tr>
+                    <tr><td>电瓶车</td><td><strong>0.045</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://www.chinautc.com/templates/H_magazine/articlecontent.aspx?nodeid=6376&page=ContentPage&contentid=107276" target="_blank" rel="noopener">《RCR》期刊</a></td><td>学术研究的平均碳排放强度为45克/人公里 (0.045 kg/人km)。</td></tr>
+                    <tr><td>公交</td><td><strong>0.06</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://www.cqvip.com/doc/journal/7203020324?sign=8435aeb2170b7df09ce19719065a79d70ad06106d857309959302a4e813d52e6&expireTime=1791136462924&resourceId=7203020324&type=1" target="_blank" rel="noopener">维普期刊</a></td><td>“自上而下”法研究100%满载率下的公交碳排放因子为56.2g/人公里，本工具取0.06 kg/人公里。</td></tr>
+                    <tr><td>地铁</td><td><strong>0.03</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://www.cqvip.com/doc/journal/7203020324?sign=8435aeb2170b7df09ce19719065a79d70ad06106d857309959302a4e813d52e6&expireTime=1791136462924&resourceId=7203020324&type=1" target="_blank" rel="noopener">维普期刊</a></td><td>“自上而下”法研究100%满载率下的地铁碳排放因子为8.22g/人公里，本工具取0.03 kg/人公里。</td></tr>
+                    <tr><td>飞机(短途)</td><td><strong>0.20</strong></td><td>千克CO₂e / 公里</td><td class="ref-link">中国科学院生态环境研究中心</td><td>参考值，短途航班碳排放因子约0.20 kg/人公里。</td></tr>
+
+                    <!-- 肉蛋类 -->
+                    <tr><td class="category-cell" rowspan="4">肉蛋类</td><td>猪肉</td><td><strong>3.8</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link"><a href="https://mse.cufe.edu.cn/info/1823/10605.htm" target="_blank" rel="noopener">常远教授团队</a> / <a href="https://scholar.oversea.cnki.net/en/Detail/index/GARJ2021_4/SJES03CA04B57CA204792D3ACB7EFEDB124C" target="_blank" rel="noopener">学术论文</a></td><td>论文数据显示为“3.8”。</td></tr>
+                    <tr><td>牛肉</td><td><strong>19.6</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">常远教授团队 (2018年全国性研究)</td><td>数据来源于2018年的全国性研究。</td></tr>
+                    <tr><td>鸡肉</td><td><strong>4.4</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">常远教授团队 (2018年全国性研究)</td><td>数据来源于2018年的全国性研究。</td></tr>
+                    <tr><td>鸡蛋</td><td><strong>1.25</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">《2025中国农业农村低碳发展报告》</td><td>数据代表中型养殖场的碳足迹水平。</td></tr>
+
+                    <!-- 蔬果类 -->
+                    <tr><td class="category-cell" rowspan="2">蔬果类</td><td>蔬菜</td><td><strong>0.30</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">《Resources, Conservation and Recycling》期刊</td><td>蔬菜碳足迹范围0.15-0.31 kg/kg，本工具采用0.30。</td></tr>
+                    <tr><td>水果</td><td><strong>0.40</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">《Resources, Conservation and Recycling》期刊</td><td>水果碳足迹范围0.31-0.58 kg/kg，本工具采用0.40。</td></tr>
+
+                    <!-- 饮品类 -->
+                    <tr><td class="category-cell" rowspan="8">饮品类</td><td>牛奶</td><td><strong>1.68</strong></td><td>千克CO₂e / 升</td><td class="ref-link">中国产品全生命周期温室气体排放系数库</td><td>1.68 kg/升。</td></tr>
+                    <tr><td>豆奶</td><td><strong>1.00</strong></td><td>千克CO₂e / 升</td><td class="ref-link">中国产品全生命周期温室气体排放系数库</td><td>1.00 kg/升。</td></tr>
+                    <tr><td>热饮(咖啡/茶)</td><td><strong>0.25</strong></td><td>千克CO₂e / 杯</td><td class="ref-link">Agribalyse数据库</td><td>参考国际数据库的通用估算值（黑咖啡/茶）。</td></tr>
+                    <tr><td>果汁</td><td><strong>0.27</strong></td><td>千克CO₂e / 瓶(250ml)</td><td class="ref-link">《饮料工业》期刊</td><td>一篇2011年的文献提到该数值。</td></tr>
+                    <tr><td>可乐/软饮</td><td><strong>0.51</strong></td><td>千克CO₂e / 升</td><td class="ref-link">《碳足迹评价技术要求 碳酸饮料》团体标准</td><td>行业内有标准用于碳酸饮料碳足迹评价。</td></tr>
+                    <tr><td>果酒/啤酒</td><td><strong>0.70</strong></td><td>千克CO₂e / 升</td><td class="ref-link">现有研究 (综合估算)</td><td>参考值。酒类碳足迹受工艺影响大，此值为综合估算值。</td></tr>
+                    <tr><td>烈酒</td><td><strong>1.00</strong></td><td>千克CO₂e / 升</td><td class="ref-link">现有研究 (综合估算)</td><td>参考值。白酒等烈酒碳足迹普遍较高，此值为综合估算值。</td></tr>
+                    <tr><td>饮用水</td><td><strong>0.03</strong></td><td>千克CO₂e / 升</td><td class="ref-link">中国产品全生命周期温室气体排放系数库</td><td>参考数据库中相关环境足迹研究，为最低估算值。</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-note">
+            📌 所有数据均来自公开渠道，部分估算值已标注。本计算器将持续追踪最新排放因子并更新。
+            <br>🔗 如需转载或引用数据，请注明来源及本页面链接。
+        </div>
     </div>
-
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>类别</th>
-                    <th>项目</th>
-                    <th>数值<br>(最新)</th>
-                    <th>单位</th>
-                    <th>数据来源机构/渠道</th>
-                    <th>说明</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 家庭能耗 -->
-                <tr><td class="category-cell" rowspan="3">家庭能耗</td><td>用电量</td><td><strong>0.5777</strong></td><td>千克CO₂e / 度</td><td class="ref-link"><a href="https://sthjt.sc.gov.cn/sthjt/c108895/2025/10/29/dbe0f2954c5d4cbfb75dd1721b662290.shtml" target="_blank" rel="noopener">生态环境部、国家统计局、国家能源局</a> / <a href="https://env.people.com.cn/BIG5/n1/2025/1105/c1010-40597268.html" target="_blank" rel="noopener">人民日报</a></td><td>全国电力平均碳足迹因子。2024年最新数据，比2023年的0.6205下降了6.9%。</td></tr>
-                <tr><td>用水量</td><td><strong>0.38</strong></td><td>千克CO₂e / 吨</td><td class="ref-link">生态环境部等</td><td>综合参考《关于发布2024年电力碳足迹因子数据的公告》及供水行业碳减排研究。</td></tr>
-                <tr><td>天然气</td><td><strong>1.885</strong></td><td>千克CO₂e / 立方米</td><td class="ref-link"><a href="https://gdee.gd.gov.cn/hdjlpt/detail?pid=2890743" target="_blank" rel="noopener">广东省生态环境厅</a></td><td>引用自国家碳强度考核及碳达峰编制指南。折合为1.56吨CO₂/吨标煤，按1吨标煤≈0.001吨计算，实际值约为1.56 kg/m³。</td></tr>
-
-                <!-- 交通出行 -->
-                <tr><td class="category-cell" rowspan="5">交通出行</td><td>家用燃油车</td><td><strong>0.25</strong></td><td>千克CO₂e / 公里</td><td class="ref-link">《中国公布近1400款车型碳足迹数据》</td><td>近1400款车型碳足迹平均值约0.25967 kg/km，本工具采用0.25作为近似值。</td></tr>
-                <tr><td>家用电动车</td><td><strong>0.19</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://mse.cufe.edu.cn/info/1823/10605.htm" target="_blank" rel="noopener">常远教授团队</a> / <a href="https://scholar.oversea.cnki.net/en/Detail/index/GARJ2021_4/SJES03CA04B57CA204792D3ACB7EFEDB124C" target="_blank" rel="noopener">学术论文</a></td><td>论文数据显示为“0.19”，此数值在学术研究中较为典型。</td></tr>
-                <tr><td>电瓶车</td><td><strong>0.045</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://www.chinautc.com/templates/H_magazine/articlecontent.aspx?nodeid=6376&page=ContentPage&contentid=107276" target="_blank" rel="noopener">《RCR》期刊</a></td><td>学术研究的平均碳排放强度为45克/人公里 (0.045 kg/人km)。</td></tr>
-                <tr><td>公交</td><td><strong>0.06</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://www.cqvip.com/doc/journal/7203020324?sign=8435aeb2170b7df09ce19719065a79d70ad06106d857309959302a4e813d52e6&expireTime=1791136462924&resourceId=7203020324&type=1" target="_blank" rel="noopener">维普期刊</a></td><td>“自上而下”法研究100%满载率下的公交碳排放因子为56.2g/人公里，本工具取0.06 kg/人公里。</td></tr>
-                <tr><td>地铁</td><td><strong>0.03</strong></td><td>千克CO₂e / 公里</td><td class="ref-link"><a href="https://www.cqvip.com/doc/journal/7203020324?sign=8435aeb2170b7df09ce19719065a79d70ad06106d857309959302a4e813d52e6&expireTime=1791136462924&resourceId=7203020324&type=1" target="_blank" rel="noopener">维普期刊</a></td><td>“自上而下”法研究100%满载率下的地铁碳排放因子为8.22g/人公里，本工具取0.03 kg/人公里。</td></tr>
-                <tr><td>飞机(短途)</td><td><strong>0.20</strong></td><td>千克CO₂e / 公里</td><td class="ref-link">中国科学院生态环境研究中心</td><td>参考值，短途航班碳排放因子约0.20 kg/人公里。</td></tr>
-
-                <!-- 肉蛋类 -->
-                <tr><td class="category-cell" rowspan="4">肉蛋类</td><td>猪肉</td><td><strong>3.8</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link"><a href="https://mse.cufe.edu.cn/info/1823/10605.htm" target="_blank" rel="noopener">常远教授团队</a> / <a href="https://scholar.oversea.cnki.net/en/Detail/index/GARJ2021_4/SJES03CA04B57CA204792D3ACB7EFEDB124C" target="_blank" rel="noopener">学术论文</a></td><td>论文数据显示为“3.8”。</td></tr>
-                <tr><td>牛肉</td><td><strong>19.6</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">常远教授团队 (2018年全国性研究)</td><td>数据来源于2018年的全国性研究。</td></tr>
-                <tr><td>鸡肉</td><td><strong>4.4</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">常远教授团队 (2018年全国性研究)</td><td>数据来源于2018年的全国性研究。</td></tr>
-                <tr><td>鸡蛋</td><td><strong>1.25</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">《2025中国农业农村低碳发展报告》</td><td>数据代表中型养殖场的碳足迹水平。</td></tr>
-
-                <!-- 蔬果类 -->
-                <tr><td class="category-cell" rowspan="2">蔬果类</td><td>蔬菜</td><td><strong>0.30</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">《Resources, Conservation and Recycling》期刊</td><td>蔬菜碳足迹范围0.15-0.31 kg/kg，本工具采用0.30。</td></tr>
-                <tr><td>水果</td><td><strong>0.40</strong></td><td>千克CO₂e / 公斤</td><td class="ref-link">《Resources, Conservation and Recycling》期刊</td><td>水果碳足迹范围0.31-0.58 kg/kg，本工具采用0.40。</td></tr>
-
-                <!-- 饮品类 -->
-                <tr><td class="category-cell" rowspan="8">饮品类</td><td>牛奶</td><td><strong>1.68</strong></td><td>千克CO₂e / 升</td><td class="ref-link">中国产品全生命周期温室气体排放系数库</td><td>1.68 kg/升。</td></tr>
-                <tr><td>豆奶</td><td><strong>1.00</strong></td><td>千克CO₂e / 升</td><td class="ref-link">中国产品全生命周期温室气体排放系数库</td><td>1.00 kg/升。</td></tr>
-                <tr><td>热饮(咖啡/茶)</td><td><strong>0.25</strong></td><td>千克CO₂e / 杯</td><td class="ref-link">Agribalyse数据库</td><td>参考国际数据库的通用估算值（黑咖啡/茶）。</td></tr>
-                <tr><td>果汁</td><td><strong>0.27</strong></td><td>千克CO₂e / 瓶(250ml)</td><td class="ref-link">《饮料工业》期刊</td><td>一篇2011年的文献提到该数值。</td></tr>
-                <tr><td>可乐/软饮</td><td><strong>0.51</strong></td><td>千克CO₂e / 升</td><td class="ref-link">《碳足迹评价技术要求 碳酸饮料》团体标准</td><td>行业内有标准用于碳酸饮料碳足迹评价。</td></tr>
-                <tr><td>果酒/啤酒</td><td><strong>0.70</strong></td><td>千克CO₂e / 升</td><td class="ref-link">现有研究 (综合估算)</td><td>参考值。酒类碳足迹受工艺影响大，此值为综合估算值。</td></tr>
-                <tr><td>烈酒</td><td><strong>1.00</strong></td><td>千克CO₂e / 升</td><td class="ref-link">现有研究 (综合估算)</td><td>参考值。白酒等烈酒碳足迹普遍较高，此值为综合估算值。</td></tr>
-                <tr><td>饮用水</td><td><strong>0.03</strong></td><td>千克CO₂e / 升</td><td class="ref-link">中国产品全生命周期温室气体排放系数库</td><td>参考数据库中相关环境足迹研究，为最低估算值。</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="footer-note">
-        📌 所有数据均来自公开渠道，部分估算值已标注。本计算器将持续追踪最新排放因子并更新。
-        <br>🔗 如需转载或引用数据，请注明来源及本页面链接。
-    </div>
-</div>
-<footer>
-    <p><a href='/jump_warning?url=https://github.com/bCreeper156/blog/blob/main/LICENSE'>Copyright © 2026 Creeper156</a></p>
-</footer>
+    <footer>
+        <p><a href='/jump_warning?url=https://github.com/bCreeper156/blog/blob/main/LICENSE'>Copyright © 2026 Creeper156</a></p>
+    </footer>
 </body>
 </html>
