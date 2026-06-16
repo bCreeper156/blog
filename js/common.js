@@ -182,6 +182,8 @@ function initCommentSection() {
         document.addEventListener('DOMContentLoaded', () => {
             processAllLinks();
             startObserver();
+            // 再次确保在 load 事件中也处理一次
+            window.addEventListener('load', processAllLinks);
         });
     } else {
         processAllLinks();
