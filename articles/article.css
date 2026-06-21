@@ -592,3 +592,106 @@ footer a:hover {
         font-size: 1rem;
     }
 }
+/* ========================================
+   首页样式补充
+   ======================================== */
+
+/* 通用卡片 */
+.about_me,
+.articles,
+.tar {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.06);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about_me img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.about_me p {
+    color: #5f6368;
+}
+
+.social-media a {
+    color: #0f9d58;
+    margin: 0 5px;
+    font-weight: 500;
+}
+
+.social-media a:hover {
+    color: #0b7a44;
+    text-decoration: underline;
+}
+
+.articles h1 {
+    color: #1f1f1f;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.articles .highlight-box a {
+    color: #0f9d58;
+}
+
+.articles .highlight-box a:hover {
+    color: #0b7a44;
+}
+
+/* 公告栏 */
+.Ad {
+    background: #e6f4ed;
+    padding: 16px 24px;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 24px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Ad p {
+    color: #0a2e1a;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* 底部链接区 */
+.tar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 24px;
+}
+
+.tar a {
+    color: #0f9d58;
+    font-weight: 500;
+}
+
+.tar a:hover {
+    color: #0b7a44;
+    text-decoration: underline;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .about_me,
+    .articles,
+    .tar,
+    .Ad {
+        padding: 16px 18px;
+        border-radius: 12px;
+    }
+    .about_me img {
+        max-width: 120px;
+    }
+}
