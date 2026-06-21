@@ -1,14 +1,22 @@
-@import url('/css/common.css');
+/* ========================================
+   156博客 - 独立样式表
+   导航栏：白色背景，黑色文字，绿色悬停
+   ======================================== */
+
+/* ----- 全局重置 ----- */
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
+
+/* ----- 全局动画（进度条等） ----- */
 @keyframes shimmer {
     0% { transform: translateX(-100%) skewX(-20deg); }
     100% { transform: translateX(200%) skewX(-20deg); }
 }
 
+/* ----- 进度条文本（仅用于加载状态） ----- */
 .progress-text {
     position: fixed;
     top: 10px;
@@ -22,17 +30,37 @@
     display: none;
 }
 
-/* 文章页面样式 */
+/* ----- 全局基础样式 ----- */
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.7;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    width: 100%;
+}
+
+/* ----- 导航栏（白色背景，黑色文字，绿色悬停） ----- */
 header {
-    background-color: black;
+    background-color: #ffffff;
     height: 80px;
     width: 100%;
     position: relative;
     flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 header h1 {
-    color: white;
+    color: #000000;
     position: absolute;
     left: 120px;
     top: 0;
@@ -42,7 +70,7 @@ header h1 {
 }
 
 header h1 a {
-    color: white;
+    color: #000000;
     text-decoration: none;
 }
 
@@ -62,37 +90,68 @@ header li {
 }
 
 header a {
-    color: white;
+    color: #000000;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.2s;
 }
 
 header a:hover {
-    color: #11cb5f;
+    color: #0f9d58; /* Google 绿色 */
 }
 
 .menu {
     display: none;
 }
 
-body {
-    background-color: #f8f9fa;
-    color: #333;
-    line-height: 1.7;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+/* ----- 移动端菜单（白色背景，黑色文字） ----- */
+@media screen and (max-width: 768px) {
+    header ul {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 10px 0;
+        z-index: 1000;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    header ul.show {
+        display: flex;
+    }
+
+    header li {
+        display: block;
+        margin: 0;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    header h1 {
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.3rem;
+    }
+
+    .menu {
+        display: block;
+        background: transparent;
+        color: #000000;
+        font-size: 24px;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 1001;
+    }
 }
 
-main {
-    flex: 1;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    width: 100%;
-}
-
+/* ----- 文章头部 ----- */
 .header {
     text-align: center;
     margin-bottom: 3rem;
@@ -123,6 +182,7 @@ main {
     gap: 0.5rem;
 }
 
+/* ----- 文章内容卡片 ----- */
 .article-content {
     background: white;
     border-radius: 12px;
@@ -141,7 +201,7 @@ main {
 
 .section-title {
     font-size: 1.5rem;
-    color: #11cb5f;
+    color: #0f9d58;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #f1f3f5;
@@ -159,6 +219,7 @@ main {
     margin-bottom: 0;
 }
 
+/* ----- 文章内容中的特殊块 ----- */
 .highlight-box {
     background: linear-gradient(135deg, #65ffff, #abebff);
     color: white;
@@ -186,7 +247,7 @@ main {
     background: #f8f9fa;
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid #11cb5f;
+    border-left: 4px solid #0f9d58;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -222,7 +283,7 @@ main {
 }
 
 .action-btn {
-    background: #11cb5f;
+    background: #0f9d58;
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -237,9 +298,9 @@ main {
 }
 
 .action-btn:hover {
-    background: #0fa84c;
+    background: #0b7a44;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(17, 203, 95, 0.3);
+    box-shadow: 0 5px 15px rgba(15, 157, 88, 0.3);
 }
 
 .action-btn.secondary {
@@ -250,7 +311,7 @@ main {
     background: #5a6268;
 }
 
-/* 文章内容富文本样式 */
+/* ----- 文章内容富文本样式 ----- */
 .article-content pre {
     background: #f6f8fa;
     border-radius: 8px;
@@ -263,6 +324,78 @@ main {
     margin: 1.5em 0;
 }
 
+.article-content code {
+    background: #f0f2f5;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #d14;
+}
+
+.article-content pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: 0.9rem;
+}
+
+.article-content blockquote {
+    margin: 1.5em 0;
+    padding: 1em 1.5em;
+    background: #f9fafc;
+    border-left: 4px solid #10b981;
+    border-radius: 0 8px 8px 0;
+    color: #2c3e50;
+    font-style: normal;
+}
+
+.article-content blockquote p {
+    margin: 0.5em 0;
+}
+
+.article-content hr {
+    border: none;
+    border-top: 2px dashed #d0d7de;
+    margin: 2em 0;
+}
+
+.article-content img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.article-content h2 {
+    margin-top: 2em;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5em;
+}
+
+.article-content h3 {
+    margin-top: 1.5em;
+    color: #2d3748;
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 1.8em;
+}
+
+.article-content li {
+    margin: 0.5em 0;
+}
+
+.article-content a {
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.article-content a:hover {
+    text-decoration: underline;
+}
+
+/* ----- 评论区域（留言板） ----- */
 .comment-widget {
     margin-top: 2.5rem;
     padding: 1.2rem;
@@ -341,7 +474,7 @@ main {
 }
 
 .comment-widget .comment-submit {
-    background: #11cb5f;
+    background: #0f9d58;
     border: 0;
     color: white;
     padding: 0.65rem 1rem;
@@ -350,7 +483,11 @@ main {
     transition: background-color 0.2s ease;
 }
 
-/* Giscus 评论区样式 */
+.comment-widget .comment-submit:hover {
+    background: #0b7a44;
+}
+
+/* ----- Giscus 评论区容器 ----- */
 #comments {
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -368,82 +505,7 @@ main {
     border: none;
 }
 
-.comment-widget .comment-submit:hover {
-    background: #0fa84c;
-}
-
-.article-content code {
-    background: #f0f2f5;
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 0.9em;
-    color: #d14;
-}
-
-.article-content pre code {
-    background: none;
-    padding: 0;
-    color: inherit;
-    font-size: 0.9rem;
-}
-
-.article-content blockquote {
-    margin: 1.5em 0;
-    padding: 1em 1.5em;
-    background: #f9fafc;
-    border-left: 4px solid #10b981;
-    border-radius: 0 8px 8px 0;
-    color: #2c3e50;
-    font-style: normal;
-}
-
-.article-content blockquote p {
-    margin: 0.5em 0;
-}
-
-.article-content hr {
-    border: none;
-    border-top: 2px dashed #d0d7de;
-    margin: 2em 0;
-}
-
-.article-content img {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.article-content h2 {
-    margin-top: 2em;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 0.5em;
-}
-
-.article-content h3 {
-    margin-top: 1.5em;
-    color: #2d3748;
-}
-
-.article-content ul,
-.article-content ol {
-    padding-left: 1.8em;
-}
-
-.article-content li {
-    margin: 0.5em 0;
-}
-
-.article-content a {
-    color: #10b981;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.article-content a:hover {
-    text-decoration: underline;
-}
-
-/* 页脚通用样式 */
+/* ----- 页脚（黑色背景，白色文字） ----- */
 footer {
     background-color: #000000;
     color: #ffffff;
@@ -469,82 +531,44 @@ footer a {
     text-decoration: none;
 }
 
-/* ========== 移动端优化 ========== */
+footer a:hover {
+    color: #0f9d58;
+}
+
+/* ========================================
+   移动端响应式优化
+   ======================================== */
 @media screen and (max-width: 768px) {
-    /* 导航菜单移动端样式 */
-    header ul {
-        display: none;
-        position: absolute;
-        top: 80px;
-        left: 0;
-        width: 100%;
-        background: black;
-        flex-direction: column;
-        padding: 10px 0;
-        z-index: 1000;
-    }
-
-    header ul.show {
-        display: flex;
-    }
-
-    header li {
-        display: block;
-        margin: 0;
-        text-align: center;
-        padding: 10px 0;
-    }
-
-    header h1 {
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 1.3rem;
-    }
-
-    .menu {
-        display: block;
-        background-color: transparent;
-        color: white;
-        font-size: 24px;
-        position: absolute;
-        top: 15px;
-        left: 20px;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        z-index: 1001;
-    }
-
-    /* 原有文章内容移动端样式 */
+    /* 文章标题 */
     .article-title {
         font-size: 2rem;
     }
-    
+
     .article-content {
         padding: 1.5rem;
         margin: 0 1rem;
     }
-    
+
     .article-meta {
         flex-direction: column;
         gap: 0.5rem;
         align-items: center;
     }
-    
+
     .features-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .article-actions {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .action-btn {
         width: 200px;
         justify-content: center;
     }
-    
+
     main {
         padding: 1rem 0.5rem;
     }
@@ -554,16 +578,16 @@ footer a {
     .article-title {
         font-size: 1.75rem;
     }
-    
+
     .article-content {
         padding: 1rem;
         margin: 0 0.5rem;
     }
-    
+
     .section-title {
         font-size: 1.25rem;
     }
-    
+
     .article-text {
         font-size: 1rem;
     }
