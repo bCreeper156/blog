@@ -1,29 +1,21 @@
+// ========================================
+// 加载进度条 - 事件驱动重构版
+// ========================================
 (function() {
-    const loaderWrapId = 'gh-loader-wrap';
-    const loaderId = 'gh-loader';
-    const loaderTipId = 'gh-loader-tip';
+    'use strict';
 
-    function createLoaderElements() {
-        if (document.getElementById(loaderWrapId)) return;
+    const wrap = document.getElementById('gh-loader-wrap');
+    const bar = document.getElementById('gh-loader');
+    const tip = document.getElementById('gh-loader-tip');
 
-        const wrap = document.createElement('div');
-        wrap.id = loaderWrapId;
-        wrap.innerHTML = '<div id="'+loaderId+'"></div>';
+    if (!wrap || !bar || !tip) return;
 
-        const tip = document.createElement('div');
-        tip.id = loaderTipId;
-        tip.textContent = '加载中 0%';
+    let progress = 0;
+    let targetProgress = 0;
+    let animationFrame = null;
 
-        document.documentElement.appendChild(wrap);
-        document.documentElement.appendChild(tip);
-    }
-
-    function setProgress(value, text) {
-        const bar = document.getElementById(loaderId);
-        const wrap = document.getElementById(loaderWrapId);
-        const tip = document.getElementById(loaderTipId);
-        if (!bar || !wrap || !tip) return;
-
+    // 更新进度条显示
+    function updateDisplay(value, text) {
         const pct = Math.min(100, Math.max(0, Math.round(value)));
         bar.style.width = pct + '%';
         tip.textContent = text || `加载中 ${pct}%`;
@@ -37,43 +29,53 @@
         }
     }
 
-    function getProgressByResources() {
-        const resources = performance.getEntriesByType('resource') || [];
-        if (resources.length === 0) return 0;
-        const loadedCount = resources.filter(r => r.responseEnd > 0).length;
-        return Math.round((loadedCount / resources.length) * 70);
+    // 平滑过渡到目标进度
+    function animateTo(target) {
+        targetProgress = Math.min(100, Math.max(0, target));
+        if (animationFrame) cancelAnimationFrame(animationFrame);
+
+        function step() {
+            const diff = targetProgress - progress;
+            if (Math.abs(diff) < 0.5) {
+                progress = targetProgress;
+                updateDisplay(progress);
+                return;
+            }
+            // 缓动前进：每次移动剩余距离的 20%
+            progress += diff * 0.2;
+            updateDisplay(progress);
+            animationFrame = requestAnimationFrame(step);
+        }
+        step();
     }
 
-    function updateLoader() {
+    // 根据文档状态更新进度
+    function updateByState() {
         const state = document.readyState;
         if (state === 'loading') {
-            setProgress(8, '开始加载页面...');
+            animateTo(20);
         } else if (state === 'interactive') {
-            const p = Math.max(35, getProgressByResources());
-            setProgress(p, `DOM 已就绪 ${p}%`);
+            animateTo(60);
         } else if (state === 'complete') {
-            setProgress(94, '资源加载中...');
+            animateTo(90);
         }
     }
 
-    createLoaderElements();
-    updateLoader();
-    const interval = setInterval(() => {
-        updateLoader();
-        if (document.readyState === 'complete') {
-            clearInterval(interval);
-        }
-    }, 100);
+    // 监听文档状态变化
+    document.addEventListener('readystatechange', updateByState);
 
-    window.addEventListener('load', () => {
-        setProgress(100, '加载完成，欢迎回来！');
-        setTimeout(() => {
-            const wrap = document.getElementById(loaderWrapId);
-            const tip = document.getElementById(loaderTipId);
-            if(wrap) wrap.classList.add('hide');
-            if(tip) tip.classList.remove('show');
-        }, 260);
+    // 页面完全加载后，进度到 100% 并隐藏
+    window.addEventListener('load', function() {
+        animateTo(100);
+        // 延迟隐藏，让用户看到完成状态
+        setTimeout(function() {
+            wrap.classList.add('hide');
+            tip.classList.remove('show');
+        }, 400);
     });
+
+    // 初始状态
+    updateByState();
 })();
 
 // 移动端菜单功能
