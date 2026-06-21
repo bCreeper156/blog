@@ -1,4 +1,38 @@
-/* 通用重置和基础样式 */
+/* ========================================
+   2026 Google Material 3 风格 - common.css
+   白色导航栏 · 黑色文字 · 绿色悬停
+   ======================================== */
+
+:root {
+    /* ----- 品牌色 ----- */
+    --md-primary: #0f9d58;
+    --md-primary-hover: #0b7a44;
+    --md-primary-container: #e6f4ed;
+    --md-primary-on-container: #0a2e1a;
+
+    /* ----- 表面与背景 ----- */
+    --md-surface: #f8f9fa;
+    --md-surface-container: #ffffff;
+
+    /* ----- 文字颜色 ----- */
+    --md-on-surface: #1f1f1f;
+    --md-on-surface-variant: #5f6368;
+    --md-on-primary: #ffffff;
+    --md-on-nav: #000000;
+
+    /* ----- 阴影与轮廓 ----- */
+    --md-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --md-shadow-md: 0 4px 20px -4px rgba(0, 0, 0, 0.06);
+    --md-shadow-lg: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --md-shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+    /* ----- 形状 ----- */
+    --md-radius-card: 16px;
+    --md-radius-btn: 30px;
+    --md-radius-pill: 999px;
+}
+
+/* ----- 全局重置 ----- */
 * {
     padding: 0;
     margin: 0;
@@ -7,36 +41,35 @@
 
 html, body {
     height: 100%;
-    overflow-x: hidden; /* 防止水平滚动 */
+    overflow-x: hidden;
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    position: relative;
+    background-color: var(--md-surface);
+    font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--md-on-surface);
+    line-height: 1.5;
 }
 
-/* 通用重置和基础样式 */
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+/* ----- 通用链接 ----- */
+a {
+    color: var(--md-primary);
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-html, body {
-    height: 100%;
+a:hover {
+    color: var(--md-primary-hover);
+    text-decoration: underline;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* 头部导航通用样式 */
+/* ----- 导航栏（白色背景，黑色文字，绿色悬停） ----- */
 header {
-    background-color: black;
+    background: var(--md-surface-container);
+    box-shadow: var(--md-shadow-sm);
     height: 80px;
     width: 100%;
     position: relative;
@@ -44,13 +77,18 @@ header {
 }
 
 header h1 {
-    color: white;
     position: absolute;
     left: 120px;
     top: 0;
     line-height: 80px;
     font-size: 1.5rem;
+    font-weight: 500;
     margin: 0;
+}
+
+header h1 a {
+    color: var(--md-on-nav);
+    text-decoration: none;
 }
 
 header ul {
@@ -69,20 +107,28 @@ header li {
 }
 
 header a {
-    color: white;
-    text-decoration: none;
+    color: var(--md-on-nav);
     font-weight: 500;
+    transition: color 0.2s;
 }
 
 header a:hover {
-    color: #11cb5f;
+    color: var(--md-primary);
+    text-decoration: none;
 }
 
 .menu {
     display: none;
+    background: transparent;
+    color: var(--md-on-nav);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001;
 }
 
-/* 移动端响应式 */
+/* ----- 移动端菜单（白色背景，黑色文字） ----- */
 @media screen and (max-width: 768px) {
     header ul {
         display: none;
@@ -90,59 +136,128 @@ header a:hover {
         top: 80px;
         left: 0;
         width: 100%;
-        background: black;
+        background: var(--md-surface-container);
         flex-direction: column;
         padding: 10px 0;
         z-index: 1000;
+        box-shadow: var(--md-shadow-lg);
     }
-    
+
     header ul.show {
         display: flex;
     }
-    
+
     header li {
         display: block;
         margin: 0;
         text-align: center;
         padding: 10px 0;
     }
-    
+
     header h1 {
         left: 50%;
         transform: translateX(-50%);
         font-size: 1.3rem;
     }
-    
+
     .menu {
         display: block;
-        background-color: transparent;
-        color: white;
-        font-size: 24px;
         position: absolute;
         top: 15px;
         left: 20px;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        z-index: 1001;
+        color: var(--md-on-nav);
+    }
+
+    header a {
+        color: var(--md-on-nav);
+    }
+
+    header a:hover {
+        color: var(--md-primary);
+        text-decoration: none;
     }
 }
 
-/* 页脚通用样式 */
-footer a{
-    background-color: #000000;
-    color: #ffffff;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
+/* ----- 通用卡片 ----- */
+.card {
+    background: var(--md-surface-container);
+    border: none;
+    border-radius: var(--md-radius-card);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--md-shadow-md);
+}
+
+.card h3 {
+    color: var(--md-on-surface);
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.card p,
+.card div {
+    color: var(--md-on-surface-variant);
+}
+
+/* ----- 页脚 ----- */
+footer {
     margin-top: auto;
+    background: var(--md-surface-container);
+    border: none;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.02);
+    border-radius: 0 0 var(--md-radius-card) var(--md-radius-card);
+    padding: 16px 24px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--md-on-surface-variant);
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
     flex-shrink: 0;
+}
+
+footer a {
+    color: var(--md-on-surface-variant);
     text-decoration: none;
 }
 
-/* 通用顶部加载条（GitHub 风格） */
+footer a:hover {
+    color: var(--md-primary);
+    text-decoration: underline;
+}
+
+/* ----- 置顶按钮 ----- */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--md-surface-container);
+    border: none;
+    box-shadow: var(--md-shadow-lg);
+    border-radius: var(--md-radius-btn);
+    padding: 10px 16px;
+    font-size: 14px;
+    color: var(--md-on-surface-variant);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, background 0.2s, color 0.2s, transform 0.2s;
+    z-index: 999;
+}
+
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#back-to-top:hover {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+    transform: translateY(-2px);
+}
+
+/* ----- 加载进度条 ----- */
 #gh-loader-wrap {
     position: fixed;
     top: 0;
@@ -151,29 +266,30 @@ footer a{
     height: 4px;
     z-index: 9999;
     pointer-events: none;
-    transform: translateZ(0);
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.02);
     transition: opacity 0.25s ease;
 }
+
 #gh-loader-wrap.hide {
     opacity: 0;
-    pointer-events: none;
 }
+
 #gh-loader {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #2ea44f 0%, #2f8f3e 55%, #239638 100%);
-    box-shadow: 0 0 8px rgba(46, 164, 79, 0.8);
+    background: linear-gradient(90deg, var(--md-primary) 0%, var(--md-primary-hover) 100%);
+    box-shadow: 0 0 8px rgba(15, 157, 88, 0.5);
     transition: width 0.2s ease;
 }
+
 #gh-loader-tip {
     position: fixed;
     top: 6px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.62);
-    color: #fff;
-    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--md-on-primary);
+    border-radius: var(--md-radius-pill);
     font-size: 0.72rem;
     padding: 2px 9px;
     pointer-events: none;
@@ -181,6 +297,7 @@ footer a{
     opacity: 0;
     transition: opacity 0.2s ease;
 }
+
 #gh-loader-tip.show {
     opacity: 1;
 }
