@@ -5,446 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>156博客</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/common.js"></script>
-    <script src="js/nope.js"></script>
-    <style>
-        .github-loader-wrap {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            z-index: 9999;
-            pointer-events: none;
-            background: transparent;
-            opacity: 1;
-            transition: opacity 0.4s ease;
-        }
-        .github-loader-wrap.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .github-loader {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #2ea44f, #2f8f3e 55%, #239638);
-            box-shadow: 0 0 8px rgba(46, 164, 79, 0.8);
-            transition: width 0.2s ease;
-        }
-        .github-loader-tip {
-            position: fixed;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            font-size: 0.75rem;
-            border-radius: 999px;
-            padding: 4px 10px;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            pointer-events: none;
-        }
-        .github-loader-tip.show {
-            opacity: 1;
-        }
-
-        .about_me a {
-            color: #058eff;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        #andy-lau-thaw-progress.show {
-            display: block; /* 显示时设为block */
-        }
-        .progress-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-        .progress-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #1a56db;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .progress-title::before {
-            content: '⏳';
-            font-size: 1.2em;
-        }
-        #current-date {
-            font-size: 0.9em;
-            color: #6b7280;
-            background: #f3f4f6;
-            padding: 3px 10px;
-            border-radius: 20px;
-        }
-        .progress-bar-container {
-            height: 24px;
-            background-color: #e5e7eb;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 12px;
-            position: relative;
-        }
-        #progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #4facfe 0%, #00c6ff 50%, #00f2fe 100%);
-            border-radius: 12px;
-            transition: width 0.8s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-        }
-        .progress-stats {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.95em;
-            color: #4b5563;
-            margin-bottom: 15px;
-        }
-        #thaw-status {
-            text-align: center;
-            font-size: 1em;
-            min-height: 1.5em;
-            padding: 8px;
-            background-color: #fef3c7;
-            border-radius: 8px;
-            border-left: 4px solid #f59e0b;
-            color: #92400e;
-            margin-bottom: 15px;
-        }
-        .season-indicator {
-            background-color: #f0f9ff;
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 15px;
-            text-align: center;
-            border: 1px solid #dbeafe;
-            color: #1e40af;
-            font-weight: bold;
-        }
-        .season-indicator::before {
-            content: '❄️ ';
-        }
-        .event-highlight {
-            background-color: #f0f9ff;
-            border-radius: 8px;
-            padding: 12px;
-            border-left: 4px solid #3b82f6;
-            margin-top: 15px;
-        }
-        .event-highlight h4 {
-            margin-top: 0;
-            color: #1e40af;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .event-highlight h4::before {
-            content: '✨';
-        }
-        .countdown {
-            font-weight: bold;
-            color: #dc2626;
-        }
-        .footnote {
-            font-size: 0.8em;
-            color: #9ca3af;
-            text-align: center;
-            margin-top: 15px;
-            border-top: 1px dashed #d1d5db;
-            padding-top: 10px;
-        }
-    </style>
+    <script src="js/common.js" defer></script>
 </head>
 <body>
+
     <header>
-        <button class="menu">&#9776;</button>
-        <h1><a href="/index.html">156博客</a></h1>
+        <button class="menu">☰</button>
+        <h1><a href="/">156博客</a></h1>
         <nav>
             <ul>
-                <li><a href="/index.html">首页</a></li>
-                <li><a href="/blog.html">博客</a></li>
-                <li><a href="/link.html">链接</a></li>
-                <li><a href="/about.html">关于</a></li>
+                <li><a href="/">首页</a></li>
+                <li><a href="/blog">博客</a></li>
+                <li><a href="/link">链接</a></li>
+                <li><a href="/about">关于</a></li>
             </ul>
-        </nav>  
+        </nav>
     </header>
-    <div class="github-loader-wrap" id="githubLoaderWrap">
-        <div class="github-loader" id="githubLoader"></div>
+
+    <!-- 加载进度条（由 common.js 控制样式） -->
+    <div id="gh-loader-wrap">
+        <div id="gh-loader"></div>
     </div>
-    <div class="github-loader-tip" id="githubLoaderTip">加载中 0%</div>
-    <!-- 公告区 -->
-    <section class="Ad">
-        <p>156粉丝站即将上线，敬请期待！</p>
-    </section>
-    <!-- 刘德华解冻进度条组件 -->
-    <!-- <section class="ldhjd">
-        <div id="andy-lau-thaw-progress">
-            <div class="progress-header">
-                <div class="progress-title">刘德华年度解冻进度</div>
-                <div id="current-date">加载日期中...</div>
-            </div>
-            <div class="progress-bar-container">
-                <div id="progress-bar-fill">0%</div>
-            </div>
-            <div class="progress-stats">
-                <div>解冻进度: <span id="progress-percentage">0</span>%</div>
-                <div>春节倒计时: <span id="spring-festival-countdown">--</span> 天</div>
-            </div>
-            <div id="thaw-status">正在计算华仔的解冻状态...</div>
-            <div class="footnote">
-                * "解冻"梗源自刘德华歌曲《恭喜发财》每年春节前在各大场所循环播放的现象。进度条为趣味计算，并非官方内容。
-            </div>
-        </div>
-    </section> -->
+    <div id="gh-loader-tip">加载中 0%</div>
 
     <main>
+        <!-- 公告栏 -->
+        <section class="Ad">
+            <p>156粉丝站即将上线，敬请期待！</p>
+        </section>
+
+        <!-- 关于我 -->
         <section class="about_me">
             <img src="images/LOGO.png" alt="Creeper苦力怕i个人博客LOGO">
             <p>bilibili游戏区、科技区博主，爱玩游戏、编程</p>
-            <div class="social media">
-                <a href="/jump_warning.html?url=https://github.com/bCreeper156">GitHub</a> | 
-                <a href="/jump_warning.html?url=https://space.bilibili.com/3546378363996834">bilibili</a> | 
-                <a href="/jump_warning.html?url=https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">YouTube</a> |
-                <a href="/jump_warning.html?url=https://qm.qq.com/q/3xAA2pN0bm">QQ群</a> |
-                <a href="mailto://creeper156@qq.com">email</a> |
-                <a href="/jump_warning.html?url=http://ifdian.net/a/bcdogs156">爱发电</a>
+            <div class="social-media">
+                <a href="/jump_warning?url=https://github.com/bCreeper156">GitHub</a> |
+                <a href="/jump_warning?url=https://space.bilibili.com/3546378363996834">bilibili</a> |
+                <a href="/jump_warning?url=https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">YouTube</a> |
+                <a href="/jump_warning?url=https://qm.qq.com/q/3xAA2pN0bm">QQ群</a> |
+                <a href="mailto:creeper156@qq.com">email</a> |
+                <a href="/jump_warning?url=http://ifdian.net/a/bcdogs156">爱发电</a>
             </div>
         </section>
+
+        <!-- 精选文章 -->
         <section class="articles">
             <h1>精选文章</h1>
             <div class="highlight-box">
-                <h3><a href="articles/4/index.html">4.软件测评#3——Cloudreve</a></h3>
+                <h3><a href="/articles/4/">4.软件测评#3——Cloudreve</a></h3>
             </div>
-            <h1><a href="/software.html">更多软件</a></h1>
         </section>
+
+        <!-- 底部链接区 -->
         <section class="tar">
-            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog_old">想看我的老博客屎山？点击查看！</a>
-            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog">想看我的新博客源码？点击查看！</a>
+            <a href="/jump_warning?url=https://github.com/bCreeper156/blog_old">想看我的老博客屎山？点击查看！</a>
+            <a href="/jump_warning?url=https://github.com/bCreeper156/blog">想看我的新博客源码？点击查看！</a>
         </section>
     </main>
+
     <footer>
-        <p><a href ="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
+        <p><a href="/jump_warning?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
 
-    <!-- 刘德华解冻进度条脚本（原有） -->
-    <script>
-        // 原有刘德华进度条脚本（保持不变）
-        const config = {
-            targetSpringFestival: new Date('2026-02-17')
-        };
-
-        const progressBarFill = document.getElementById('progress-bar-fill');
-        const progressPercentage = document.getElementById('progress-percentage');
-        const springFestivalCountdown = document.getElementById('spring-festival-countdown');
-        const currentDateEl = document.getElementById('current-date');
-        const thawStatus = document.getElementById('thaw-status');
-        const specialEventContainer = document.getElementById('special-event');
-        const progressContainer = document.getElementById('andy-lau-thaw-progress');
-
-        function isThawSeason() {
-            const now = new Date();
-            const month = now.getMonth() + 1;
-            return month === 12 || month === 1 || month === 2;
-        }
-
-        function getLastYearSpringFestival() {
-            const currentYear = new Date().getFullYear();
-            return new Date(`${currentYear-1}-02-01`);
-        }
-
-        function calculateThawProgress() {
-            const now = new Date();
-            const startDate = getLastYearSpringFestival();
-            const endDate = config.targetSpringFestival;
-            const holidayDays = 7;
-            const holidayEndDate = new Date(endDate);
-            holidayEndDate.setDate(holidayEndDate.getDate() + holidayDays);
-            
-            if (now < endDate) {
-                if (now < startDate) return 0;
-                const totalDuration = endDate - startDate;
-                const elapsedDuration = now - startDate;
-                const progress = Math.min(100, Math.max(0, (elapsedDuration / totalDuration) * 100));
-                return Math.round(progress * 10) / 10;
-            } else if (now <= holidayEndDate) {
-                return 100;
-            } else {
-                return 0;
-            }
-        }
-
-        function calculateCountdown() {
-            const now = new Date();
-            const targetDate = config.targetSpringFestival;
-            const holidayDays = 7;
-            const holidayEndDate = new Date(targetDate);
-            holidayEndDate.setDate(holidayEndDate.getDate() + holidayDays);
-            
-            if (now < targetDate) {
-                const timeDiff = targetDate - now;
-                return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            } else if (now <= holidayEndDate) {
-                return "假期中";
-            } else {
-                const nextSpringFestival = new Date(targetDate);
-                nextSpringFestival.setFullYear(nextSpringFestival.getFullYear() + 1);
-                const timeDiff = nextSpringFestival - now;
-                return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            }
-        }
-
-        function getThawStatusDescription(progress) {
-            const now = new Date();
-            const endDate = config.targetSpringFestival;
-            const holidayDays = 7;
-            const holidayEndDate = new Date(endDate);
-            holidayEndDate.setDate(holidayEndDate.getDate() + holidayDays);
-            
-            if (now >= endDate && now <= holidayEndDate) {
-                return "🎊 春节假期中！《恭喜发财》正在各大商场热播，华仔全功率输出！";
-            }
-            
-            if (progress === 0) return "🔄 华仔尚在冰封中，全年休假模式开启。";
-            if (progress < 20) return "❄️ 解冻初期，华仔偶尔在记忆中浮现。";
-            if (progress < 40) return "🧊 解冻进行中，超市尚未接到《恭喜发财》播放通知。";
-            if (progress < 60) return "🌬️ 解冻近半，有网友开始感叹时间飞快。";
-            if (progress < 80) return "💧 解冻加速，部分地区可能开始出现年味预热。";
-            if (progress < 95) return "🔥 解冻冲刺！华仔即将去超市上班，商场开始筹备春节歌单。";
-            if (progress < 100) return "🚨 高度解冻！《恭喜发财》已陆续登陆各大卖场，年味十足。";
-            if (progress >= 100) return "🎉 完全解冻！华仔正式上岗，《恭喜发财》响彻大街小巷，春节到！";
-            return "监测解冻状态中...";
-        }
-
-        function checkSpecialEvents() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            const event = config.specialEvents?.find(e => e.date === todayStr);
-            if (event && specialEventContainer) {
-                specialEventContainer.innerHTML = `
-                    <h4>${event.title}</h4>
-                    <p>${event.description}</p>
-                `;
-                specialEventContainer.style.display = 'block';
-            } else if (specialEventContainer) {
-                specialEventContainer.style.display = 'none';
-            }
-        }
-
-        function toggleProgressVisibility() {
-            const isSeason = isThawSeason();
-            if (isSeason) {
-                progressContainer.classList.add('show');
-                return true;
-            } else {
-                progressContainer.classList.remove('show');
-                return false;
-            }
-        }
-
-        function updateAllDisplays() {
-            const isSeason = toggleProgressVisibility();
-            if (!isSeason) return;
-            
-            const progress = calculateThawProgress();
-            const countdown = calculateCountdown();
-            const now = new Date();
-            
-            progressBarFill.style.width = `${progress}%`;
-            progressBarFill.textContent = `${progress}%`;
-            progressPercentage.textContent = progress;
-            springFestivalCountdown.textContent = countdown;
-            currentDateEl.textContent = now.toLocaleDateString('zh-CN', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long'
-            });
-            thawStatus.textContent = getThawStatusDescription(progress);
-            checkSpecialEvents();
-            
-            if (progress >= 100) {
-                progressBarFill.style.background = 'linear-gradient(90deg, #f97316 0%, #eab308 50%, #84cc16 100%)';
-                thawStatus.style.backgroundColor = '#dcfce7';
-                thawStatus.style.borderLeftColor = '#16a34a';
-                thawStatus.style.color = '#166534';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            updateAllDisplays();
-            setInterval(updateAllDisplays, 3600000);
-            
-            const now = new Date();
-            const millisecondsUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0) - now;
-            setTimeout(function() {
-                updateAllDisplays();
-                setInterval(updateAllDisplays, 86400000);
-            }, millisecondsUntilMidnight);
-        });
-    </script>
-    <script>
-        (function() {
-            const loaderWrap = document.getElementById('githubLoaderWrap');
-            const loaderBar = document.getElementById('githubLoader');
-            const loaderTip = document.getElementById('githubLoaderTip');
-
-            function setLoaderProgress(percent, text) {
-                const value = Math.min(100, Math.max(0, percent));
-                loaderBar.style.width = value + '%';
-                loaderTip.textContent = text || `加载中 ${value}%`;
-                if (value >= 100) {
-                    loaderWrap.classList.add('hide');
-                    loaderTip.classList.remove('show');
-                } else {
-                    loaderTip.classList.add('show');
-                }
-            }
-
-            function getEstimatedProgress() {
-                const resources = performance.getEntriesByType('resource') || [];
-                if (resources.length === 0) return 0;
-                const loaded = resources.filter(res => res.responseEnd > 0).length;
-                return Math.round((loaded / resources.length) * 80);
-            }
-
-            function runLoader() {
-                const readyState = document.readyState;
-                if (readyState === 'loading') {
-                    setLoaderProgress(10, '开始加载页面...');
-                } else if (readyState === 'interactive') {
-                    const p = Math.max(35, getEstimatedProgress());
-                    setLoaderProgress(p, `DOM已就绪 ${p}%`);
-                } else if (readyState === 'complete') {
-                    setLoaderProgress(95, '正在完成加载...');
-                }
-            }
-
-            const poller = window.setInterval(function() {
-                runLoader();
-                if (document.readyState === 'complete') {
-                    clearInterval(poller);
-                }
-            }, 80);
-
-            window.addEventListener('load', function() {
-                setLoaderProgress(100, '加载完成，欢迎回来！');
-                window.setTimeout(() => {
-                    loaderWrap.classList.add('hide');
-                    loaderTip.classList.remove('show');
-                }, 350);
-            });
-        })();
-    </script>
 </body>
 </html>
