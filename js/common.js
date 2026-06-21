@@ -4,78 +4,108 @@
 (function() {
     'use strict';
 
-    const wrap = document.getElementById('gh-loader-wrap');
-    const bar = document.getElementById('gh-loader');
-    const tip = document.getElementById('gh-loader-tip');
+    function initProgressBar() {
+        const wrap = document.getElementById('gh-loader-wrap');
+        const bar = document.getElementById('gh-loader');
+        const tip = document.getElementById('gh-loader-tip');
 
-    if (!wrap || !bar || !tip) return;
+        if (!wrap || !bar || !tip) return;
 
-    let progress = 0;
-    let targetProgress = 0;
-    let animationFrame = null;
+        let progress = 0;
+        let targetProgress = 0;
+        let animationFrame = null;
+        let hideTimer = null;
 
-    // 更新进度条显示
-    function updateDisplay(value, text) {
-        const pct = Math.min(100, Math.max(0, Math.round(value)));
-        bar.style.width = pct + '%';
-        tip.textContent = text || `加载中 ${pct}%`;
-
-        if (pct >= 100) {
-            wrap.classList.add('hide');
-            tip.classList.remove('show');
-        } else {
+        function showLoader() {
             wrap.classList.remove('hide');
             tip.classList.add('show');
         }
-    }
 
-    // 平滑过渡到目标进度
-    function animateTo(target) {
-        targetProgress = Math.min(100, Math.max(0, target));
-        if (animationFrame) cancelAnimationFrame(animationFrame);
-
-        function step() {
-            const diff = targetProgress - progress;
-            if (Math.abs(diff) < 0.5) {
-                progress = targetProgress;
-                updateDisplay(progress);
-                return;
-            }
-            // 缓动前进：每次移动剩余距离的 20%
-            progress += diff * 0.2;
-            updateDisplay(progress);
-            animationFrame = requestAnimationFrame(step);
-        }
-        step();
-    }
-
-    // 根据文档状态更新进度
-    function updateByState() {
-        const state = document.readyState;
-        if (state === 'loading') {
-            animateTo(20);
-        } else if (state === 'interactive') {
-            animateTo(60);
-        } else if (state === 'complete') {
-            animateTo(90);
-        }
-    }
-
-    // 监听文档状态变化
-    document.addEventListener('readystatechange', updateByState);
-
-    // 页面完全加载后，进度到 100% 并隐藏
-    window.addEventListener('load', function() {
-        animateTo(100);
-        // 延迟隐藏，让用户看到完成状态
-        setTimeout(function() {
+        function hideLoader() {
             wrap.classList.add('hide');
             tip.classList.remove('show');
-        }, 400);
-    });
+        }
 
-    // 初始状态
-    updateByState();
+        function updateDisplay(value, text) {
+            const pct = Math.min(100, Math.max(0, Math.round(value)));
+            bar.style.width = pct + '%';
+            tip.textContent = text || `加载中 ${pct}%`;
+
+            if (pct >= 100) {
+                hideLoader();
+            } else {
+                showLoader();
+            }
+        }
+
+        function animateTo(target) {
+            targetProgress = Math.min(100, Math.max(0, target));
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+
+            function step() {
+                const diff = targetProgress - progress;
+                if (Math.abs(diff) < 0.5) {
+                    progress = targetProgress;
+                    updateDisplay(progress);
+
+                    if (progress >= 100) {
+                        if (hideTimer) clearTimeout(hideTimer);
+                        hideTimer = setTimeout(hideLoader, 400);
+                    }
+                    return;
+                }
+
+                progress += diff * 0.2;
+                updateDisplay(progress);
+                animationFrame = requestAnimationFrame(step);
+            }
+
+            step();
+        }
+
+        function resetProgress() {
+            progress = 0;
+            targetProgress = 0;
+            bar.style.width = '0%';
+            hideLoader();
+            if (hideTimer) {
+                clearTimeout(hideTimer);
+                hideTimer = null;
+            }
+        }
+
+        function updateByState() {
+            const state = document.readyState;
+            if (state === 'loading') {
+                animateTo(20);
+            } else if (state === 'interactive') {
+                animateTo(60);
+            } else if (state === 'complete') {
+                animateTo(90);
+            }
+        }
+
+        document.addEventListener('readystatechange', updateByState);
+
+        window.addEventListener('load', function() {
+            animateTo(100);
+        });
+
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                resetProgress();
+                animateTo(100);
+            }
+        });
+
+        updateByState();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initProgressBar, { once: true });
+    } else {
+        initProgressBar();
+    }
 })();
 
 // 移动端菜单功能
