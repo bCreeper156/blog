@@ -695,3 +695,52 @@ footer a:hover {
         max-width: 120px;
     }
 }
+/* ===== 加载进度条 ===== */
+:root {
+    --progress-color: #0f9d58;
+    --progress-shadow: rgba(15, 157, 88, 0.5);
+}
+
+#gh-loader-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 9999;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.02);
+    transition: opacity 0.3s ease;
+}
+
+#gh-loader-wrap.hide {
+    opacity: 0;
+}
+
+#gh-loader {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--progress-color) 0%, #0b7a44 100%);
+    box-shadow: 0 0 8px var(--progress-shadow);
+    transition: width 0.25s ease;
+}
+
+#gh-loader-tip {
+    position: fixed;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    padding: 2px 9px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+#gh-loader-tip.show {
+    opacity: 1;
+}
