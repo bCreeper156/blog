@@ -311,26 +311,37 @@ footer a:hover {
     transform: translateX(-50%) translateY(0);
 }
 
-// ========== 置顶按钮 ==========
-(function() {
-    'use strict';
+/* ===== 置顶按钮 ===== */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #0f9d58;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+    z-index: 1000;
+}
 
-    const btn = document.getElementById('back-to-top');
-    if (!btn) return;
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
 
-    // 滚动超过 300px 显示按钮
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            btn.classList.add('show');
-        } else {
-            btn.classList.remove('show');
-        }
-    });
+#back-to-top:hover {
+    background: #0b7a44;
+    transform: translateY(-3px);
+}
 
-    // 点击平滑回到顶部
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-})();
+#back-to-top:active {
+    transform: scale(0.95);
+}
