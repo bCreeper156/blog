@@ -138,6 +138,31 @@ document.addEventListener('DOMContentLoaded', function() {
     initCommentSection();
 });
 
+// ========== 置顶按钮 ==========
+(function() {
+    'use strict';
+
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    // 滚动超过 300px 显示按钮
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    });
+
+    // 点击平滑回到顶部
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+})();
+
+
 function initCommentSection() {
     // Giscus 会自动在具有 class="giscus" 的元素中加载评论
     // 无需额外操作
