@@ -1,6 +1,9 @@
 @import url('common.css');
 
-/* 首页特有样式 */
+/* ========================================
+   首页特有样式
+   ======================================== */
+
 main {
     flex: 1;
     padding: 20px;
@@ -9,16 +12,73 @@ main {
     width: 100%;
 }
 
+/* ========================================
+   精选文章 · 纯白 + 绿色细节
+   ======================================== */
+
 .articles {
-    background-color: yellowgreen;
-    color: white;
-    padding: 60px 0;
+    background: #ffffff;
+    color: #1f1f1f;
+    padding: 24px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 8px;
     margin: 20px 0;
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.06),
+                inset 0 0 0 1px rgba(15, 157, 88, 0.12);
+    transition: box-shadow 0.2s ease;
+    width: 100%;
+    max-width: 1200px;
 }
+
+.articles:hover {
+    box-shadow: 0 8px 30px -6px rgba(0, 0, 0, 0.10),
+                inset 0 0 0 1px rgba(15, 157, 88, 0.20);
+}
+
+.articles h1 {
+    color: #1f1f1f;
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #0f9d58;
+    display: inline-block;
+    align-self: flex-start;
+    width: auto;
+}
+
+.articles .highlight-box {
+    padding: 12px 0;
+    align-self: stretch;
+}
+
+.articles .highlight-box:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.articles .highlight-box h3 {
+    font-weight: 500;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.articles a {
+    color: #0f9d58;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.articles a:hover {
+    color: #0b7a44;
+    text-decoration: underline;
+}
+
+/* ========================================
+   其他首页模块（保持不变）
+   ======================================== */
 
 input::placeholder {
     color: white;
@@ -45,6 +105,7 @@ input:focus {
     margin-bottom: 1rem;
     border-radius: 8px;
 }
+
 .warning {
     background: white;
     padding: 2rem;
@@ -55,6 +116,7 @@ input:focus {
     align-items: center;
     justify-content: center;
 }
+
 .social-media {
     margin-top: 1rem;
 }
@@ -89,15 +151,18 @@ input:focus {
     font-weight: bold;
     font-size: 1.1rem;
 }
+
 .Ad p {
     color: white;
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1rem;
 }
+
 .Ad a:hover {
     text-decoration: underline;
 }
+
 .tar {
     display: flex;
     align-items: center;
@@ -120,15 +185,10 @@ input:focus {
 .tar a:hover {
     text-decoration: underline;
 }
-.articles a {
-    text-decoration: none;
-    color: inherit;
-    transition: color 0.3s;
-}
 
-.articles a:hover {
-    color: #2600ff;
-}
+/* ========================================
+   响应式设计
+   ======================================== */
 
 @media screen and (max-width: 768px) {
     main {
@@ -136,14 +196,10 @@ input:focus {
     }
     
     .articles {
-        padding: 40px 20px;
+        padding: 24px 20px;   /* 小屏内边距略减 */
     }
     
-    .articles input {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
+    /* 注意：原有的 .articles input 样式已删除，因为新设计无输入框 */
     
     .about_me {
         padding: 1.5rem;
