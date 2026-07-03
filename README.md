@@ -24,7 +24,7 @@
 
 想要看旧版源码？[点此](https://github.com/bCreeper156/blog_old)查看！
 
-新版展示页面/我的博客页面：[https://156blog.netlify.app](https://156blog.pages.dev)
+新版展示页面/我的博客页面：[https://156blog.pages.dev](https://156blog.pages.dev)
 
 如果您喜欢，希望你能给我的这个仓库一个Star，谢谢。
 
