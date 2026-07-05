@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>安全警告 - 156博客</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/common.css">
     <!-- 提前检查并跳转：如果是允许的站内域名则直接跳转，避免显示警告 -->
     <script>
         (function() {
@@ -178,7 +178,7 @@
 
         <div class="anniu" id="js-button-panel">
             <a href="#" id="cancelBtn" class="cancel-link">↩ 取消</a>
-            <a href="#" id="jumpBtn">访问网站 →</a>
+            <a href="#" id="jumpBtn" >访问网站 →</a>
         </div>
 
         <div id="js-extra-note" class="url-note">
@@ -252,7 +252,8 @@
                 targetDisplay.title = targetHref;
 
                 jumpBtn.href = targetHref;
-                jumpBtn.target = '_self';
+                jumpBtn.target = '_blank';
+                jumpBtn.rel = 'noopener noreferrer';
 
                 try {
                     const urlObj = new URL(targetHref);
@@ -270,13 +271,13 @@
                 extraNote.innerHTML = '⚠️ 链接无效或参数错误，建议返回首页。';
             }
 
-            // 取消按钮：返回上一页或首页
+            // 取消按钮：优先返回上一页；若没有可回退历史，则回到首页
             cancelBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                if (document.referrer && document.referrer !== '') {
-                    history.back();
+                if (window.history.length > 1) {
+                    window.history.back();
                 } else {
-                    window.location.href = 'index.html';
+                    window.location.href = '/index.html';
                 }
             });
 

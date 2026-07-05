@@ -16,6 +16,69 @@
     100% { transform: translateX(200%) skewX(-20deg); }
 }
 
+/* ----- 置顶按钮 ----- */
+#back-to-top {
+    position: fixed !important;
+    right: 24px !important;
+    bottom: 88px !important;
+    z-index: 2147483647 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 56px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #0f9d58 0%, #0b7a44 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 12px 24px rgba(15, 157, 88, 0.22) !important;
+    cursor: pointer !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(12px) scale(0.96) !important;
+    transition: opacity 0.2s ease, transform 0.25s ease, width 0.25s ease, padding 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+#back-to-top.show {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+#back-to-top:hover,
+#back-to-top:focus-visible {
+    width: 128px !important;
+    padding: 0 14px !important;
+    transform: translateX(-6px) translateY(0) scale(1) !important;
+    box-shadow: 0 14px 28px rgba(15, 157, 88, 0.24) !important;
+}
+
+#back-to-top__icon {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+}
+
+#back-to-top__label {
+    display: inline-block !important;
+    width: 0 !important;
+    margin-left: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    transition: width 0.25s ease, opacity 0.25s ease, margin-left 0.25s ease !important;
+}
+
+#back-to-top:hover #back-to-top__label,
+#back-to-top:focus-visible #back-to-top__label {
+    width: auto !important;
+    margin-left: 0.45rem !important;
+    opacity: 1 !important;
+}
+
 /* ----- 进度条文本（仅用于加载状态） ----- */
 .progress-text {
     position: fixed;

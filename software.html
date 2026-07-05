@@ -4,11 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>软件推荐 - 156博客</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/software.css">
-    <script src="js/common.js"></script>
-    <script src="js/software_list.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/software.css">
+    <script src="/js/common.js"></script>
+    <script src="/js/software_list.js"></script>
     <script src="js/nope.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            if (!document.getElementById('back-to-top')) {
+                const btn = document.createElement('button');
+                btn.id = 'back-to-top';
+                btn.type = 'button';
+                btn.setAttribute('aria-label', '点击置顶');
+                btn.title = '点击置顶';
+                btn.innerHTML = '<span id="back-to-top__icon">↑</span><span id="back-to-top__label">点击置顶</span>';
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                document.body.appendChild(btn);
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -28,8 +45,7 @@
         <div class="software-panel">
             <div class="software-header">
                 <div>
-                    <h2>软件推荐</h2>
-                    <p>Google 风格的列表体验，支持缩略图与详细信息两种视图，同时可以搜索当前页面内容。</p>
+                    <h2>视频中的软件/156软件推荐</h2>
                 </div>
                 <div class="view-switch" role="group" aria-label="视图切换">
                     <button class="view-btn active" type="button" data-view="grid">缩略图模式</button>
@@ -57,7 +73,5 @@
     <footer>
         <p><a href ="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
-    <!-- 置顶按钮 -->
-    <button id="back-to-top" title="返回顶部">↑</button>
 </body>
 </html>

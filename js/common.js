@@ -108,25 +108,35 @@
     }
 })();
 
-// 移动端菜单功能
-
+// ========== 移动端菜单 ==========
 document.addEventListener('DOMContentLoaded', function() {
     const menuButton = document.querySelector('.menu');
     const nav = document.querySelector('nav ul');
-    
+
     if (menuButton && nav) {
-        menuButton.addEventListener('click', function() {
+        menuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
             nav.classList.toggle('show');
         });
-        
-        // 点击菜单外区域关闭菜单
+
+        // 点击菜单外区域关闭
         document.addEventListener('click', function(e) {
             if (!e.target.closest('header')) {
                 nav.classList.remove('show');
             }
         });
     }
-    
+
+    const announcement = document.querySelector('.Ad');
+    const closeButton = document.querySelector('.Ad__close');
+
+    if (announcement && closeButton) {
+        closeButton.addEventListener('click', function() {
+            announcement.classList.add('is-hidden');
+            announcement.setAttribute('aria-hidden', 'true');
+        });
+    }
+
     // 页面加载动画
     document.body.style.opacity = '0';
     setTimeout(() => {
@@ -134,91 +144,181 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.opacity = '1';
     }, 100);
 
-    // 评论区本地存储 + fallback
+    // 评论区初始化（Giscus 自动加载）
     initCommentSection();
 });
 
-// ========== 置顶按钮 ==========
-(function() {
-    'use strict';
-
-    const btn = document.getElementById('back-to-top');
-    if (!btn) return;
-
-    // 滚动超过 300px 显示按钮
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            btn.classList.add('show');
-        } else {
-            btn.classList.remove('show');
-        }
-    });
-
-    // 点击平滑回到顶部
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-})();
-
-
+// ========== 评论占位函数 ==========
 function initCommentSection() {
-    // Giscus 会自动在具有 class="giscus" 的元素中加载评论
-    // 无需额外操作
+    // Giscus 会自动加载，无需额外操作
 }
-// ==================== 自动给所有外部链接添加安全跳转 ====================
+
+// ========== 置顶按钮（统一创建 + 事件绑定） ==========
 (function() {
     'use strict';
 
-    const JUMP_BASE = '/jump_warning?url=';
-    // 判断是否为需要处理的链接（http/https 且不是站内）
-    function shouldProcess(href) {
-        if (!href) return false;
-        // 已经是跳转链接，跳过
-        if (href.startsWith(JUMP_BASE)) return false;
-        // 站内链接：以 '/' 开头、'#'、javascript:、mailto:、tel: 等
-        if (href.startsWith('/') || href.startsWith('#') || href.startsWith('javascript:') ||
-            href.startsWith('mailto:') || href.startsWith('tel:')) {
-            return false;
-        }
-        // 只处理 http:// 或 https:// 开头的链接
-        return (href.startsWith('http://') || href.startsWith('https://'));
+    function isHtmlDocument() {
+        return !!(document.documentElement && document.documentElement.nodeName === 'HTML');
     }
 
-    // 处理单个链接元素
+    function ensureBackToTopStyles() {
+        if (document.getElementById('back-to-top-style')) return;
+
+        const style = document.createElement('style');
+        style.id = 'back-to-top-style';
+        style.textContent = `
+            #back-to-top {
+                position: fixed !important;
+                right: 24px !important;
+                bottom: 88px !important;
+                z-index: 2147483647 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 56px !important;
+                height: 56px !important;
+                padding: 0 !important;
+                border: none !important;
+                border-radius: 999px !important;
+                background: linear-gradient(135deg, #0f9d58 0%, #0b7a44 100%) !important;
+                color: #ffffff !important;
+                box-shadow: 0 12px 24px rgba(15, 157, 88, 0.22) !important;
+                cursor: pointer !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+                transform: translateY(12px) scale(0.96) !important;
+                transition: opacity 0.2s ease, transform 0.25s ease, width 0.25s ease, padding 0.25s ease, box-shadow 0.25s ease !important;
+            }
+            #back-to-top.show {
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: translateY(0) scale(1) !important;
+            }
+            #back-to-top:hover,
+            #back-to-top:focus-visible {
+                width: 128px !important;
+                padding: 0 14px !important;
+                transform: translateX(-6px) translateY(0) scale(1) !important;
+                box-shadow: 0 14px 28px rgba(15, 157, 88, 0.24) !important;
+            }
+            #back-to-top__icon {
+                font-size: 1.2rem !important;
+                font-weight: 700 !important;
+                line-height: 1 !important;
+            }
+            #back-to-top__label {
+                display: inline-block !important;
+                width: 0 !important;
+                margin-left: 0 !important;
+                opacity: 0 !important;
+                overflow: hidden !important;
+                white-space: nowrap !important;
+                font-size: 0.95rem !important;
+                font-weight: 600 !important;
+                transition: width 0.25s ease, opacity 0.25s ease, margin-left 0.25s ease !important;
+            }
+            #back-to-top:hover #back-to-top__label,
+            #back-to-top:focus-visible #back-to-top__label {
+                width: auto !important;
+                margin-left: 0.45rem !important;
+                opacity: 1 !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    function initBackToTop() {
+        if (!isHtmlDocument()) return;
+
+        ensureBackToTopStyles();
+
+        let btn = document.getElementById('back-to-top');
+        if (btn && btn.parentNode !== document.body) {
+            document.body.appendChild(btn);
+        }
+        if (!btn) {
+            btn = document.createElement('button');
+            btn.id = 'back-to-top';
+            btn.type = 'button';
+            btn.setAttribute('aria-label', '点击置顶');
+            btn.title = '点击置顶';
+            btn.innerHTML = '<span id="back-to-top__icon">↑</span><span id="back-to-top__label">点击置顶</span>';
+            document.body.appendChild(btn);
+        }
+
+        function updateVisibility() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            btn.classList.toggle('show', scrollTop > 200);
+        }
+
+        function scrollToTop(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        btn.removeEventListener('click', scrollToTop);
+        btn.addEventListener('click', scrollToTop);
+
+        window.addEventListener('scroll', updateVisibility, { passive: true });
+        window.addEventListener('load', updateVisibility);
+        window.addEventListener('resize', updateVisibility);
+        updateVisibility();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBackToTop, { once: true });
+    } else {
+        initBackToTop();
+    }
+})();
+
+// ========== 自动给所有外部链接添加安全跳转 ==========
+(function() {
+    'use strict';
+
+    const JUMP_BASE = '/jump_warning.html?url=';
+
+    function shouldProcess(href) {
+        if (!href) return false;
+        if (href.startsWith(JUMP_BASE)) return false;        // ① 已经是跳转链接 → 跳过
+        if (href.startsWith('/jump_warning.html') || href.includes('jump_warning.html')) return false;
+        if (href.startsWith('/') || href.startsWith('#') ||
+            href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+            return false;                                    // ② 站内链接/特殊协议 → 跳过
+        }
+        return (href.startsWith('http://') || href.startsWith('https://')); // ③ 仅处理外部 HTTP/HTTPS 链接
+    }
+
     function processLink(link) {
         let href = link.getAttribute('href');
         if (!shouldProcess(href)) return;
-        // 避免重复处理已带有跳转前缀的（保险）
         if (href.startsWith(JUMP_BASE)) return;
         const encoded = encodeURIComponent(href);
         link.setAttribute('href', JUMP_BASE + encoded);
-        if (!link.getAttribute('target')) link.setAttribute('target', '_blank');
+        if (link.getAttribute('target') === '_blank') {
+            link.removeAttribute('target');
+        }
         link.setAttribute('rel', 'noopener noreferrer');
     }
 
-    // 扫描并处理当前文档中的所有 <a> 标签
     function processAllLinks() {
         const links = document.querySelectorAll('a[href]');
         links.forEach(processLink);
     }
 
-    // 使用 MutationObserver 监听动态添加的节点，处理新加入的链接
     const observer = new MutationObserver((mutations) => {
-        let shouldUpdate = false;
         for (const mutation of mutations) {
             if (mutation.type === 'childList' && mutation.addedNodes.length) {
                 for (const node of mutation.addedNodes) {
                     if (node.nodeType === Node.ELEMENT_NODE) {
-                        // 如果新节点本身是 <a> 标签
                         if (node.matches && node.matches('a[href]')) {
                             processLink(node);
                         }
-                        // 如果新节点包含子元素中的 <a> 标签
                         if (node.querySelectorAll) {
-                            const childLinks = node.querySelectorAll('a[href]');
-                            childLinks.forEach(processLink);
+                            node.querySelectorAll('a[href]').forEach(processLink);
                         }
                     }
                 }
@@ -226,7 +326,6 @@ function initCommentSection() {
         }
     });
 
-    // 启动观察器（监听整个文档的子树变化）
     function startObserver() {
         observer.observe(document.body, {
             childList: true,
@@ -234,12 +333,10 @@ function initCommentSection() {
         });
     }
 
-    // 页面加载完成后执行一次，并启动观察器
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             processAllLinks();
             startObserver();
-            // 再次确保在 load 事件中也处理一次
             window.addEventListener('load', processAllLinks);
         });
     } else {

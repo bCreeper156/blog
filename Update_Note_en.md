@@ -3,6 +3,23 @@
 [中文简体](Update_Note.md)·[English](Update_Note_en.md)
 
 ---
+
+## V1.3.0 (2026/07/05)
+
+* **[Optimization]** The interface style is unified.
+
+* **[Optimization]** Optimized all security jump warning (`/jump_warning`) logic to enhance user safety, privacy protection, smooth interaction, and improve user experience.
+
+* **[Fix]** Fixed the pinned feature to enhance user experience.
+
+* **[Optimization]** Further refactoring of the code structure to enhance maintainability.
+
+* **[Optimization]** The animation is smoother, aligns with human-computer interaction logic, and enhances user experience.
+
+* * *
+
+---
+
 ## V1.2.0 (2026/06/15)
 
 - **[Added]** New "About" page with a dynamic typewriter effect for the philosophy statement.
@@ -11,6 +28,7 @@
 - **[Enhanced]** Green color scheme applied throughout the site, unified button, tag, and card styles.
 - **[Fixed]** Corrected incorrect icon display on certain links (e.g., GitHub link).
 - **[Optimized]** Further code refactoring for better maintainability.
+
 ---
 
 ## V1.1.0

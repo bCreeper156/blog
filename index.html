@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>156博客</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/common.js" defer></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/common.js" defer></script>
 </head>
 <body>
 
@@ -30,8 +30,14 @@
 
     <main>
         <!-- 公告栏 -->
-        <section class="Ad">
-            <p>156粉丝站即将上线，敬请期待！</p>
+        <section class="Ad" aria-live="polite">
+            <div class="Ad__content">
+                <div class="Ad__title"> <h2>📢公告</h2></div>
+                <div class="Ad__message">⚡ 内测中，功能逐步完善中！</div>
+                <div class="Ad__actions">
+                    <button class="Ad__close" type="button"><h3>确认</h3></button>
+                </div>
+            </div>
         </section>
 
         <!-- 关于我 -->
@@ -39,12 +45,12 @@
             <img src="images/LOGO.png" alt="Creeper苦力怕i个人博客LOGO">
             <p>bilibili游戏区、科技区博主，爱玩游戏、编程</p>
             <div class="social-media">
-                <a href="/jump_warning?url=https://github.com/bCreeper156">GitHub</a> |
-                <a href="/jump_warning?url=https://space.bilibili.com/3546378363996834">bilibili</a> |
-                <a href="/jump_warning?url=https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">YouTube</a> |
-                <a href="/jump_warning?url=https://qm.qq.com/q/3xAA2pN0bm">QQ群</a> |
+                <a href="/jump_warning.html?url=https://github.com/bCreeper156">GitHub</a> |
+                <a href="/jump_warning.html?url=https://space.bilibili.com/3546378363996834">bilibili</a> |
+                <a href="/jump_warning.html?url=https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">YouTube</a> |
+                <a href="/jump_warning.html?url=https://qm.qq.com/q/3xAA2pN0bm">QQ群</a> |
                 <a href="mailto:creeper156@qq.com">email</a> |
-                <a href="/jump_warning?url=http://ifdian.net/a/bcdogs156">爱发电</a>
+                <a href="/jump_warning.html?url=http://ifdian.net/a/bcdogs156">爱发电</a>
             </div>
         </section>
 
@@ -54,19 +60,19 @@
             <div class="highlight-box">
                 <h3><a href="/articles/4/">4.软件测评#3——Cloudreve</a></h3>
             </div>
+            <a class="articles__software-link" href="/software.html">软件列表 →</a>
         </section>
 
         <!-- 底部链接区 -->
         <section class="tar">
-            <a href="/jump_warning?url=https://github.com/bCreeper156/blog_old">想看我的老博客屎山？点击查看！</a>
-            <a href="/jump_warning?url=https://github.com/bCreeper156/blog">想看我的新博客源码？点击查看！</a>
+            <h1 class="tar__title">博客源码</h1>
+            <a href="/jump_warning.html">想看我的老博客屎山？点击查看！ →</a>
+            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog">想看我的新博客源码？点击查看！ →</a>
         </section>
     </main>
 
     <footer>
-        <p><a href="/jump_warning?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
+        <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
-    <!-- 置顶按钮 -->
-    <button id="back-to-top" title="返回顶部">↑</button>
 </body>
 </html>

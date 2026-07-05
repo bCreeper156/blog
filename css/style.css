@@ -64,6 +64,25 @@ main {
     margin: 0;
 }
 
+.articles__software-link {
+    margin-top: 0.75rem;
+    align-self: flex-start;
+    color: #0f9d58;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.6rem 0.95rem;
+    border-radius: 999px;
+    background: rgba(15, 157, 88, 0.08);
+    transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.articles__software-link:hover {
+    background: rgba(15, 157, 88, 0.14);
+    color: #0b7a44;
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
 .articles a {
     color: #0f9d58;
     text-decoration: none;
@@ -134,56 +153,111 @@ input:focus {
 }
 
 .Ad {
+    margin: 1rem 0 1.25rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(30, 136, 229, 0.16);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #eaf4ff 0%, #dceeff 100%);
+    box-shadow: 0 8px 24px rgba(30, 136, 229, 0.12);
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+    max-height: 220px;
+    opacity: 1;
+}
+
+.Ad__content {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.Ad__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: 0.01em;
+}
+
+.Ad__message {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #1e3a5f;
+}
+
+.Ad__actions {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: auto;
-    min-height: 50px;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    background-color: rgb(107, 165, 212);
-    margin: 1rem 0;
+    justify-content: flex-end;
+    margin-top: 0.2rem;
 }
 
-.Ad a {
-    color: rgb(110, 255, 141);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
+.Ad__close {
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    background: #1e88e5;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(30, 136, 229, 0.2);
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.Ad p {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
+.Ad__close:hover {
+    background: #1976d2;
+    transform: translateY(-1px);
 }
 
-.Ad a:hover {
-    text-decoration: underline;
+.Ad.is-hidden {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
 }
 
 .tar {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: auto;
-    min-height: 50px;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    background-color: rgb(107, 165, 212);
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    border: 1px solid rgba(15, 157, 88, 0.16);
+    background: linear-gradient(135deg, #eefbf2 0%, #e0f7e8 100%);
+    box-shadow: 0 8px 24px rgba(15, 157, 88, 0.12);
     margin: 1rem 0;
 }
 
+.tar__title {
+    margin: 0;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #166534;
+}
+
 .tar a {
-    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    color: #166534;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.7rem 0.95rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
 
 .tar a:hover {
-    text-decoration: underline;
+    background: #ffffff;
+    color: #0f9d58;
+    transform: translateY(-1px);
+    text-decoration: none;
 }
 
 /* ========================================
