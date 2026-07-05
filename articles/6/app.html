@@ -535,7 +535,7 @@
         <div style="text-align: center;">
             <button id="startBtn">开始计算 →</button>
         </div>
-        <div class="footer-note" style="margin-top: 32px;">本工具基于真实排放因子，涵盖饮食、交通、家庭能耗等场景</div>
+        <div class="footer-note" style="margin-top: 32px;">本工具基于真实排放因子，涵盖饮食、交通、家庭能耗等场景。数据来源请<a href="/articles/6/shuju.html" style="color: green;">点此</a>查看</div>
     </div>
 
     <!-- 计算页 -->
@@ -1009,7 +1009,7 @@
         if (shareBtn) {
             shareBtn.addEventListener('click', async () => {
                 const yearly = document.getElementById('resultYearValue').innerText;
-                const shareText = `🌱 我的年碳足迹为 ${yearly} 吨 CO₂e，一起来计算你的碳足迹吧！\nhttps://156blog.netlify.app/articles/6/app.html`;
+                const shareText = `🌱 我的年碳足迹为 ${yearly} 吨 CO₂e，一起来计算你的碳足迹吧！\nhttps://156blog.pages.dev/articles/6/app.html`;
                 try {
                     await navigator.clipboard.writeText(shareText);
                     showToast('✅ 分享内容已复制到剪贴板！');
