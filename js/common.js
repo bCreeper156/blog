@@ -137,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    initThemeToggle();
+
     // 页面加载动画
     document.body.style.opacity = '0';
     setTimeout(() => {
@@ -151,6 +153,84 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========== 评论占位函数 ==========
 function initCommentSection() {
     // Giscus 会自动加载，无需额外操作
+}
+
+// ========== 主题切换 ==========
+function getSavedTheme() {
+    try {
+        return localStorage.getItem('site-theme');
+    } catch (err) {
+        return null;
+    }
+}
+
+function saveTheme(value) {
+    try {
+        localStorage.setItem('site-theme', value);
+    } catch (err) {
+        // Ignore storage errors
+    }
+}
+
+function getDefaultTheme() {
+    const saved = getSavedTheme();
+    if (saved === 'dark' || saved === 'light') {
+        return saved;
+    }
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    const toggle = document.querySelector('.theme-toggle');
+    if (toggle) {
+        const isDark = theme === 'dark';
+        toggle.textContent = isDark ? '🌙' : '☀️';
+        toggle.setAttribute('aria-pressed', String(isDark));
+        toggle.title = isDark ? '切换到白天模式' : '切换到暗黑模式';
+    }
+
+    // Swap images that provide a dark-mode source via data-dark-src
+    try {
+        document.querySelectorAll('img[data-dark-src]').forEach(img => {
+            const darkSrc = img.getAttribute('data-dark-src');
+            const lightSrc = img.getAttribute('data-light-src') || img.getAttribute('src') || '';
+            // ensure data-light-src is set so we can revert
+            if (!img.getAttribute('data-light-src')) img.setAttribute('data-light-src', lightSrc);
+            img.src = theme === 'dark' ? darkSrc : img.getAttribute('data-light-src');
+        });
+    } catch (e) {
+        // ignore
+    }
+}
+
+function initThemeToggle() {
+    const navList = document.querySelector('header nav ul');
+    if (!navList) {
+        applyTheme(getDefaultTheme());
+        return;
+    }
+
+    let themeButton = document.querySelector('.theme-toggle');
+    if (!themeButton) {
+        const listItem = document.createElement('li');
+        listItem.className = 'theme-toggle-item';
+        themeButton = document.createElement('button');
+        themeButton.type = 'button';
+        themeButton.className = 'theme-toggle';
+        themeButton.setAttribute('aria-label', '切换网站主题');
+        listItem.appendChild(themeButton);
+        navList.appendChild(listItem);
+    }
+
+    const currentTheme = getDefaultTheme();
+    applyTheme(currentTheme);
+
+    themeButton.addEventListener('click', function() {
+        const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        saveTheme(nextTheme);
+    });
 }
 
 // ========== 置顶按钮（统一创建 + 事件绑定） ==========

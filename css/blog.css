@@ -265,17 +265,134 @@ body {
     margin-top: 10px;
 }
 
-/* 收藏按钮样式 */
-.action-btn.favorited {
-    color: #ffd700 !important;
+html[data-theme="dark"] body {
+    background-color: #111827;
+    color: #ffffff;
 }
 
-/* 移动端分页样式 */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-    
+html[data-theme="dark"] .container {
+    background-color: #111827;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .controls {
+    background-color: #111827;
+    border-bottom-color: #1f2937;
+}
+
+html[data-theme="dark"] .search-box input {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .search-box input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+html[data-theme="dark"] .search-icon {
+    color: #93c5fd;
+}
+
+html[data-theme="dark"] .pagination {
+    border-top-color: #1f2937;
+    background-color: #111827;
+}
+
+html[data-theme="dark"] .pagination-btn,
+html[data-theme="dark"] .pagination-ellipsis,
+html[data-theme="dark"] .pagination-info {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .pagination-btn {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+html[data-theme="dark"] .pagination-btn:hover {
+    background-color: #374151;
+    border-color: #4f46e5;
+}
+
+html[data-theme="dark"] .pagination-btn.active {
+    background-color: #4f46e5;
+    color: #ffffff;
+    border-color: #4f46e5;
+}
+
+html[data-theme="dark"] .pagination-btn:disabled {
+    background-color: #1f2937;
+    color: #9ca3af;
+    border-color: #374151;
+}
+
+html[data-theme="dark"] .article-item,
+html[data-theme="dark"] .filter-btn,
+html[data-theme="dark"] .articles-container-wrapper {
+    background-color: #111827;
+}
+
+html[data-theme="dark"] .article-item {
+    border-color: #1f2937;
+}
+
+html[data-theme="dark"] .article-item:hover {
+    background-color: #1f2937;
+}
+
+html[data-theme="dark"] .article-title,
+html[data-theme="dark"] .article-title a,
+html[data-theme="dark"] .article-excerpt,
+html[data-theme="dark"] .article-meta,
+html[data-theme="dark"] .meta-item,
+html[data-theme="dark"] .action-btn,
+html[data-theme="dark"] .empty-state,
+html[data-theme="dark"] .empty-state h3,
+html[data-theme="dark"] .article-category {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .article-category {
+    background-color: #1f2937;
+}
+
+html[data-theme="dark"] .filter-btn {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .filter-btn:hover,
+html[data-theme="dark"] .filter-btn.active {
+    background-color: #4f46e5;
+    color: #ffffff;
+    border-color: #4f46e5;
+}
+
+html[data-theme="dark"] .action-btn:hover {
+    color: #93c5fd;
+}
+
+html[data-theme="dark"] header,
+html[data-theme="dark"] footer {
+    background-color: #111827;
+}
+
+html[data-theme="dark"] header,
+html[data-theme="dark"] header a,
+html[data-theme="dark"] header a:link,
+html[data-theme="dark"] header a:visited,
+html[data-theme="dark"] header a:hover,
+html[data-theme="dark"] footer,
+html[data-theme="dark"] footer a {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] footer a:hover {
+    color: #dbeafe;
+
     .container {
         margin: 10px auto;
     }

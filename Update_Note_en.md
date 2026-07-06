@@ -4,6 +4,12 @@
 
 ---
 
+## V1.3.1 (2026/07/06)
+
+* **[New]** Added dark mode for better eye protection! Currently in beta testing phase. Please [email](mailto:humingxuan20241@outlook.com) to report bugs! The link page (`/link.html`) is temporarily unavailable and will be rewritten in the near future! **Note:** As this feature is newly added, a period of beta testing is required for improvement.
+
+---
+
 ## V1.3.0 (2026/07/05)
 
 * **[Optimization]** The interface style is unified.

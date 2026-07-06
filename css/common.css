@@ -34,6 +34,67 @@
     --md-radius-pill: 999px;
 }
 
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --md-surface: #121212;
+    --md-surface-container: #1d1d1d;
+    --md-on-surface: #e7eaed;
+    --md-on-surface-variant: #b9bcc1;
+    --md-on-primary: #ffffff;
+    --md-on-nav: #f5f5f5;
+    --md-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
+    --md-shadow-md: 0 4px 20px -4px rgba(0, 0, 0, 0.32);
+    --md-shadow-lg: 0 2px 12px rgba(0, 0, 0, 0.35);
+    --md-shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme="dark"] .about_me {
+    background: linear-gradient(180deg, #1f242c 0%, #232a34 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="dark"] .tar {
+    background: linear-gradient(135deg, #0b3d1d 0%, #14492a 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .tar__title {
+    color: #f5f0de;
+}
+
+html[data-theme="dark"] .articles {
+    background: linear-gradient(135deg, #135226 0%, #0e331c 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+html[data-theme="dark"] .articles h1 {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .Ad {
+    background: linear-gradient(135deg, #081a38 0%, #0e2a52 100%);
+    border-color: rgba(96, 137, 255, 0.18);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.34);
+}
+
+html[data-theme="dark"] .Ad__title,
+html[data-theme="dark"] .Ad__message,
+html[data-theme="dark"] .Ad__close {
+    color: #c7e6ff;
+}
+
+html[data-theme="dark"] .Ad__close {
+    background: #2563eb;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+html[data-theme="dark"] .Ad__close:hover {
+    background: #1d4ed8;
+}
+
 /* ----- 全局重置 ----- */
 * {
     padding: 0;
@@ -106,6 +167,31 @@ header ul {
 header li {
     display: inline;
     margin-right: 4vw;
+}
+
+.theme-toggle-item {
+    display: inline;
+    margin-right: 0;
+}
+
+.theme-toggle {
+    border: none;
+    background: rgba(15, 157, 88, 0.10);
+    color: var(--md-on-nav);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--md-radius-pill);
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    line-height: 1;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+    transform: translateY(-1px);
 }
 
 header a {

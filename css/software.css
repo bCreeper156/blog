@@ -260,3 +260,91 @@
         padding: 1rem;
     }
 }
+
+html[data-theme="dark"] .software-page .container {
+    background: #020202;
+}
+
+html[data-theme="dark"] .software-panel {
+    background: #090909;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .software-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .software-header h2 {
+    color: #f8fafc;
+    background: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+html[data-theme="dark"] .software-header p {
+    color: #9ca3af;
+}
+
+html[data-theme="dark"] .search-box {
+    background: #111111;
+}
+
+html[data-theme="dark"] .search-icon {
+    color: #81c995;
+}
+
+html[data-theme="dark"] #software-search {
+    background: #121212;
+    color: #e5e7eb;
+    border-color: rgba(148, 163, 184, 0.35);
+}
+
+html[data-theme="dark"] #software-search:focus {
+    border-color: #81c995;
+    box-shadow: 0 0 0 3px rgba(129, 201, 149, 0.15);
+}
+
+html[data-theme="dark"] .software-card {
+    background: #111111;
+    border-color: rgba(148, 163, 184, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .software-card:hover {
+    border-color: rgba(129, 201, 149, 0.35);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .view-switch {
+    background: rgba(14, 43, 19, 0.7);
+}
+
+html[data-theme="dark"] .view-btn {
+    color: #cbd5e1;
+}
+
+html[data-theme="dark"] .view-btn.active {
+    background: #1f4d2b;
+    color: #f8fafc;
+    box-shadow: 0 1px 4px rgba(129, 201, 149, 0.25);
+}
+
+html[data-theme="dark"] .view-btn:not(.active):hover {
+    color: #81c995;
+}
+
+html[data-theme="dark"] .software-icon {
+    background: #0f172a;
+}
+
+html[data-theme="dark"] .software-name,
+html[data-theme="dark"] .software-desc,
+html[data-theme="dark"] .tag,
+html[data-theme="dark"] .empty-state {
+    color: #cbd5e1;
+}
+
+html[data-theme="dark"] .tag {
+    background: rgba(56, 189, 80, 0.16);
+    color: #86efac;
+}
