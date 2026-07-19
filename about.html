@@ -9,75 +9,221 @@
     <script src="/js/common.js" defer></script>
     <script src="js/nope.js"></script>
     <style>
-        /* 样式代码保持不变（省略，与原代码一致） */
-        .about-container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
-        .about-card { background: white; border-radius: 2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; }
-        .about-header { background: linear-gradient(135deg, #0f3b1f, #2b6e4f); padding: 2rem 2rem 1.5rem; text-align: center; color: white; }
-        .about-header h1 { font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
-        .about-header .tagline { font-size: 1rem; opacity: 0.9; }
-        .about-content { padding: 2rem; }
-        .bio { margin-bottom: 2rem; line-height: 1.7; color: #2d3e3a; }
-        .bio p { margin-bottom: 1rem; }
-        .section-title { font-size: 1.5rem; font-weight: 600; color: #1f543f; margin: 1.5rem 0 1rem; border-left: 4px solid #7ac4a0; padding-left: 1rem; }
-        .interests { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; }
-        .interest-tag { background: #eef5f0; color: #2b6e4f; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.85rem; font-weight: 500; }
-        .philosophy { background: #f8faf6; border-radius: 1rem; padding: 1.2rem; margin: 1.5rem 0; border-left: 3px solid #2b6e4f; font-style: italic; color: #2c5a47; min-height: 5rem; }
-        .typing-cursor { display: inline-block; width: 2px; background-color: #2b6e4f; margin-left: 2px; animation: blink 1s step-end infinite; }
-        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
-        .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
-        .contact-links a { background: #f0f5f2; padding: 0.5rem 1.2rem; border-radius: 40px; color: #2b6e4f; text-decoration: none; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .contact-links a:hover { background: #2b6e4f; color: white; transform: translateY(-2px); }
-        .footer-note { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: #7e9a89; border-top: 1px solid #e0ede6; padding-top: 1.5rem; }
+        /* ===== 基础样式（保持原样） ===== */
+        .about-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .about-card {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .about-header {
+            background: linear-gradient(135deg, #0f3b1f, #2b6e4f);
+            padding: 2rem 2rem 1.5rem;
+            text-align: center;
+            color: white;
+        }
+        .about-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        .about-header .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .about-content {
+            padding: 2rem;
+        }
+        .bio {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            color: #2d3e3a;
+        }
+        .bio p {
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f543f;
+            margin: 1.5rem 0 1rem;
+            border-left: 4px solid #7ac4a0;
+            padding-left: 1rem;
+        }
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+        .interest-tag {
+            background: #eef5f0;
+            color: #2b6e4f;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .philosophy {
+            background: #f8faf6;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid #2b6e4f;
+            font-style: italic;
+            color: #2c5a47;
+            min-height: 5rem;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #2b6e4f;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .contact-links a {
+            background: #f0f5f2;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: #2b6e4f;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .contact-links a:hover {
+            background: #2b6e4f;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #7e9a89;
+            border-top: 1px solid #e0ede6;
+            padding-top: 1.5rem;
+        }
+        .footer-note a {
+            color: #2b6e4f;
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
 
-        html[data-theme="dark"] body,
-        html[data-theme="dark"] .about-container,
-        html[data-theme="dark"] .about-card,
-        html[data-theme="dark"] .about-header,
-        html[data-theme="dark"] .about-content,
-        html[data-theme="dark"] .bio,
-        html[data-theme="dark"] .section-title,
-        html[data-theme="dark"] .interests,
-        html[data-theme="dark"] .interest-tag,
-        html[data-theme="dark"] .philosophy,
-        html[data-theme="dark"] .contact-links,
-        html[data-theme="dark"] .footer-note {
-            background: #000000 !important;
-            color: #ffffff !important;
-            border-color: #1f1f1f !important;
-            box-shadow: none !important;
+        /* ===== 🌙 暗色模式 —— 柔和、不压抑 ===== */
+        html[data-theme="dark"] body {
+            background: #0d1117 !important;
+            color: #e6e6e6 !important;
+        }
+
+        html[data-theme="dark"] .about-container {
+            background: #0d1117 !important;
+        }
+
+        html[data-theme="dark"] .about-card {
+            background: #161b22 !important;
+            border-color: #30363d !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
         }
 
         html[data-theme="dark"] .about-header {
-            background: linear-gradient(135deg, #101010, #1a1a1a) !important;
+            background: linear-gradient(135deg, #1a2332, #0d1117) !important;
+            color: #f0f6fc !important;
+        }
+        html[data-theme="dark"] .about-header h1 {
+            color: #f0f6fc !important;
+        }
+        html[data-theme="dark"] .about-header .tagline {
+            color: #8b949e !important;
         }
 
-        html[data-theme="dark"] .contact-links a {
-            background: #111111;
-            color: #ffffff;
-            border: 1px solid #222222;
+        html[data-theme="dark"] .about-content {
+            background: transparent !important;
+            color: #e6e6e6 !important;
         }
-        html[data-theme="dark"] .contact-links a:hover {
-            background: #1f1f1f;
-            color: #ffffff;
+
+        html[data-theme="dark"] .bio {
+            color: #e6e6e6 !important;
+        }
+        html[data-theme="dark"] .bio strong {
+            color: #f0f6fc !important;
+        }
+
+        html[data-theme="dark"] .section-title {
+            color: #f0f6fc !important;
+            border-left-color: #58a6ff !important;
         }
 
         html[data-theme="dark"] .interest-tag {
-            background: #111111;
-            color: #d1d5db;
+            background: #21262d !important;
+            color: #c9d1d9 !important;
         }
 
         html[data-theme="dark"] .philosophy {
-            background: #0f172a;
-            border-left-color: #2563eb;
-            color: #e2e8f0;
+            background: #0d1117 !important;
+            border-left-color: #58a6ff !important;
+            color: #e6e6e6 !important;
+        }
+
+        html[data-theme="dark"] .contact-links a {
+            background: #21262d !important;
+            color: #58a6ff !important;
+            border: 1px solid #30363d !important;
+        }
+        html[data-theme="dark"] .contact-links a:hover {
+            background: #30363d !important;
+            color: #f0f6fc !important;
+            transform: translateY(-2px) !important;
         }
 
         html[data-theme="dark"] .footer-note {
-            color: #cbd5e1;
-            border-top-color: #1f2937;
+            color: #8b949e !important;
+            border-top-color: #21262d !important;
+        }
+        html[data-theme="dark"] .footer-note a {
+            color: #58a6ff !important;
+        }
+        html[data-theme="dark"] .footer-note a:hover {
+            text-decoration: underline !important;
         }
 
-        @media (max-width: 640px) { .about-header { padding: 1.5rem; } .about-content { padding: 1.5rem; } .section-title { font-size: 1.3rem; } }
+        /* ===== 响应式 ===== */
+        @media (max-width: 640px) {
+            .about-header {
+                padding: 1.5rem;
+            }
+            .about-content {
+                padding: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -91,7 +237,7 @@
                 <li><a href='/link.html'>链接</a></li>
                 <li><a href='/about.html'>关于</a></li>
             </ul>
-        </nav>  
+        </nav>
     </header>
 
     <main class="about-container">
@@ -102,9 +248,9 @@
             </div>
             <div class="about-content">
                 <div class="bio">
-                    <p>👋 你好，我是 Creeper156，一名七年级学生，也是这个博客的作者。  
+                    <p>👋 你好，我是 Creeper156，一名七年级学生，也是这个博客的作者。<br>
                     我喜欢摆弄软件、拆解工具、在方块世界里搭服务器，以及吐槽那些“反人类”的产品设计。</p>
-                    <p>💻 我的数字哲学很简单：<strong>能 Web 就不 App，能本地就不上云，能开源就不闭源。</strong>  
+                    <p>💻 我的数字哲学很简单：<strong>能 Web 就不 App，能本地就不上云，能开源就不闭源。</strong><br>
                     这个博客是我分享技术笔记、软件测评、折腾心得的地方，偶尔也记录一些对教育和内卷的清醒吐槽。</p>
                 </div>
 
@@ -119,8 +265,8 @@
                 </div>
 
                 <div class="section-title">📖 博客定位</div>
-                <p>这里没有算法推荐，没有广告弹窗，也没有“猜你喜欢”。每一篇文章都是我自己写、自己改、自己部署的。  
-                我记录过 IDM 的激活脚本、QQ 聊天记录迁移、纯血鸿蒙上装开源音乐软件、碳足迹计算器的数据溯源……  
+                <p>这里没有算法推荐，没有广告弹窗，也没有“猜你喜欢”。每一篇文章都是我自己写、自己改、自己部署的。<br>
+                我记录过 IDM 的激活脚本、QQ 聊天记录迁移、纯血鸿蒙上装开源音乐软件、碳足迹计算器的数据溯源……<br>
                 未来还会继续写关于软件筛选、服务器搭建、以及那些“只有折腾过才懂”的踩坑经验。</p>
 
                 <div class="philosophy">
@@ -130,17 +276,17 @@
 
                 <div class="section-title">🔗 找到我</div>
                 <div class="contact-links" id="contact-links">
-                    <!-- GitHub 链接去掉章鱼emoji，只保留文字 -->
-                    <a href="https://github.com/bCreeper156" ">GitHub</a>
-                    <a href="https://space.bilibili.com/3546378363996834" ">📺 Bilibili</a>
-                    <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i" ">▶️ YouTube</a>
+                    <!-- 所有外部链接均已移除 target 属性，将在当前窗口打开 -->
+                    <a href="https://github.com/bCreeper156">GitHub</a>
+                    <a href="https://space.bilibili.com/3546378363996834">📺 Bilibili</a>
+                    <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">▶️ YouTube</a>
                     <a href="mailto:creeper156@qq.com">📧 邮箱</a>
-                    <a href="https://qm.qq.com/q/3xAA2pN0bm" ">💬 QQ群</a>
-                    <a href="http://ifdian.net/a/bcdogs156" ">❤️ 爱发电</a>
+                    <a href="https://qm.qq.com/q/3xAA2pN0bm">💬 QQ群</a>
+                    <a href="http://ifdian.net/a/bcdogs156">❤️ 爱发电</a>
                 </div>
 
                 <div class="footer-note">
-                    © 2026 Creeper156 · 博客源码在 <a href="https://github.com/bCreeper156/blog" style = "color:green;">GitHub</a> 开源 · 由 Netlify + Cloudflare Pages 驱动
+                    © 2026 Creeper156 · 博客源码在 <a href="https://github.com/bCreeper156/blog">GitHub</a> 开源 · 由 Netlify + Cloudflare Pages 驱动
                 </div>
             </div>
         </div>
@@ -149,13 +295,15 @@
     <footer>
         <p><a href="https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
+
     <script>
         (function() {
-            // 动态哲学宣言打字效果
-            const philosophyText = "“工具应该是人的延伸，而不是捆绑。我选择用键盘和代码，守护自己的数字主权。”";
+            // ===== 1. 动态哲学宣言打字效果 =====
+            const philosophyText = '"工具应该是人的延伸，而不是捆绑。我选择用键盘和代码，守护自己的数字主权。"';
             const dynamicSpan = document.getElementById('dynamic-philosophy');
             const cursorSpan = document.getElementById('cursor');
             let index = 0;
+
             function typeNext() {
                 if (index < philosophyText.length) {
                     dynamicSpan.textContent += philosophyText.charAt(index);
@@ -170,10 +318,11 @@
                 typeNext();
             }
 
-            // 为所有外部链接添加 /jump_warning?url= 前缀（保留 mailto 和站内链接）
+            // ===== 2. 为外部链接添加跳转警告前缀（但保留在当前窗口打开） =====
             function addJumpWarningToExternalLinks() {
                 const allLinks = document.querySelectorAll('a');
                 const jumpWarningBase = '/jump_warning?url=';
+
                 allLinks.forEach(link => {
                     const originalHref = link.getAttribute('href');
                     if (!originalHref) return;
@@ -185,11 +334,14 @@
 
                     const encodedUrl = encodeURIComponent(originalHref);
                     link.setAttribute('href', jumpWarningBase + encodedUrl);
-                    if (!link.getAttribute('target')) link.setAttribute('target', '_blank');
+
+                    // ✅ 不再设置 target="_blank" —— 所有链接在当前窗口打开
+                    // 保留 rel 属性（安全考量）
                     link.setAttribute('rel', 'noopener noreferrer');
                 });
             }
             addJumpWarningToExternalLinks();
+
         })();
     </script>
 </body>
