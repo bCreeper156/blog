@@ -361,15 +361,21 @@ function initThemeToggle() {
 
     const JUMP_BASE = '/jump_warning.html?url=';
 
-    function shouldProcess(href) {
+        function shouldProcess(href) {
         if (!href) return false;
-        if (href.startsWith(JUMP_BASE)) return false;        // ① 已经是跳转链接 → 跳过
-        if (href.startsWith('/jump_warning.html') || href.includes('jump_warning.html')) return false;
+        // ① 已经是跳转链接或者跳转页本身，直接跳过，防止死循环
+        if (href.startsWith(JUMP_BASE)) return false;
+        if (href.startsWith('/jump_warning.html')) return false;
+        if (href.includes('/jump_warning.html')) return false;
+        
+        // ② 站内链接/特殊协议直接跳过
         if (href.startsWith('/') || href.startsWith('#') ||
             href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-            return false;                                    // ② 站内链接/特殊协议 → 跳过
+            return false;
         }
-        return (href.startsWith('http://') || href.startsWith('https://')); // ③ 仅处理外部 HTTP/HTTPS 链接
+        
+        // ③ 仅处理外部 HTTP/HTTPS 链接
+        return (href.startsWith('http://') || href.startsWith('https://'));
     }
 
     function processLink(link) {
