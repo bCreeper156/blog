@@ -1,4 +1,6 @@
-/* === 156 博客 - 链接页独立样式 === */
+/* === 156 博客 - 链接页独立样式（完整版，含暗色适配） === */
+
+/* ---------- 亮色模式（默认） ---------- */
 .link-page {
     max-width: 1200px;
     margin: 30px auto;
@@ -53,7 +55,7 @@
     padding: 25px;
     margin-bottom: 30px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    scroll-margin-top: 20px; /* 点击目录跳转时留出顶部空隙 */
+    scroll-margin-top: 20px;
 }
 .link-page .section-title {
     font-size: 20px;
@@ -123,7 +125,9 @@
     gap: 10px;
     -webkit-overflow-scrolling: touch;
 }
-.link-page .mobile-catalog::-webkit-scrollbar { display: none; }
+.link-page .mobile-catalog::-webkit-scrollbar {
+    display: none;
+}
 .link-page .mobile-catalog a {
     display: inline-block;
     padding: 8px 16px;
@@ -135,12 +139,102 @@
     margin-right: 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-.link-page .mobile-catalog a:active { background: #10B981; color: #fff; }
+.link-page .mobile-catalog a:active {
+    background: #10B981;
+    color: #fff;
+}
 
-/* 移动端响应式适配 */
+/* 移动端响应式 */
 @media (max-width: 768px) {
-    .link-page { flex-direction: column; padding: 0 15px; margin: 20px auto; }
-    .link-page .sidebar { display: none; }
-    .link-page .mobile-catalog { display: flex; align-items: center; }
-    .link-page .card-grid { grid-template-columns: 1fr; }
+    .link-page {
+        flex-direction: column;
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+    .link-page .sidebar {
+        display: none;
+    }
+    .link-page .mobile-catalog {
+        display: flex;
+        align-items: center;
+    }
+    .link-page .card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------- 暗色模式（html[data-theme="dark"]） ---------- */
+html[data-theme="dark"] .link-page .sidebar,
+html[data-theme="dark"] .link-page .section,
+html[data-theme="dark"] .link-page .link-card,
+html[data-theme="dark"] .link-page .mobile-catalog a {
+    background: #2a2a2a; /* 柔和深灰，不压抑 */
+}
+
+html[data-theme="dark"] .link-page .sidebar {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+html[data-theme="dark"] .link-page .sidebar h3 {
+    color: #ccc;
+    border-left-color: #10B981; /* 绿色不变 */
+}
+
+html[data-theme="dark"] .link-page .sidebar a {
+    color: #ddd;
+}
+html[data-theme="dark"] .link-page .sidebar a:hover,
+html[data-theme="dark"] .link-page .sidebar a.active {
+    background: #3a3a3a;
+    border-left-color: #10B981;
+    color: #10B981; /* 保持绿色高亮 */
+}
+
+/* 主内容文字颜色 */
+html[data-theme="dark"] .link-page .main-content,
+html[data-theme="dark"] .link-page .section-title,
+html[data-theme="dark"] .link-page .link-card .info h4 {
+    color: #fff;
+}
+
+html[data-theme="dark"] .link-page .section {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+html[data-theme="dark"] .link-page .section-title {
+    border-bottom-color: #444;
+}
+
+html[data-theme="dark"] .link-page .link-card {
+    border-color: #3a3a3a;
+}
+html[data-theme="dark"] .link-page .link-card:hover {
+    border-color: #10B981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+html[data-theme="dark"] .link-page .link-card .info p {
+    color: #aaa; /* 辅助描述文字柔和 */
+}
+
+html[data-theme="dark"] .link-page .link-card .card-btn {
+    border-color: #555;
+    color: #ccc;
+}
+html[data-theme="dark"] .link-page .link-card .card-btn.primary {
+    border-color: #10B981;
+    color: #10B981;
+}
+html[data-theme="dark"] .link-page .link-card .card-btn.primary:hover {
+    background: #10B981;
+    color: #fff;
+}
+
+html[data-theme="dark"] .link-page .mobile-catalog a {
+    color: #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+html[data-theme="dark"] .link-page .mobile-catalog a:active {
+    background: #10B981;
+    color: #fff;
 }
