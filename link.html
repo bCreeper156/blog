@@ -5,66 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>链接与资源 - 156博客</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/link.css">
     <script src="/js/common.js" defer></script>
+    <script src="/js/link.js" defer></script>
     <script src="js/nope.js"></script>
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem 1rem;
-            text-align: center;
-        }
-        .placeholder {
-            max-width: 760px;
-            width: 100%;
-            padding: 2rem 2rem;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
-            border: 1px solid rgba(15, 157, 88, 0.14);
-        }
-        .placeholder h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #0f9d58;
-        }
-        .placeholder p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #333;
-            margin: 0;
-        }
-        html[data-theme="dark"] body {
-            background: #0b1220;
-            color: #e2e8f0;
-        }
-        html[data-theme="dark"] .placeholder {
-            background: rgba(15, 23, 42, 0.92);
-            border-color: rgba(56, 189, 248, 0.18);
-            box-shadow: 0 20px 65px rgba(0, 0, 0, 0.55);
-        }
-        html[data-theme="dark"] .placeholder h1 {
-            color: #7dd3fc;
-        }
-        html[data-theme="dark"] .placeholder p {
-            color: #cbd5e1;
-        }
-        @media (max-width: 640px) {
-            .placeholder {
-                padding: 1.5rem 1.25rem;
-            }
-            .placeholder h1 {
-                font-size: 1.6rem;
-            }
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -79,12 +23,43 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="placeholder">
-            <h1>⚡ 等待是为了更好的遇见</h1>
-            <p>我们将在不久的将来重写开放此页面！</p>
+    <!-- === 156博客 链接页面专用 HTML === -->
+    <div class="link-page">
+    
+        <!-- 移动端横向目录 -->
+        <div class="mobile-catalog">
+            <a href="#section-shortcuts">⚡ 快捷链接</a>
+            <a href="#section-friends">🤝 友情链接</a>
+            <a href="#section-projects">🛠️ 我的项目</a>
         </div>
-    </main>
+    
+        <!-- 左侧目录 -->
+        <div class="sidebar">
+            <h3>页面导航</h3>
+            <div id="menu-list"></div>
+        </div>
+    
+        <!-- 右侧主内容 -->
+        <div class="main-content">
+            <!-- 快捷链接 -->
+            <div class="section" id="section-shortcuts">
+                <div class="section-title">⚡ 快捷链接</div>
+                <div class="card-grid" id="shortcut-grid"></div>
+            </div>
+    
+            <!-- 友情链接 -->
+            <div class="section" id="section-friends">
+                <div class="section-title">🤝 友情链接</div>
+                <div class="card-grid" id="friend-grid"></div>
+            </div>
+    
+            <!-- 我的项目 -->
+            <div class="section" id="section-projects">
+                <div class="section-title">🛠️ 我的项目</div>
+                <div class="card-grid" id="project-grid"></div>
+            </div>
+        </div>
+    </div>
     <footer class="main-footer">
         <div class="footer-container">
             <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
