@@ -1,0 +1,146 @@
+/* === 156 博客 - 链接页独立样式 === */
+.link-page {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+    position: relative;
+}
+
+/* 侧边目录 (PC端) */
+.link-page .sidebar {
+    flex: 0 0 200px;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.link-page .sidebar h3 {
+    padding: 0 20px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #555;
+    border-left: 3px solid #10B981; /* 苦力怕绿 */
+    padding-left: 15px;
+}
+.link-page .sidebar a {
+    display: block;
+    padding: 12px 20px;
+    transition: 0.2s;
+    border-left: 3px solid transparent;
+    color: #333;
+    text-decoration: none;
+}
+.link-page .sidebar a:hover,
+.link-page .sidebar a.active {
+    background: #f0fdf4;
+    border-left-color: #10B981;
+    color: #10B981;
+}
+
+/* 右侧内容 */
+.link-page .main-content {
+    flex: 1;
+    min-width: 0;
+}
+.link-page .section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    scroll-margin-top: 20px; /* 点击目录跳转时留出顶部空隙 */
+}
+.link-page .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+/* 卡片网格 */
+.link-page .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+.link-page .link-card {
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+    background: #fff;
+    text-decoration: none;
+    color: inherit;
+}
+.link-page .link-card:hover {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+    border-color: #10B981;
+}
+.link-page .link-card .info h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: #333;
+}
+.link-page .link-card .info p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+}
+.link-page .link-card .card-btn {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    margin-right: 8px;
+    margin-top: 12px;
+}
+.link-page .link-card .card-btn.primary {
+    border-color: #10B981;
+    color: #10B981;
+}
+.link-page .link-card .card-btn.primary:hover {
+    background: #10B981;
+    color: #fff;
+}
+
+/* 移动端顶部横向目录 */
+.link-page .mobile-catalog {
+    display: none;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0 0 15px 0;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+.link-page .mobile-catalog::-webkit-scrollbar { display: none; }
+.link-page .mobile-catalog a {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    margin-right: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.link-page .mobile-catalog a:active { background: #10B981; color: #fff; }
+
+/* 移动端响应式适配 */
+@media (max-width: 768px) {
+    .link-page { flex-direction: column; padding: 0 15px; margin: 20px auto; }
+    .link-page .sidebar { display: none; }
+    .link-page .mobile-catalog { display: flex; align-items: center; }
+    .link-page .card-grid { grid-template-columns: 1fr; }
+}
