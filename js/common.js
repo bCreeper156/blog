@@ -1,17 +1,3 @@
-(function() {
-        // 1. 立即读取本地存储中保存的主题
-        const savedTheme = localStorage.getItem('theme');
-        const html = document.documentElement;
-
-        // 2. 如果之前保存的是 'dark'，立刻给 html 打上标记
-        if (savedTheme === 'dark') {
-            html.setAttribute('data-theme', 'dark');
-        } 
-        // 3. 如果没有保存过，但系统本身开启了深色模式
-        else if (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            html.setAttribute('data-theme', 'dark');
-        }
-})();
 // ========================================
 // 加载进度条 - 事件驱动重构版
 // ========================================
