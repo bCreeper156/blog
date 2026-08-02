@@ -207,10 +207,26 @@
     color: #166534;
 }
 
+/* 按钮操作区 */
+.software-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+    justify-content: center;
+}
+
+.grid-view .software-actions {
+    justify-content: center;
+}
+
+.list-view .software-actions {
+    justify-content: flex-start;
+}
+
 /* 独特下载按钮 */
 .download-link {
     display: inline-block;
-    margin-top: 0.75rem;
     padding: 0.5rem 1.2rem;
     background: linear-gradient(95deg, #059669, #10b981);
     color: white;
@@ -225,6 +241,11 @@
     letter-spacing: 0.5px;
 }
 
+.download-link.secondary {
+    background: linear-gradient(95deg, #2563eb, #3b82f6);
+    box-shadow: 0 2px 5px rgba(37,99,235,0.25);
+}
+
 .download-link:hover {
     background: linear-gradient(95deg, #047857, #059669);
     transform: translateY(-2px);
@@ -232,12 +253,24 @@
     color: #fef9c3;
 }
 
+.download-link.secondary:hover {
+    background: linear-gradient(95deg, #1d4ed8, #2563eb);
+    box-shadow: 0 6px 12px rgba(37,99,235,0.35);
+}
+
 .download-link:active {
     transform: translateY(0);
 }
 
-.list-view .download-link {
-    align-self: flex-start;
+/* 底部说明 */
+.software-note {
+    margin-top: 1.2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.8rem;
+    color: #6b7280;
+    line-height: 1.6;
+    text-align: center;
 }
 
 /* 空状态 */

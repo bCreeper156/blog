@@ -6,10 +6,11 @@
     <title>关于下载页面项目下线的公告 - 156博客</title>
     <meta name="description" content="关于下载页面项目下线的公告">
     <script src="/js/legacy_redirect.js"></script>
-    <script src="js/dark_fix.js"></script>
+    <script src="/js/dark_fix.js"></script>
     <link rel="stylesheet" href="/articles/article.css">
     <script src="/js/common.js"></script>
-    <script src="js/nope.js"></script>
+    <script src="/js/jump_warning.js" defer></script>
+    <script src="/js/nope.js"></script>
 </head>
 <body>
     <header>
@@ -22,7 +23,7 @@
                 <li><a href="/link.html">链接</a></li>
                 <li><a href="/about.html">关于</a></li>
             </ul>
-        </nav>  
+        </nav>
     </header>
     <main>
         <article>
@@ -40,7 +41,7 @@
                     </span>
                 </div>
             </section>
-            
+
             <div class="article-content">
                 <section class="article-section">
                     <div class="highlight-box">
@@ -55,12 +56,23 @@
                         🏠 返回首页
                     </button>
                 </div>
+                <div id="tcomment"></div>
             </div>
         </article>
     </main>
-    
+
     <footer>
         <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            twikoo.init({
+                envId: 'https://twikoo-vercel.vercel.app',
+                el: '#tcomment',
+            });
+        });
+    </script>
 </body>
 </html>

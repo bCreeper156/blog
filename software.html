@@ -62,6 +62,11 @@
                 </div>
             </div>
 
+            <!-- ⭐ 新增：重置软件列表按钮（默认隐藏，仅在 ?id= 参数时显示） -->
+            <button id="resetSoftwareBtn" style="display:none; padding: 8px 16px; background: #10B981; color: white; border: none; border-radius: 999px; cursor: pointer; margin-top: 12px;">
+                🔄 重置列表
+            </button>
+
             <div class="software-list-wrapper">
                 <ul id="software-list" class="software-list"></ul>
                 <div id="software-empty" class="empty-state" hidden>
@@ -69,11 +74,15 @@
                     <p>请换一个关键词，或切换到另一种显示模式试试。</p>
                 </div>
             </div>
+
+            <div class="software-note">
+                加速下载为镜像站下载，以提高速度；原速下载为 GitHub 直链直接下载，不加速。
+            </div>
         </div>
     </main>
     
     <footer>
-        <p><a href ="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
+        <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE"">Copyright © 2026 Creeper156</a></p>
     </footer>
 </body>
 </html>

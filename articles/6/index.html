@@ -6,10 +6,11 @@
     <title>每日碳管理（工具） - 156博客</title>
     <meta name="description" content="碳足迹计算器">
     <script src="/js/legacy_redirect.js"></script>
-    <script src="js/dark_fix.js"></script>
+    <script src="/js/dark_fix.js"></script>
     <link rel="stylesheet" href="/articles/article.css">
     <script src="/js/common.js"></script>
-    <script src="js/nope.js"></script>
+    <script src="/js/jump_warning.js" defer></script>
+    <script src="/js/nope.js"></script>
 </head>
 <body>
     <header>
@@ -22,7 +23,7 @@
                 <li><a href="/link.html">链接</a></li>
                 <li><a href="/about.html">关于</a></li>
             </ul>
-        </nav>  
+        </nav>
     </header>
     <main>
         <article>
@@ -40,10 +41,10 @@
                     </span>
                 </div>
             </section>
-            
+
             <div class="article-content">
                 <h2>每日碳管理</h2>
-                <p>这是一个碳足迹计算器，帮助你了解和管理日常活动中的碳排放。您可以在QQ或微信中搜索“每日碳管理”来使用它；您也可以<a href="app.html">点此</a>立即体验！</p>
+                <p>这是一个碳足迹计算器，帮助你了解和管理日常活动中的碳排放。您可以在QQ或微信中搜索"每日碳管理"来使用它；您也可以<a href="app.html">点此</a>立即体验！</p>
                 <p>Web端数据来源<a href="/articles/6/shuju.html">点此查看</a>！</p>
                 <blockquote>注意！Web端与小程序端分离，数据可能不一致。建议您使用Web端！</blockquote>
                 <div class="article-actions">
@@ -54,13 +55,24 @@
                         🏠 返回首页
                     </button>
                 </div>
+                <div id="tcomment"></div>
             </div>
         </article>
-        
+
     </main>
-    
+
     <footer>
         <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            twikoo.init({
+                envId: 'https://twikoo-vercel.vercel.app',
+                el: '#tcomment',
+            });
+        });
+    </script>
 </body>
 </html>

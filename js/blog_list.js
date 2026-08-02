@@ -53,6 +53,15 @@ const articles = [
         date: "2026-03-29",
         readTime: "1分钟阅读",
         link: "/articles/6/index.html"
+    },
+    {
+        id: 7,
+        title: "7.软件测评#4 - Typedown",
+        excerpt: "TypeDown实时渲染Markdown编辑器详细测评，特点、适用场景、安装方式及真实使用感受",
+        category: "软件测评",
+        date: "2026-08-02",
+        readTime: "5分钟阅读",
+        link: "/articles/7/index.html"
     }
 ];
 

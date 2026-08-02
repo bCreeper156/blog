@@ -6,10 +6,13 @@
     <title>软件测评#3——Cloudreve - 156博客</title>
     <meta name="description" content="详细的内网穿透与云服务器部署教程，教你自建私有网盘摆脱限速烦恼">
     <script src="/js/legacy_redirect.js"></script>
-    <script src="js/dark_fix.js"></script>
+    <!-- 以下两个脚本改为绝对路径，避免子路径404 -->
+    <script src="/js/dark_fix.js"></script>
     <link rel="stylesheet" href="/articles/article.css">
     <script src="/js/common.js"></script>
-    <script src="js/nope.js"></script>
+    <script src="/js/jump_warning.js" defer></script>
+    <script src="/js/nope.js"></script>
+    <!-- 移除了 twikoo 初始化，待 DOM 加载后执行 -->
 </head>
 <body>
     <header>
@@ -265,6 +268,8 @@ WantedBy=multi-user.target</code></pre>
                         🏠 返回首页
                     </button>
                 </div>
+                <!-- 评论容器，放在正确位置 -->
+                <div id="tcomment"></div>
             </div>
         </article>
     </main>
@@ -272,5 +277,17 @@ WantedBy=multi-user.target</code></pre>
     <footer>
         <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
+
+    <!-- Twikoo 初始化移到文档底部，确保容器已加载 -->
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            twikoo.init({
+                envId: 'https://twikoo-vercel.vercel.app',
+                el: '#tcomment',
+                // path: window.location.pathname, // 可选，用于区分不同页面
+            });
+        });
+    </script>
 </body>
 </html>

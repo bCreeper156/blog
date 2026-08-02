@@ -6,10 +6,11 @@
     <title>欢迎来到我的博客！ - 156博客</title>
     <meta name="description" content="欢迎访问156博客，这里分享编程学习、技术经验和创作内容">
     <script src="/js/legacy_redirect.js"></script>
-    <script src="js/dark_fix.js"></script>
+    <script src="/js/dark_fix.js"></script>
     <link rel="stylesheet" href="/articles/article.css">
     <script src="/js/common.js"></script>
-    <script src="js/nope.js"></script>
+    <script src="/js/jump_warning.js" defer></script>
+    <script src="/js/nope.js"></script>
 </head>
 <body>
     <header>
@@ -22,7 +23,7 @@
                 <li><a href="/link.html">链接</a></li>
                 <li><a href="/about.html">关于</a></li>
             </ul>
-        </nav>  
+        </nav>
     </header>
     <main>
         <article>
@@ -41,12 +42,11 @@
                 </div>
             </section>
             <div class="article-content">
-                <!-- 文章内容保持不变 -->
                 <section class="article-section">
                     <div class="highlight-box">
                         <p>🎉 欢迎光临！这里是Creeper苦力怕i的个人博客空间</p>
                     </div>
-                    
+
                     <h2 class="section-title">✨ 关于这个博客</h2>
                     <p class="article-text">
                         大家好！我是Creeper苦力怕i，一个热爱编程、游戏和科技的自媒体创作者。
@@ -55,7 +55,7 @@
                         在这里，你将会看到各种文章，
                         也会分享一些我在创作过程中的心得体会。
                     </p>
-                    
+
                     <h2 class="section-title">🚀 博客特色</h2>
                     <div class="features-grid">
                         <div class="feature-card">
@@ -79,7 +79,7 @@
                             <p class="feature-desc">正在开发中！</p>
                         </div>
                     </div>
-                    
+
                     <h2 class="section-title">🌟 期待与你交流</h2>
                     <p class="article-text">
                         如果你对任何内容有疑问或建议，欢迎通过下面的联系方式与我交流！
@@ -87,7 +87,7 @@
                     <p class="article-text">
                         邮箱：<a href="mailto://humingxuan20241@outlook.com">humingxuan20241@outlook.com</a>
                     </p>
-                    
+
                     <div class="highlight-box">
                         <p>📚 更多精彩内容正在准备中，敬请期待！</p>
                     </div>
@@ -100,14 +100,23 @@
                         🏠 返回首页
                     </button>
                 </div>
+                <div id="tcomment"></div>
             </div>
         </article>
     </main>
-    
+
     <footer>
         <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a></p>
     </footer>
-    <!-- 正确配置 giscus：所有配置写在 script 标签的 data-* 属性上 -->
-    
+
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            twikoo.init({
+                envId: 'https://twikoo-vercel.vercel.app',
+                el: '#tcomment',
+            });
+        });
+    </script>
 </body>
 </html>

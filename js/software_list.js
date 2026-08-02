@@ -1,14 +1,37 @@
-// software_list.js
+// software_list.js (V2.1.0 完整版 - 带ID精准跳转与重置)
 const softwareData = [
-    { name: "希沃白板5 - 插件 - 一体机模式", desc: "为一体机提供更好的教学体验", tags: ["希沃白板5", "一体机", "插件"], icon: "🏫", downloadUrl: "https://pan.mcbebbs.cn/s/3xaF8" }
+    { 
+        id: 1,
+        name: "希沃白板5 - 插件 - 一体机模式", 
+        desc: "为一体机提供更好的教学体验", 
+        tags: ["希沃白板5", "一体机", "插件"], 
+        icon: "🏫", 
+        downloadUrl: "https://gh-proxy.com/https://github.com/bCreeper156/blog_files/raw/refs/heads/main/%E6%8F%92%E4%BB%B6%EF%BC%9APC%E5%81%87%E8%A3%85%E6%98%AF%E4%B8%80%E4%BD%93%E6%9C%BA.exe",
+        backupDownloadUrl: "https://github.com/bCreeper156/blog_files/raw/refs/heads/main/%E6%8F%92%E4%BB%B6%EF%BC%9APC%E5%81%87%E8%A3%85%E6%98%AF%E4%B8%80%E4%BD%93%E6%9C%BA.exe"
+    },
+    { 
+        id: 2,
+        name: "Typedown - Markdown编辑器", 
+        desc: "轻量级Markdown编辑器，支持实时预览", 
+        tags: ["Typedown", "Markdown", "编辑器"], 
+        icon: "📝", 
+        downloadUrl: "https://gh-proxy.com/https://github.com/bCreeper156/blog_files/raw/refs/heads/main/Typedown%20Installer.exe",
+        backupDownloadUrl: "https://github.com/bCreeper156/blog_files/raw/refs/heads/main/Typedown%20Installer.exe"
+    }
 ];
+
 let currentView = 'grid';
 let filteredData = [...softwareData];
 
 function renderSoftwareList() {
     const container = document.getElementById('software-list');
     const emptyDiv = document.getElementById('software-empty');
-    const searchKeyword = document.getElementById('software-search').value.trim().toLowerCase();
+    const searchInput = document.getElementById('software-search');
+    
+    let searchKeyword = '';
+    if (searchInput && searchInput.style.display !== 'none') {
+        searchKeyword = searchInput.value.trim().toLowerCase();
+    }
 
     if (searchKeyword) {
         filteredData = softwareData.filter(soft =>
@@ -16,8 +39,6 @@ function renderSoftwareList() {
             soft.desc.toLowerCase().includes(searchKeyword) ||
             soft.tags.some(tag => tag.toLowerCase().includes(searchKeyword))
         );
-    } else {
-        filteredData = [...softwareData];
     }
 
     if (!container) return;
@@ -35,12 +56,10 @@ function renderSoftwareList() {
         const li = document.createElement('li');
         li.className = 'software-card';
 
-        // 图标
         const iconDiv = document.createElement('div');
         iconDiv.className = 'software-icon';
         iconDiv.textContent = soft.icon || '📦';
 
-        // 信息区
         const infoDiv = document.createElement('div');
         infoDiv.className = 'software-info';
 
@@ -52,7 +71,6 @@ function renderSoftwareList() {
         descDiv.className = 'software-desc';
         descDiv.textContent = soft.desc;
 
-        // 标签区（居中）
         const tagsDiv = document.createElement('div');
         tagsDiv.className = 'software-tags';
         soft.tags.forEach(tag => {
@@ -62,19 +80,30 @@ function renderSoftwareList() {
             tagsDiv.appendChild(span);
         });
 
-        // 下载链接（添加跳转警告前缀）
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'software-actions';
+
         const downloadLink = document.createElement('a');
-        const encodedUrl = encodeURIComponent(soft.downloadUrl);
-        downloadLink.href = `/jump_warning.html?url=${encodedUrl}`;
+        downloadLink.href = soft.downloadUrl;
         downloadLink.className = 'download-link';
-        downloadLink.textContent = '访问官网 / 下载';
+        downloadLink.textContent = '快速下载';
         downloadLink.target = '_blank';
         downloadLink.rel = 'noopener noreferrer';
+
+        const backupLink = document.createElement('a');
+        backupLink.href = soft.backupDownloadUrl || soft.downloadUrl;
+        backupLink.className = 'download-link secondary';
+        backupLink.textContent = '原速下载';
+        backupLink.target = '_blank';
+        backupLink.rel = 'noopener noreferrer';
+
+        actionsDiv.appendChild(downloadLink);
+        actionsDiv.appendChild(backupLink);
 
         infoDiv.appendChild(nameDiv);
         infoDiv.appendChild(descDiv);
         infoDiv.appendChild(tagsDiv);
-        infoDiv.appendChild(downloadLink);
+        infoDiv.appendChild(actionsDiv);
 
         li.appendChild(iconDiv);
         li.appendChild(infoDiv);
@@ -94,14 +123,68 @@ function setSoftwareView(view) {
     renderSoftwareList();
 }
 
+/* ============================================
+   V2.1.0 核心功能：ID检测与重置
+   ============================================ */
+function resetSoftwareList() {
+    // 1. 清除 URL 中的 ?id= 参数
+    const url = new URL(window.location);
+    if (url.searchParams.has('id')) {
+        url.searchParams.delete('id');
+        window.history.replaceState({}, '', url);
+    }
+    
+    // 2. 恢复全部数据
+    filteredData = [...softwareData];
+    
+    // 3. 显示搜索框、切换按钮，隐藏重置按钮
+    const searchArea = document.querySelector('.search-area');
+    const modeSwitch = document.querySelector('.mode-switch');
+    const resetBtn = document.getElementById('resetSoftwareBtn');
+    if (searchArea) searchArea.style.display = 'block';
+    if (modeSwitch) modeSwitch.style.display = 'block';
+    if (resetBtn) resetBtn.style.display = 'none';
+
+    // 4. 重新渲染
+    renderSoftwareList();
+}
+
 function initSoftwarePage() {
+    const params = new URLSearchParams(window.location.search);
+    const targetId = params.get('id');
+    const searchArea = document.querySelector('.search-area');
+    const modeSwitch = document.querySelector('.mode-switch');
+    const resetBtn = document.getElementById('resetSoftwareBtn');
+
+    if (targetId) {
+        // ① 如果有 ?id=X，精确匹配数字
+        const targetIdNum = parseInt(targetId, 10);
+        filteredData = softwareData.filter(item => item.id === targetIdNum);
+        
+        // 隐藏搜索和切换，显示重置按钮
+        if (searchArea) searchArea.style.display = 'none';
+        if (modeSwitch) modeSwitch.style.display = 'none';
+        if (resetBtn) resetBtn.style.display = 'inline-block';
+    } else {
+        // ② 没有ID，显示全部
+        filteredData = [...softwareData];
+        if (resetBtn) resetBtn.style.display = 'none';
+    }
+
+    // 绑定重置按钮事件
+    if (resetBtn) {
+        resetBtn.addEventListener('click', resetSoftwareList);
+    }
+
     renderSoftwareList();
 
+    // 原有搜索监听
     const searchInput = document.getElementById('software-search');
     if (searchInput) {
         searchInput.addEventListener('input', renderSoftwareList);
     }
 
+    // 原有视图切换监听
     const viewBtns = document.querySelectorAll('.view-btn');
     viewBtns.forEach(btn => {
         btn.addEventListener('click', () => {

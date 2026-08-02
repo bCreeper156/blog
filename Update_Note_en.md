@@ -4,6 +4,16 @@
 
 * * *
 
+## V2.1.0 (2026/08/02)
+
+* **[New]** Added comment section functionality. There may be bugs; please understand.
+
+* **[Fixed]** Fixed a bug in jump_warning.html that caused page redirection errors.
+
+* **[New]** Added dynamic URL functionality to software.html to improve user experience.
+
+---
+
 ## V2.0.0 (2026/07/19)
 
 * **[Added]** Completely rewrote the links page (`/link.html`) with a standalone modular design that does not pollute global styles. Added a sidebar quick navigation, content sections are categorised and displayed, making interaction clearer.
@@ -100,3 +110,5 @@
 * * *
 
 Copyright © 2025‑2037 Creeper's Personal Blog. All rights reserved.
+
+

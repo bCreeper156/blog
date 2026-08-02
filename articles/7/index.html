@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件测评#4——TypeDown - 156博客</title>
+    <meta name="description" content="TypeDown实时渲染Markdown编辑器详细测评，特点、适用场景、安装方式及真实使用感受">
+    <script src="/js/legacy_redirect.js"></script>
+    <script src="js/dark_fix.js"></script>
+    <link rel="stylesheet" href="/articles/article.css">
+    <script src="/js/common.js"></script>
+    <script src="/js/jump_warning.js" defer></script>
+    <script src="js/nope.js"></script>
+    <!-- 移除了 Twikoo 初始化，放到 body 底部执行 -->
+</head>
+<body>
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="/index.html">156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>
+                <li><a href="/about.html">关于</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <section class="header">
+                <h1 class="article-title">软件测评#4——TypeDown</h1>
+                <div class="article-meta">
+                    <span class="meta-item">
+                        <span class="meta-icon">📅</span> 2026年7月26日
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-icon">⏱️</span> 6分钟阅读
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-icon">🏷️</span> 软件测评 · Markdown · 编辑器
+                    </span>
+                </div>
+            </section>
+
+            <div class="article-content">
+                <section class="article-section">
+
+                    <p>在众多 Markdown 编辑器中，<strong>TypeDown</strong> 是一个常被低估的选择。它不像 Typora 那样需要付费，也不像 Obsidian 那样依赖复杂的插件生态，而是专注于一件事：<strong>让你快速、专注地写作</strong>。</p>
+                    <p>这篇文章将为你详细拆解 TypeDown 的特点、适用场景、安装方式以及我长期使用下来的真实感受。</p>
+
+                    <div class="highlight-box">
+                        <p>📌 <strong>文件资源请滑到最底下查看</strong>，下方提供了两种下载方式，请根据你的网络环境选择。</p>
+                    </div>
+
+                    <h2 class="section-title">一、它解决了什么问题？</h2>
+                    <p>很多人对 Markdown 编辑器的需求其实很简单：<strong>能写、能预览、不卡、不打扰</strong>。但市面上的编辑器往往走向两个极端：</p>
+                    <ul>
+                        <li><strong>过于简陋</strong>：连实时预览都没有，写起来像在记事本里敲纯文本。</li>
+                        <li><strong>过于复杂</strong>：自带知识库、双向链接、同步服务、数据库、插件商店……你只是想写一篇文章，却被引导着搭建一套知识管理系统。</li>
+                    </ul>
+                    <p>TypeDown 恰好卡在中间：它是<strong>实时渲染</strong>的，你写什么，它就直接渲染成最终效果，不需要切换模式、不需要分栏查看。同时它也没有多余的功能堆砌，不打扰你的写作节奏。</p>
+                    <p>它支持 LaTeX、流程图、代码高亮，但这些功能只是“可用”，而不是“必须”。你打开它，写，保存，关闭。没有多余的通知，没有冗余的菜单栏，没有弹窗提醒你升级会员。</p>
+                    <p><strong>它是一支笔，而不是一台多功能打印机。</strong></p>
+
+                    <h2 class="section-title">二、它有哪些核心特点？</h2>
+
+                    <h3>2.1 实时渲染</h3>
+                    <p>TypeDown 采用的是<strong>所见即所得（WYSIWYG）</strong>的编辑模式。你输入 Markdown 语法，它直接在编辑区渲染成最终样式——加粗、标题、列表、代码块、表格全部即时显示。你不需要切换到预览模式，也不需要分屏对照，写出来的就是最终效果。这对写技术文档、博客草稿、笔记记录等场景来说非常高效——你始终看到的是成文后的样子，不会被源码干扰，也不会在“写”和“看”之间来回切换。</p>
+                    <p>如果你用过 VS Code 写 markdown 的话，你将会看到以下画面，总感觉缺了点什么，但 TypeDown 就不会有这个问题。</p>
+                    <img src="https://bee-reg-ab.imagency.cn/p/b6ac2f474d39d8d5d7f6f6464de384d7.png" alt="VS Code写markdown界面与TypeDown对比" loading="lazy">
+
+                    <h3>2.2 启动速度与资源占用</h3>
+                    <p>TypeDown 基于 <strong>WinUI</strong> 框架开发，使用 <strong>Edge WebView2</strong> 进行渲染。这套技术方案带来的实际表现是：</p>
+                    <ul>
+                        <li><strong>冷启动时间</strong>：约 <strong>3 秒</strong>。不算快，尤其是第一次打开时，能明显感知到等待时间。</li>
+                        <li><strong>内存占用</strong>：<strong>约 300MB</strong>。主要来自 WebView2 的渲染进程。对于一款 Markdown 编辑器来说，这个占用偏高。</li>
+                    </ul>
+                    <p>所以它并不算“轻量”或“快速”，只能说“能用”。如果你对启动速度和内存占用比较敏感，TypeDown 可能不会给你带来很好的体验。但如果你愿意接受这些资源消耗来换取实时渲染的便利，它依然是一个可用的选择。</p>
+
+                    <h3>2.3 本地优先</h3>
+                    <p>所有文件都保存在你的本地磁盘中，不需要登录账号，不需要依赖云服务，也不需要担心服务器宕机导致无法访问。你可以用 OneDrive 或任何你喜欢的同步工具来备份，而不是被强制绑定到某个特定的云生态里。</p>
+
+                    <h3>2.4 支持技术写作</h3>
+                    <p>TypeDown 原生支持以下内容：</p>
+                    <ul>
+                        <li><strong>LaTeX 公式</strong>：用 <code>$</code> 或 <code>$$</code> 包裹即可渲染数学公式。</li>
+                        <li><strong>Mermaid 流程图</strong>：通过代码块编写流程图、时序图、甘特图等。</li>
+                        <li><strong>代码高亮</strong>：支持多种编程语言的语法高亮。</li>
+                    </ul>
+                    <p>这些功能对于写技术博客、课程笔记或项目文档的人来说非常实用，而且全部在实时渲染中直接呈现。</p>
+
+                    <h3>2.5 完全免费、开源、无广告</h3>
+                    <p>这是 TypeDown 最吸引我的地方。它不需要付费订阅，没有内购项目，也没有任何广告。你下载它，安装它，使用它，不需要担心“免费版功能受限”或“三天后弹窗提示升级会员”。</p>
+
+                    <h2 class="section-title">三、它适合谁？</h2>
+                    <p>如果你符合以下任意一条，TypeDown 可能很适合你：</p>
+                    <ul>
+                        <li><strong>写博客的技术作者</strong>：需要实时预览，不想折腾配置。</li>
+                        <li><strong>学生或研究者</strong>：需要插入公式、绘制流程图。</li>
+                        <li><strong>对云端依赖过敏的人</strong>：希望所有数据由自己掌控。</li>
+                        <li><strong>不在意启动速度和内存占用的人</strong>：能接受 3 秒冷启动和 300MB 内存占用，换取实时渲染的便利。</li>
+                    </ul>
+
+                    <h2 class="section-title">四、TypeDown 的局限</h2>
+                    <ul>
+                        <li><strong>跨平台支持</strong>：它目前只有 Windows 版本，没有 iOS 或 Android 客户端。</li>
+                        <li><strong>云同步</strong>：需要自己解决跨设备同步的问题（比如用 OneDrive、Git 或网盘）。</li>
+                        <li><strong>主题定制</strong>：支持浅色/深色模式切换，但不像 Obsidian 那样支持高度自定义的 CSS 样式。</li>
+                        <li><strong>启动速度与内存占用</strong>：3 秒冷启动 + 300MB 内存占用，对 Markdown 编辑器来说偏高。</li>
+                    </ul>
+                    <p>这些局限是否影响你的使用，取决于你的需求和容忍度。对我来说，它依然是目前最顺手的选择。</p>
+
+                    <h2 class="section-title">五、我的个人评价</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>维度</th>
+                                <th>评价</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>启动速度</td>
+                                <td>★★☆☆☆（冷启动约3秒，偏慢）</td>
+                            </tr>
+                            <tr>
+                                <td>内存占用</td>
+                                <td>★★☆☆☆（约300MB，偏高）</td>
+                            </tr>
+                            <tr>
+                                <td>实时渲染体验</td>
+                                <td>★★★★★（所见即所得，开箱即用）</td>
+                            </tr>
+                            <tr>
+                                <td>功能丰富度</td>
+                                <td>★★★★☆（功能够用）</td>
+                            </tr>
+                            <tr>
+                                <td>跨平台支持</td>
+                                <td>★☆☆☆☆（仅限 Windows）</td>
+                            </tr>
+                            <tr>
+                                <td>付费门槛</td>
+                                <td>★★★★★（完全免费）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>TypeDown 的定位非常清晰：<strong>它是一款让你专注于写作的本地编辑器，而不是一套知识管理解决方案。</strong> 它的优势不在于“快”或“轻”，而在于“打开就能用、写起来不被打扰”的整体体验。如果你不想折腾配置、不想为实时预览装一堆 VS Code 插件，TypeDown 会是一个很好的选择。</p>
+
+                    <h2 class="section-title">六、文件资源下载</h2>
+
+                    <h3>下载方式</h3>
+                    <ul>
+                        <li>
+                            <strong>微软商店链接</strong>：<a href="https://apps.microsoft.com/detail/9p8tcw4h2hb4?hl=zh-CN&gl=CN" target="_blank" rel="noopener">点击前往微软商店下载 TypeDown</a><br>
+                            如果你使用的是 Windows 10/11，通过微软商店安装可以自动更新到最新版本，是最推荐的安装方式。
+                        </li>
+                        <li>
+                            <strong>博客内下载</strong>：<a href="https://156blog.pages.dev/software?id=2" target="_blank" rel="noopener">https://156blog.pages.dev/software?id=2</a><br>
+                            如果你的网络环境无法访问微软商店，或你更喜欢使用离线安装包，我已将 TypeDown 的安装包上传到博客内，可从此链接直接下载。
+                        </li>
+                    </ul>
+
+                    <p>如果你也在寻找一款能让你专注于写作的 Markdown 编辑器，TypeDown 值得一试。至少它已经在我这里服役超过一年了。希望它也能成为你写作工具箱里的一支好笔。💪</p>
+
+                </section>
+
+                <div class="article-actions">
+                    <button class="action-btn" onclick="window.location.href='/blog.html'">
+                        📖 浏览更多文章
+                    </button>
+                    <button class="action-btn secondary" onclick="window.location.href='/index.html'">
+                        🏠 返回首页
+                    </button>
+                </div>
+                <div id="tcomment"></div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p><a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright &copy; 2026 Creeper156</a></p>
+    </footer>
+
+    <!-- Twikoo 初始化移到文档底部，确保容器已加载 -->
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            twikoo.init({
+                envId: 'https://twikoo-vercel.vercel.app',
+                el: '#tcomment',
+                // path: window.location.pathname, // 可选
+            });
+        });
+    </script>
+</body>
+</html>
