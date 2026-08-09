@@ -4,6 +4,12 @@
 
 * * *
 
+## V2.1.1 (2026/08/08)
+
+- **[Fixed]** Fixed the comment section function and added a human verification function for comment submission to ensure security.
+
+---
+
 ## V2.1.0 (2026/08/02)
 
 * **[New]** Added comment section functionality. There may be bugs; please understand.
