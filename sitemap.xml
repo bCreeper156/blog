@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://156blog.pages.dev/</loc> <!-- 页面绝对地址，必须 [reference:12] -->
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>1.0</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <url>
+    <loc>https://156blog.pages.dev/articles/1/</loc>
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>0.9</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <url>
+    <loc>https://156blog.pages.dev/articles/2/</loc>
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>0.8</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <url>
+    <loc>https://156blog.pages.dev/articles/3/</loc>
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>0.7</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <url>
+    <loc>https://156blog.pages.dev/articles/4/</loc>
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>0.6</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <url>
+    <loc>https://156blog.pages.dev/articles/5/</loc>
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>0.5</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <url>
+    <loc>https://156blog.pages.dev/articles/6/</loc>
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>0.4</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <url>
+    <loc>https://156blog.pages.dev/articles/7/</loc>
+    <lastmod>2026-08-10</lastmod> <!-- 最后修改日期，可选 [reference:13] -->
+    <changefreq>weekly</changefreq> <!-- 更新频率，可选 [reference:14] -->
+    <priority>0.3</priority> <!-- 优先级，可选 [reference:15] -->
+  </url>
+  <!-- 继续添加其他文章页面 -->
+</urlset>
