@@ -1,4 +1,4 @@
-<img title="156博客LOGO" src="https://156blog.netlify.app/images/LOGO.png" alt="">
+<img title="156博客LOGO" src="https://156blog.pages.dev/images/LOGO_dark.png" alt="">
 
 # 这里是156博客（原Creeper苦力怕i）仓库！
 
@@ -10,6 +10,8 @@
 
 为众多想要零成本制作一个属于自己的个人博客的人（我就是）而出现。
 
+你可以在Releases里下载最新版本进行修改。
+
 你可以根据自己的喜好来修改这里的任何代码。
 
 如果你不会修改，请定位至“修改指南”！
@@ -20,7 +22,7 @@
 
 ## 注意事项
 
-这里的源码你可以随便拿，只要你遵守MIT开源协议！
+这里的源码需要你遵守MIT开源协议！
 
 想要看旧版源码？[点此](https://github.com/bCreeper156/blog_old)查看！
 
@@ -32,16 +34,18 @@
 
 ## 使用指南
 
-如果你已经确认完成修改，请打开[Netlify](https://app.netlify.app)并登录，选择你的方式添加你的第一个网站，根据流程走，你就获得了一个临时网址，你可以修改前缀，使其变成属于你的网站！
+如果你已经确认完成修改，请打开[Cloudflare](https://dash.cloudflare.com)并登录，点击worker与pages，创建应用程序，点击下方创建pages，然后上传你下载的博客模板，根据流程走，你就获得了一个临时网址，你可以修改前缀，使其变成属于你的网站！
 
 ---
 
 ## 修改指南
 
-我们建议你fork我们的仓库，在GitHub里修改！（如果不是，我们建议你下载VSCODE并下载Live Server插件（插件在VSCODE的插件商店内））
+我们建议你下载VSCODE并下载Live Server插件（插件在VSCODE的插件商店内）
 
 如果你还不会HTML+css+js的语法，请你观看两期视频！（[HTML+CSS教程](https://www.bilibili.com/video/BV1Wr4y1R7Bd/)和[JS教程](https://www.bilibili.com/video/BV1bS421X7Wv/)）
 
-然后，跟随index.html的注释修改，剩下的我们认为你可以自行修改了！
+然后，你就可以自由修改了。
 
 articles部分请你参考并尝试修改文章1！
+
+（好吧，其实AI也是可以协助你的）
