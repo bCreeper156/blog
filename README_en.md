@@ -2,7 +2,7 @@
 
 # This is the 156 Blog (formerly Creeper) repository!
 
-[Simplified Chinese](README.md)·[English](README_en.md)·[Update Note](Update_Note.md)
+[中文简体](README.md)·[English](README_en.md)·[Update Note](Update_Note.md)
 
 ---
 
