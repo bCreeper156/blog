@@ -69,7 +69,7 @@ const articles = [
         excerpt: "Ditto剪贴板管理工具详细测评，特点、适用场景、安装方式及真实使用感受",
         category: "软件测评",
         date: "2026-08-16",
-        readTime: "5分钟阅读",
+        readTime: "6分钟阅读",
         link: "/articles/8/index.html"
     }
 ];
