@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件测评#5 - Ditto - 156博客</title>
+    <meta name="description" content="Ditto 剪贴板增强工具测评：它把剪贴板从「中转站」变成了「本地库」，但为什么我最后还是卸了它？">
+    <script src="/js/legacy_redirect.js"></script>
+    <script src="/js/dark_fix.js"></script>
+    <link rel="stylesheet" href="/articles/article.css">
+    <script src="/js/common.js"></script>
+    <script src="/js/jump_warning.js" defer></script>
+    <script src="/js/nope.js"></script>
+</head>
+<body>
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="/index.html">156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>
+                <li><a href="/about.html">关于</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <section class="header">
+                <h1 class="article-title">软件测评#5 - Ditto</h1>
+                <div class="article-meta">
+                    <span class="meta-item">
+                        <span class="meta-icon">📅</span> 2026年8月16日
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-icon">⏱️</span> 6分钟阅读
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-icon">🏷️</span> 软件测评 · Ditto · 剪贴板工具
+                    </span>
+                </div>
+            </section>
+            <div class="article-content">
+                <section class="article-section">
+                    <!-- 引言 -->
+                    <p class="article-text">
+                        写 Markdown 的时候，剪贴板就是第二条手。
+                    </p>
+                    <p class="article-text">
+                        Win+V 用久了，总觉得差点意思——历史只有 25 条，重启还会清，想找上周复制过的一段配置只能靠滚轮硬翻。于是很多人跟我说：试试 <strong>Ditto</strong>。
+                    </p>
+                    <p class="article-text">
+                        我试了，认真用了一段。下面是它确实能做的事，以及为什么我最后还是把它卸了。
+                    </p>
+
+                    <!-- 资源提示 -->
+                    <div class="highlight-box" style="margin: 1.2rem 0;">
+                        <p>📎 文件资源提示：本文相关安装包与便携版可在文末资源区获取，或前往博客内下载页查看。</p>
+                    </div>
+
+                    <!-- Ditto 到底是什么 -->
+                    <h2 class="section-title">Ditto 到底是什么</h2>
+                    <p class="article-text">
+                        Ditto 是 Scott Brogden 维护的一款 Windows 剪贴板增强工具，2000 年代就存在了，开源，用 SQLite 存本地历史。便携版解压仅几 MB，常驻内存极低，默认热键 <code>Ctrl+`</code>（反引号）呼出面板，和 Win+V 互不冲突。
+                    </p>
+                    <p class="article-text">
+                        它有三个主要维护渠道：官网、GitHub Releases 与微软商店。为避免下到修改版，建议只从上述渠道获取。
+                    </p>
+
+                    <!-- 它把剪贴板从"中转站"变成了"本地库" -->
+                    <h2 class="section-title">它把剪贴板从"中转站"变成了"本地库"</h2>
+                    <p class="article-text">
+                        认真用起来，Ditto 和 Win+V 的差距不在"能存几条"，而在下面几件事：
+                    </p>
+
+                    <h4 style="font-size:1.1rem; margin:1.2rem 0 0.3rem 0; color:#222;">1. 容量不再是 25 条</h4>
+                    <p class="article-text" style="margin-top:0.2rem;">
+                        你可以设 5000、10000 条，文本、代码、图片、HTML、文件对象都进同一张表，重启不丢，不绑微软账号。
+                    </p>
+
+                    <h4 style="font-size:1.1rem; margin:1rem 0 0.3rem 0; color:#222;">2. 能搜索</h4>
+                    <p class="article-text" style="margin-top:0.2rem;">
+                        面板顶部一个输入框，敲 <code>json</code>、<code>ssh</code>、<code>2026规划</code>，几个月前复制过的一段代码直接命中。Win+V 只能靠手滚。
+                    </p>
+
+                    <h4 style="font-size:1.1rem; margin:1rem 0 0.3rem 0; color:#222;">3. 纯文本粘贴</h4>
+                    <p class="article-text" style="margin-top:0.2rem;">
+                        写 MD 最怕从网页拷一段带颜色带缩进的富文本。Ditto 右键条目 → "粘贴为纯文本"，进编辑器就是干净字。
+                    </p>
+
+                    <h4 style="font-size:1.1rem; margin:1rem 0 0.3rem 0; color:#222;">4. 合并粘贴</h4>
+                    <p class="article-text" style="margin-top:0.2rem;">
+                        历史里选中三条、五条，右键"合并粘贴"，一次性按换行吐出来。搬客服话术、拼接口参数时有用。
+                    </p>
+
+                    <h4 style="font-size:1.1rem; margin:1rem 0 0.3rem 0; color:#222;">5. 分组 + 钉住 + 局域网同步</h4>
+                    <p class="article-text" style="margin-top:0.2rem;">
+                        常用邮箱、SSH 命令、签名存一个"常用"组，设快捷键直贴；多台电脑走局域网同步，不走云。
+                    </p>
+
+                    <p class="article-text" style="margin-top:0.8rem;">
+                        这些功能叠在一起，确实把"剪贴板管理器"这个品类能做到的极致给到了。
+                    </p>
+
+                    <!-- 但我的真实用量是：顶多五条切换 -->
+                    <h2 class="section-title">但我的真实用量是：顶多五条切换</h2>
+                    <p class="article-text">
+                        用了很长一段时间后，我发现自己有个很固定的习惯：
+                    </p>
+                    <ul style="padding-left:1.8rem; margin:0.6rem 0 0.8rem 0; line-height:1.8;">
+                        <li>复制完基本当场粘走，活过半天的条目很少</li>
+                        <li>Win+V 的 25 条上限，我从来没触过顶</li>
+                        <li>三个月前复制过什么，我记不住，也没打算去查</li>
+                        <li>纯文本粘贴？Win+V 右键条目也能做到</li>
+                        <li>合并粘贴？我一年用不到几次</li>
+                        <li>分组、局域网同步？对我单机写字的人来说是闲置能力</li>
+                    </ul>
+                    <p class="article-text">
+                        也就是说，Ditto 最值钱的"历史检索"和"大容量"，恰好压在我用不上的地方。它没不好，是我这五条切换的工作流，喂不饱它。
+                    </p>
+
+                    <!-- 谁该装，谁可以跳过 -->
+                    <h2 class="section-title">谁该装，谁可以跳过</h2>
+                    <ul style="padding-left:1.8rem; margin:0.6rem 0 0.8rem 0; line-height:1.8;">
+                        <li>
+                            <strong>日拷百段的程序员</strong>、<strong>背话术的运营/客服</strong>、<strong>不绑微软账号的多机办公党</strong>：Ditto 是刚需，装，别犹豫
+                        </li>
+                        <li>
+                            <strong>像我这样顶多五条来回切、偶尔粘纯文本、Win+V 右键够用的人</strong>：Win+V + 钉两条常用地址/签名，已经活得很舒服
+                        </li>
+                    </ul>
+                    <p class="article-text">
+                        工具好不好，不看功能清单长度，看它能不能塞进你的工作流。
+                    </p>
+
+                    <!-- 结尾 -->
+                    <h2 class="section-title">结尾</h2>
+                    <p class="article-text">
+                        Ditto 把剪贴板能做到的极致都给你了。只是对我这种"五条切换党"来说，这份极致有点太重。
+                    </p>
+                    <p class="article-text">
+                        最后我还是卸掉了它。倒不是它不好，只是我真的用不上。
+                    </p>
+
+                    <hr style="border:0; border-top:1px solid #e0e0e0; margin:2rem 0;">
+
+                    <!-- 资源下载 -->
+                    <h3 style="font-size:1.2rem; margin:0 0 0.8rem 0; color:#222;">📎 资源下载</h3>
+                    <ul style="padding-left:1.8rem; margin:0 0 1.2rem 0; line-height:2;">
+                        <li>
+                            <strong>博客内下载（含便携版/安装版）：</strong>
+                            <a href="https://156blog.pages.dev/software.html?id=3" target="_blank">https://156blog.pages.dev/software.html?id=3</a>
+                        </li>
+                        <li>
+                            <strong>官网（SourceForge）：</strong>
+                            <a href="https://ditto-cp.sourceforge.io" target="_blank">https://ditto-cp.sourceforge.io</a>
+                        </li>
+                        <li>
+                            <strong>GitHub Releases：</strong>
+                            <a href="https://github.com/sabrogden/Ditto/releases" target="_blank">https://github.com/sabrogden/Ditto/releases</a>
+                        </li>
+                        <li>
+                            <strong>微软商店：</strong>
+                            <a href="https://apps.microsoft.com/detail/9nblggh3zbjq" target="_blank">https://apps.microsoft.com/detail/9nblggh3zbjq</a>
+                        </li>
+                    </ul>
+
+                </section>
+
+                <!-- 文章操作按钮 -->
+                <div class="article-actions">
+                    <button class="action-btn" onclick="window.location.href='/blog.html'">
+                        📖 浏览更多文章
+                    </button>
+                    <button class="action-btn secondary" onclick="window.location.href='/index.html'">
+                        🏠 返回首页
+                    </button>
+                </div>
+
+                <!-- 评论提示 -->
+                <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
+                    💡 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
+                </div>
+                <div id="tcomment"></div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>
+            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a> ·
+            <a href="/privacy">隐私政策</a> ·
+            <a href="/rules">用户与评论政策</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@1.7.15/dist/twikoo.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            twikoo.init({
+                envId: 'https://twikoo-vercel-psi-azure.vercel.app',
+                el: '#tcomment',
+            });
+        });
+    </script>
+</body>
+</html>
