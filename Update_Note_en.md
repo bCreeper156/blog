@@ -1,120 +1,130 @@
-# Update Note
+# New Version Update Log
 
 [中文简体](Update_Note.md)·[English](Update_Note_en.md)
 
 * * *
-
 ## V2.1.1 (2026/08/08)
 
-- **[Fixed]** Fixed the comment section function and added a human verification function for comment submission to ensure security.
+- **[Fixed]** Fixed the comment section function and added a human verification function for submitting comments to ensure security.
 
 ---
 
 ## V2.1.0 (2026/08/02)
 
-* **[New]** Added comment section functionality. There may be bugs; please understand.
+- **[Added]** Added the comment section function. There may be bugs. Please understand.
 
-* **[Fixed]** Fixed a bug in jump_warning.html that caused page redirection errors.
+- **[Fixed]** Fixed the bug of incorrect page redirection in jump_warning.html.
 
-* **[New]** Added dynamic URL functionality to software.html to improve user experience.
+- **[Added]** Added dynamic URL function to software.html to improve user experience.
 
 ---
 
 ## V2.0.0 (2026/07/19)
 
-* **[Added]** Completely rewrote the links page (`/link.html`) with a standalone modular design that does not pollute global styles. Added a sidebar quick navigation, content sections are categorised and displayed, making interaction clearer.
-* **[Added]** Added a stop‑update announcement for the backup site, with a pop‑up guiding users to the main site for a better experience.
-* **[Fixed]** Fixed the issue where a white flash occurred when switching to dark mode; optimised the theme‑switching logic for smoother visual transitions. (Well, there is still a certain chance of flashing white.)
-* **[Added]** Added compatibility interception for old browsers, showing an upgrade prompt to ensure functionality.
-* **[Improved]** Optimised the layout of the "About" page and enhanced the stability of the dynamic typewriter effect.
-* **[Improved]** Unified the interaction flow of all external‑link jump warnings (`/jump_warning`); users are safely redirected after confirmation, and the back‑navigation logic is now more robust.
-* **[Improved]** Further modularised the code structure to reduce coupling and improve future maintainability.
+* **[Added]** Completely rewrote the link page (`/link.html`), adopting an independent modular design to avoid polluting the global style. Added a sidebar quick navigation with categorized content sections for clearer interaction.
+
+* **[New]** Added a stop-update announcement for the backup site, guiding users to the main site via a pop-up, improving the user experience.
+
+* **[Fixed]** Fixed the issue of a white background flashing on the page in dark mode, and optimized the dark mode switching logic for a smoother visual transition. (Okay, there's still a chance of a white background flash.)
+
+* **[New]** Added compatibility blocking for older browsers, displaying upgrade prompts for older browsers to ensure feature integrity.
+
+* **[Optimized]** Optimized the layout of the "About" page content, enhancing the stability of the dynamic typewriter effect.
+
+* **[Optimized]** Unified the interaction flow for all external link redirect warnings (`/jump_warning`), ensuring safe redirection after user confirmation, and improving the fallback logic.
+
+* **[Optimized]** Further modularized the code structure, reducing coupling and improving subsequent maintenance efficiency.
 
 * * *
 
 ## V1.3.1 (2026/07/06)
 
-* **[Added]** Added dark mode for better eye care! Currently in beta; if you encounter bugs, please report them via [email](mailto:humingxuan20241@outlook.com)! The links page (`/link.html`) is temporarily unavailable – we will rewrite it in the near future! **Note:** Since this feature has just been added, a period of internal testing is required for refinement.
+* **[New Feature]** Added dark mode for better eye protection! Currently in internal testing phase. For bug reports, please use [email](mailto:humingxuan20241@outlook.com)! The link page (`/link.html`) is not yet open; we will rewrite it in the near future! **Note! As this feature is newly added, it requires a period of internal testing for refinement.**
 
 * * *
 
 ## V1.3.0 (2026/07/05)
 
-* **[Improved]** Completed the unification of the interface style.
-* **[Improved]** Optimised the logic of all security jump warnings (`/jump_warning`) to enhance user security, privacy protection, and interaction fluency, improving user experience.
-* **[Fixed]** Fixed the sticky‑on‑top feature, improving user experience.
-* **[Improved]** Further refactored the code structure for better maintainability.
-* **[Improved]** Smoother animations that align with human‑computer interaction principles, enhancing user experience.
+* **[Optimization]** Unified interface style completed.
+
+* **[Optimization]** Optimized all security jump warning (`/jump_warning`) logic, enhancing user security and privacy protection, improving smooth interaction, and enhancing user experience.
+
+* **[Fixed]** Fixed the pinning function, improving user experience.
+
+* **[Optimization]** Further refactored the code structure to improve maintainability.
+
+* **[Optimization]** Smoother animations, conforming to human-computer interaction logic and improving user experience.
 
 * * *
-
 ## V1.2.0 (2026/06/15)
 
-* **[Added]** Added an "About" page featuring a dynamic typewriter effect for a philosophical manifesto.
-* **[Improved]** Completely revamped the software recommendations page: green‑themed visuals, card‑based layout, support for grid/list view switching, and real‑time search.
-* **[Added]** Added security jump warnings (`/jump_warning`) for all external links to enhance privacy protection.
-* **[Improved]** Unified the overall interface with a green theme, standardising buttons, tags, and card styles.
-* **[Fixed]** Fixed an issue where some link icons (e.g., GitHub) were displayed incorrectly.
-* **[Improved]** Further refactored the code structure for better maintainability.
+* **[New]** Added an "About" page with a dynamic typewriter effect and a philosophical statement.
+
+* **[Optimization]** Completely redesigned the software recommendation page: green visual theme, card layout, support for grid/list view switching, and real-time search.
+
+* **[New]** Added a security redirect warning (`/jump_warning`) to all external links to enhance privacy protection.
+
+* **[Optimization]** The overall interface adopts a green theme, unifying the style of buttons, labels, and cards.
+
+* **[Fixed]** Fixed the issue of some link icons displaying incorrectly (such as the GitHub link).
+
+* **[Optimization]** Further refactored the code structure to improve maintainability.
 
 * * *
-
 ## V1.1.0
 
-[fix] Modified the entry file for the game "Geometry Dash" √
+[fix] Modified the entry file for the "Geometry Dash" game √
 
-[fix] Unified hyperlink colours across articles and beautified homepage links √
+[fix] Unified the color of hyperlinks in articles, improving the appearance of homepage hyperlinks √
 
-[fix] Revised the page loading progress bar calculation logic and consolidated it into `common.css` and `common.js` √
+[fix] Modified the page loading progress bar calculation logic and unified it in "common.css" and "common.js" √
 
-[fix] Updated parts of Article 3 to improve timeliness √
+[fix] Modified some content in Article 3 to enhance timeliness √
 
-[fix] Reviewed and revised Article 4 to improve timeliness and provide necessary warnings and tips to users √
+[fix] Reviewed and rectified Article 4, enhancing timeliness and providing users with necessary warnings and prompts √
 
-[feature] Added a comment section for articles (preview version); if bugs occur, please submit issues √
+[feature] Added article comment section functionality (preview version). If there are any bugs, please upload them. Issues√
 
-[fix] Improved article styling for a more beautiful and user‑friendly detail page √
+[Fix] Modified article style to make the article details page more aesthetically pleasing and user-friendly.√
 
-[feature] The copyright notice in the footer now links to the copyright certificate document √
+[Feature] The copyright certificate text at the bottom can now redirect to the copyright certificate document.√
 
-[fix] Removed tags "Frontend Development", "Backend Development", "Artificial Intelligence"; added "Software Review" and "Announcement" tags √
+[Fix] Removed the "Front-end Development," "Back-end Development," and "Artificial Intelligence" tags, and added "Software Testing" and "Announcement" tags.√
 
-[fix] Removed the bookmark/favourite feature √
+[Fix] Removed the favorites function.√
 
-[fix] Fixed the bug where the jump warning on the links page prevented proper back navigation √
+[Fix] Fixed a bug where it was impossible to go back after redirecting to a security warning page.√
 
-[feature] Added a custom 404 page with a more friendly prompt √
+[Feature] Added a 404 page with a more user-friendly message.√
 
-[fix] Optimised the header of article detail pages on mobile devices √
-
-* * *
-
-## V1.0.1
-
-[Fixed] Fixed a vulnerability in the third‑party site access warning
-
-[Fixed & Improved] Fixed known bugs and enhanced overall experience
-
-[Added] Added a "Games" tag and the first game entry
+[Fix] Optimized the header of the mobile article details page.√
 
 * * *
 
-## V1.0.0
+V1.0.1
 
-[Added] Added third‑party site access warnings
+[Fix] Fixed a vulnerability in the third-party website access warning.
 
-[Improved] Refactored the blog structure for easier maintenance
+[Fix & Optimize] Fixed known bugs and improved user experience.
 
-[Fixed] Fixed some broken hyperlinks
-
-[Improved] Refactored hard‑to‑maintain code sections to facilitate future updates
-
-[Changed] Updated Article 3 with more tips, refreshed interface screenshots, and corrected wording and omissions
-
-[Added] Added a fourth article
+[Add] Added a "Games" tag and added the first game.
 
 * * *
 
-Copyright © 2025‑2037 Creeper's Personal Blog. All rights reserved.
+V1.0.0
 
+[Add] Added a third-party website access warning.
 
+[Optimize] Restructured the blog structure to make the code easier to maintain.
+
+[Fix] Fixed some hyperlinks that were not working properly.
+
+[Optimize] Restructured some difficult-to-maintain code to make subsequent maintenance easier.
+
+[Modify] Modified article 3, added more tips and updated the interface screenshots. Fixed and added some inappropriate wording, inaccurate descriptions, and unmentioned content.
+
+[Add] Added the 4th article.
+
+* * *
+
+Copyright © 2025-2037 Creeper's Personal Blog. All rights reserved.
