@@ -32,9 +32,9 @@ const linkData = {
     ]
 };
 
-// ==============================
+//=============================
 // 【2. 渲染与逻辑（后续不需要再动）】
-// ==============================
+//=============================
 function renderCards(id, items, type) {
     const container = document.getElementById(id);
     let html = '';
@@ -74,3 +74,20 @@ const menuKeys = [
 ];
 document.getElementById('menu-list').innerHTML = menuKeys.map(k => 
     `<a href="#${k.id}">${k.name}</a>`
+).join('');
+
+// 滚动监听（自动高亮侧边栏/移动目录）
+const sections = document.querySelectorAll('.link-page .section');
+const sidebarLinks = document.querySelectorAll('.link-page .sidebar a');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150; // 提前判定
+        if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+        }
+    });
+    sidebarLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+    });
+});
