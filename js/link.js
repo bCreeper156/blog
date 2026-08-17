@@ -20,6 +20,14 @@ const linkData = {
             btn1_url: "https://github.com/bCreeper156/blog",
             btn2_name: "博客内查看（暂未开放）", 
             btn2_url: "#" 
+        },
+        { 
+            title: "156博客源码", 
+            desc: "本博客的纯静态源代码。", 
+            btn1_name: "GitHub查看", 
+            btn1_url: "https://github.com/bCreeper156/156-2FA-QR_code-Identification",
+            btn2_name: "博客内查看（暂未开放）", 
+            btn2_url: "#" 
         }
     ]
 };
