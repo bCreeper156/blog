@@ -22,8 +22,8 @@ const linkData = {
             btn2_url: "#" 
         },
         { 
-            title: "156博客源码", 
-            desc: "本博客的纯静态源代码。", 
+            title: "156 2FA二维码备用代码识别工具", 
+            desc: "用于辅助无法识别二维码的设备或2FA软件", 
             btn1_name: "GitHub查看", 
             btn1_url: "https://github.com/bCreeper156/156-2FA-QR_code-Identification",
             btn2_name: "博客内查看（暂未开放）", 
