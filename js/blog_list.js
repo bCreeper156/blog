@@ -80,6 +80,15 @@ const articles = [
         date: "2026-08-17",
         readTime: "18分钟阅读",
         link: "/articles/9/index.html"
+    },
+    {
+        id: 10,
+        title: "10.156 2FA二维码备用代码识别工具",
+        excerpt: "一款纯前端、零依赖的2FA二维码解析工具，帮助您从二维码中提取Secret密钥，全程本地处理，安全可靠。",
+        category: "工具",
+        date: "2026-08-17",
+        readTime: "6分钟阅读",
+        link: "/articles/10/index.html"
     }
 ];
 
