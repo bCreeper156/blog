@@ -71,6 +71,15 @@ const articles = [
         date: "2026-08-16",
         readTime: "6分钟阅读",
         link: "/articles/8/index.html"
+    },
+    {
+        id: 9,
+        title: "9.适合小白的Windows电脑优化教程（完整版）",
+        excerpt: "一份面向小白的Windows电脑优化完整教程，涵盖卸载清理、开机自启、安全软件、存储感知、电源设置、软件安装、Chrome优化、压缩/下载/听歌/搜索工具推荐等实用内容",
+        category: "教程",
+        date: "2026-08-17",
+        readTime: "18分钟阅读",
+        link: "/articles/9/index.html"
     }
 ];
 
