@@ -26,8 +26,8 @@ const linkData = {
             desc: "用于辅助无法识别二维码的设备或2FA软件", 
             btn1_name: "GitHub查看", 
             btn1_url: "https://github.com/bCreeper156/156-2FA-QR_code-Identification",
-            btn2_name: "博客内查看（暂未开放）", 
-            btn2_url: "#" 
+            btn2_name: "博客内查看", 
+            btn2_url: "https://156blog.pages.dev/app/1" 
         }
     ]
 };
@@ -74,20 +74,3 @@ const menuKeys = [
 ];
 document.getElementById('menu-list').innerHTML = menuKeys.map(k => 
     `<a href="#${k.id}">${k.name}</a>`
-).join('');
-
-// 滚动监听（自动高亮侧边栏/移动目录）
-const sections = document.querySelectorAll('.link-page .section');
-const sidebarLinks = document.querySelectorAll('.link-page .sidebar a');
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 150; // 提前判定
-        if (window.scrollY >= sectionTop) {
-            current = section.getAttribute('id');
-        }
-    });
-    sidebarLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-    });
-});
