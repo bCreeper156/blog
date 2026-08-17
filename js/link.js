@@ -9,7 +9,7 @@ const linkData = {
     ],
     // 友情链接
     friends: [
-        { title: "示例博客", desc: "一个热爱技术的开发者", url: "https://example.com" }
+        { title: "羊角快车Blog", desc: "把有用的东西，合成你需要的模样", url: "https://jiaoblog.dpdns.org/" }
     ],
     // 我的项目
     projects: [
