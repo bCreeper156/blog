@@ -3,7 +3,10 @@
 # 这里是156博客（原Creeper苦力怕i）仓库！
 
 [中文简体](README.md)·[English](README_en.md)·[更新日志（Update_Note）](Update_Note.md)
-
+> ⚠️ 注意  
+> - `main` 分支是我个人博客的完整源码，**不开源**  
+> - 本分支（`template`）为 MIT 开源模板，可供参考和使用  
+> - 请勿直接复制 `main` 分支的内容或文章
 ---
 
 ## 仓库简介
