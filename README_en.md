@@ -6,4 +6,4 @@
 
 > ⚠️ Notice  
 > All code and any other content in this repository is **completely not open source**!
-If you want to use the blog template, please go to the new repository: [Click here](https://github.com/bCreeper156/156blog)!
+If you want to use the blog template, please go to the new repository: [Click here](https://github.com/bCreeper156/156blog-template)!
