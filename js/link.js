@@ -9,6 +9,7 @@ const linkData = {
     ],
     // 友情链接
     friends: [
+        { title: "添加友链", desc: "提交你的博客信息", type: "add-link" },
         { title: "羊角快车Blog", desc: "把有用的东西，合成你需要的模样", url: "https://jiaoblog.dpdns.org/" }
     ],
     // 我的项目
