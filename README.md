@@ -5,4 +5,4 @@
 [中文简体](README.md)·[English](README_en.md)·[更新日志（Update_Note）](Update_Note.md)
 > ⚠️ 注意  
 > 本仓库所有代码等任何内容完全**不开源**  ！
-如果你想要使用博客模板，请转移至新仓库：[点此进入](https://github.com/bCreeper156/156blog)！
+如果你想要使用博客模板，请转移至新仓库：[点此进入](https://github.com/bCreeper156/156blog-template)！
