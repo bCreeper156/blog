@@ -32,9 +32,9 @@ const linkData = {
     ]
 };
 
-//=============================
+// ==============================
 // 【2. 渲染与逻辑（后续不需要再动）】
-//=============================
+// ==============================
 function renderCards(id, items, type) {
     const container = document.getElementById(id);
     let html = '';
@@ -49,6 +49,13 @@ function renderCards(id, items, type) {
                     </div>
                 </div>
             `;
+        } else if (type === 'friend' && item.type === 'add-link') {
+            html += `
+                <div class="link-card add-friend-card" role="button" tabindex="0" data-add-friend>
+                    <div class="info"><h4>${item.title}</h4><p>${item.desc}</p></div>
+                    <div class="card-foot">添加友链 →</div>
+                </div>
+            `;
         } else {
             html += `
                 <a href="${item.url}" target="_self" class="link-card">
@@ -61,10 +68,67 @@ function renderCards(id, items, type) {
     container.innerHTML = html;
 }
 
+function createAddFriendToast() {
+    if (document.getElementById('friend-link-toast')) {
+        return;
+    }
+
+    const toast = document.createElement('div');
+    toast.id = 'friend-link-toast';
+    toast.className = 'friend-link-toast';
+    toast.innerHTML = `
+        <div class="friend-toast-box">
+            <div class="friend-toast-header">添加友链</div>
+            <div class="friend-toast-content">
+                1. 博客名称<br>
+                2. 博客简介<br>
+                3. 博客链接
+            </div>
+            <div class="friend-toast-actions">
+                <button type="button" class="toast-btn secondary" data-close-toast>取消</button>
+                <a href="mailto://humingxuan20241@outlook.com?subject=友链申请&body=1.博客名称%0A2.博客简介%0A3.博客链接" class="toast-btn primary" data-add-mailto>现在添加</a>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(toast);
+
+    toast.querySelector('[data-close-toast]').addEventListener('click', () => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 180);
+    });
+
+    toast.addEventListener('click', (event) => {
+        if (event.target === toast) {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 180);
+        }
+    });
+}
+
+function openAddFriendToast() {
+    createAddFriendToast();
+    const toast = document.getElementById('friend-link-toast');
+    if (toast) {
+        requestAnimationFrame(() => toast.classList.add('show'));
+    }
+}
+
 // 执行渲染
 renderCards('shortcut-grid', linkData.shortcuts);
-renderCards('friend-grid', linkData.friends);
+renderCards('friend-grid', linkData.friends, 'friend');
 renderCards('project-grid', linkData.projects, 'project');
+
+const addFriendCard = document.querySelector('[data-add-friend]');
+if (addFriendCard) {
+    addFriendCard.addEventListener('click', openAddFriendToast);
+    addFriendCard.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openAddFriendToast();
+        }
+    });
+}
 
 // 自动生成左侧侧边栏菜单
 const menuKeys = [
