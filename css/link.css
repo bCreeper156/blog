@@ -65,6 +65,35 @@
     padding-bottom: 15px;
 }
 
+.link-page .github-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.link-page .github-cta p {
+    margin: 0;
+    color: #666;
+    line-height: 1.7;
+}
+.link-page .github-cta-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #10B981, #34D399);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.18);
+}
+.link-page .github-cta-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.22);
+}
+
 /* 卡片网格 */
 .link-page .card-grid {
     display: grid;
@@ -85,6 +114,22 @@
 .link-page .link-card:hover {
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
     border-color: #10B981;
+}
+.link-page .link-card.add-friend-card {
+    cursor: pointer;
+    border-style: dashed;
+    border-color: #a7f3d0;
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+.link-page .link-card.add-friend-card:hover {
+    border-color: #10B981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+}
+.link-page .link-card .card-foot {
+    margin-top: 12px;
+    color: #10B981;
+    font-size: 14px;
+    font-weight: 600;
 }
 .link-page .link-card .info h4 {
     font-size: 16px;
@@ -114,6 +159,74 @@
 .link-page .link-card .card-btn.primary:hover {
     background: #10B981;
     color: #fff;
+}
+
+.friend-link-toast {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.friend-link-toast.show {
+    opacity: 1;
+    visibility: visible;
+}
+.friend-toast-box {
+    width: min(420px, calc(100vw - 32px));
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+    padding: 22px 20px 18px;
+    border: 1px solid #f0f0f0;
+}
+.friend-toast-header {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #1f2937;
+}
+.friend-toast-content {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #4b5563;
+    padding: 12px 14px;
+    background: #f9fafb;
+    border-radius: 10px;
+    margin-bottom: 18px;
+}
+.friend-toast-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.toast-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.toast-btn:hover {
+    transform: translateY(-1px);
+}
+.toast-btn.secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+.toast-btn.primary {
+    background: linear-gradient(135deg, #10B981, #34D399);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* 移动端顶部横向目录 */
@@ -205,6 +318,10 @@ html[data-theme="dark"] .link-page .section-title {
     border-bottom-color: #444;
 }
 
+html[data-theme="dark"] .link-page .github-cta p {
+    color: #aaa;
+}
+
 html[data-theme="dark"] .link-page .link-card {
     border-color: #3a3a3a;
 }
@@ -228,6 +345,22 @@ html[data-theme="dark"] .link-page .link-card .card-btn.primary {
 html[data-theme="dark"] .link-page .link-card .card-btn.primary:hover {
     background: #10B981;
     color: #fff;
+}
+
+html[data-theme="dark"] .friend-toast-box {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+}
+html[data-theme="dark"] .friend-toast-header {
+    color: #fff;
+}
+html[data-theme="dark"] .friend-toast-content {
+    background: #1f1f1f;
+    color: #d1d5db;
+}
+html[data-theme="dark"] .toast-btn.secondary {
+    background: #3a3a3a;
+    color: #e5e7eb;
 }
 
 html[data-theme="dark"] .link-page .mobile-catalog a {
