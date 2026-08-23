@@ -20,7 +20,7 @@ const linkData = {
             btn1_name: "GitHub查看", 
             btn1_url: "https://github.com/bCreeper156/blog",
             btn2_name: "博客内查看（暂未开放）", 
-            btn2_url: "#" 
+            btn2_url: "" 
         },
         { 
             title: "156 2FA二维码备用代码识别工具", 
