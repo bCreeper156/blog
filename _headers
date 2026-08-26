@@ -1,3 +1,1 @@
-# 阻止搜索引擎索引所有 *.pages.dev 域名
-https://:project.pages.dev/*
-  X-Robots-Tag: noindex
+
