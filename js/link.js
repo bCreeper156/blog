@@ -30,8 +30,7 @@ const linkData = {
             desc: "一款本地优先的软件",
             githubName: "GitHub查看",
             githubUrl: "https://github.com/bCreeper156/156-2FA",
-            hasOnlinePreview: true,
-            onlineUrl: "/app/1"
+            hasOnlinePreview: false
         }
     ]
 };
