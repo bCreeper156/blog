@@ -503,6 +503,61 @@ body {
     }
 }
 
+/* ========================================
+   暗黑模式：按钮统一深色背景 + 浅色文字
+   ======================================== */
+html[data-theme="dark"] .filter-btn,
+html[data-theme="dark"] .pagination-btn,
+html[data-theme="dark"] .prev-btn,
+html[data-theme="dark"] .next-btn,
+html[data-theme="dark"] .action-btn {
+    background-color: #2a2a2a;
+    color: #e7eaed;
+    border-color: #3a3a3a;
+}
+
+html[data-theme="dark"] .filter-btn:hover,
+html[data-theme="dark"] .pagination-btn:hover:not(:disabled),
+html[data-theme="dark"] .prev-btn:hover:not(:disabled),
+html[data-theme="dark"] .next-btn:hover:not(:disabled) {
+    background-color: #333333;
+    color: #ffffff;
+    border-color: #4a4a4a;
+}
+
+html[data-theme="dark"] .action-btn:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .filter-btn:focus-visible,
+html[data-theme="dark"] .pagination-btn:focus-visible,
+html[data-theme="dark"] .action-btn:focus-visible {
+    box-shadow: 0 0 0 2px var(--md-state-focus);
+}
+
+/* 激活/选中：保持深色背景，以浅色主色文字强调 */
+html[data-theme="dark"] .filter-btn.active,
+html[data-theme="dark"] .pagination-btn.active {
+    background-color: #2f3b34;
+    color: #8ef0c2;
+    border-color: #2f3b34;
+    box-shadow: none;
+}
+
+html[data-theme="dark"] .pagination-btn:disabled {
+    background-color: #232323;
+    color: #6b6f73;
+    border-color: #2a2a2a;
+    opacity: 1;
+}
+
+/* 分类标签：深色底 + 浅色文字 */
+html[data-theme="dark"] .article-category {
+    background-color: #2f3b34;
+    color: #8ef0c2;
+}
+
 /* ----- 减少动画偏好 ----- */
 @media (prefers-reduced-motion: reduce) {
     * {
