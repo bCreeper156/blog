@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系方式 - 156博客</title>
+    <!-- 提前应用主题，避免深色模式下的白屏闪烁（与站点主题键 site-theme 保持一致） -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('site-theme') || localStorage.getItem('theme');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var theme = (saved === 'dark' || saved === 'light') ? saved : (prefersDark ? 'dark' : 'light');
+                document.documentElement.dataset.theme = theme;
+                document.documentElement.classList.toggle('dark-mode', theme === 'dark');
+            } catch (e) {}
+        })();
+    </script>
+    <script src="/js/legacy_redirect.js"></script>
+    <script src="js/dark_fix.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/loading.js"></script>
+    <script src="js/common.js" defer></script>
+    <meta http-equiv="refresh" content="2;url=https://muselink.cc/Creeper156">
+    <style>
+        /* 全部使用站点主题变量（--md-*），自动跟随博客的浅色 / 深色主题 */
+        .warning {
+            max-width: 720px;
+            margin: 80px auto;
+            padding: 30px 35px;
+            background: var(--md-surface-container, #ffffff);
+            border: 1px solid rgba(15, 157, 88, 0.18);
+            border-radius: 24px;
+            box-shadow: var(--md-shadow-lg, 0 2px 12px rgba(0, 0, 0, 0.08));
+            text-align: left;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            color: var(--md-on-surface, #1f1f1f);
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+        }
+        .warning h2 {
+            font-size: 1.9rem;
+            color: var(--md-primary, #0f9d58);
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .warning h2::before {
+            content: "🔗";
+            font-size: 1.8rem;
+        }
+        .warning p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: var(--md-on-surface-variant, #5f6368);
+            margin: 0.8rem 0;
+        }
+        .target-link-box {
+            background: var(--md-surface, #f5f7fa);
+            border: 1px dashed rgba(15, 157, 88, 0.45);
+            border-radius: 18px;
+            padding: 15px 20px;
+            margin: 20px 0 10px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            word-break: break-all;
+            word-wrap: break-word;
+            color: var(--md-on-surface-variant, #5f6368);
+            font-size: 1rem;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.04);
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+        }
+        .target-link-box a {
+            color: var(--md-primary, #0f9d58);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .target-link-box a:hover {
+            text-decoration: underline;
+        }
+        .anniu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .anniu a {
+            display: inline-block;
+            padding: 10px 32px;
+            border-radius: 40px;
+            background: var(--md-primary-container, #e6f4ed);
+            border: 1px solid rgba(15, 157, 88, 0.4);
+            font-size: 1.2rem;
+            font-weight: 550;
+            transition: all 0.2s ease;
+            min-width: 110px;
+            text-align: center;
+            color: var(--md-primary-hover, #0b7a44);
+            text-decoration: none;
+        }
+        .anniu a:hover {
+            background: var(--md-primary, #0f9d58);
+            color: var(--md-on-primary, #ffffff);
+        }
+        .anniu a.cancel-link {
+            background: rgba(127, 127, 127, 0.12);
+            border-color: rgba(127, 127, 127, 0.28);
+            color: var(--md-on-surface-variant, #5f6368);
+        }
+        .anniu a.cancel-link:hover {
+            background: rgba(127, 127, 127, 0.22);
+            border-color: rgba(127, 127, 127, 0.4);
+            color: var(--md-on-surface, #1f1f1f);
+        }
+        .anniu a:active {
+            transform: scale(0.97);
+        }
+        .url-note {
+            font-size: 0.9rem;
+            color: var(--md-on-surface-variant, #5f6368);
+            border-left: 4px solid var(--md-primary, #0f9d58);
+            padding-left: 15px;
+            background: rgba(15, 157, 88, 0.08);
+            border-radius: 0 12px 12px 0;
+            margin-top: 20px;
+            line-height: 1.4;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+        @media (max-width: 600px) {
+            .warning { margin: 30px 16px; padding: 20px; }
+            .anniu { flex-direction: column; gap: 12px; }
+            .anniu a { width: 100%; }
+        }
+    </style>
+<link rel="icon" type="image/png" href="/images/LOGO_dark.png">
+</head>
+<body>
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><a href="/index.html">156博客</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><a href="/blog.html">博客</a></li>
+                <li><a href="/link.html">链接</a></li>
+                <li><a href="/about.html">关于</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="warning">
+        <h2>正在跳转至联系方式</h2>
+        <p>正在为您打开全部联系方式页面，请稍候……</p>
+        <p>如果浏览器没有自动跳转，请点击下方链接手动前往：</p>
+        <div class="target-link-box">
+            <a href="https://muselink.cc/Creeper156" id="manualLink" rel="noopener noreferrer">https://muselink.cc/Creeper156</a>
+        </div>
+        <div class="anniu">
+            <a href="https://muselink.cc/Creeper156" id="jumpBtn" rel="noopener noreferrer">立即前往 →</a>
+            <a href="/index.html" class="cancel-link">↩ 返回首页</a>
+        </div>
+    </section>
+    <footer>
+        <p>
+            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE">Copyright © 2026 Creeper156</a> ·
+            <a href="/privacy">隐私政策</a> ·
+            <a href="/rules">用户与评论政策</a>
+        </p>
+    </footer>
+
+    <script>
+        (function() {
+            'use strict';
+            var TARGET = 'https://muselink.cc/Creeper156';
+
+            // 尝试自动跳转（使用 replace，避免在历史记录中留下当前页）
+            function tryRedirect() {
+                try {
+                    window.location.replace(TARGET);
+                } catch (e) {
+                    // 跳转失败时保留页面，用户可点击手动链接
+                }
+            }
+
+            // 等 DOM 就绪后再跳转：defer 的 common.js 会在此之前注入主题切换按钮，
+            // 保证按钮与其它页面完全一致；若跳转被拦截，页面保留且按钮可用。
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', tryRedirect, { once: true });
+            } else {
+                tryRedirect();
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,4 +1,7 @@
 // 完善的文章数据
+(function () {
+'use strict';
+
 const articles = [
     {
         id: 1,
@@ -294,24 +297,49 @@ function copyByTextarea(text) {
     document.body.removeChild(textarea);
 }
 
-// 初始化
-document.addEventListener('DOMContentLoaded', function() {
+// 初始化（首次加载与无刷新页面切换后都会调用，需保证可重复执行）
+function initBlogList() {
+    currentFilter = 'all';
+    currentSearch = '';
+    currentPage = 1;
+
     renderArticles(articles, 1);
-    
+
     document.querySelectorAll('.filter-btn').forEach(button => {
+        if (button.dataset.blogBound) return;
+        button.dataset.blogBound = '1';
         button.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             this.classList.add('active');
-            
+
             currentFilter = this.getAttribute('data-filter');
             applyFiltersAndSearch(1);
         });
     });
 
-    document.getElementById('search').addEventListener('input', function() {
-        currentSearch = this.value.toLowerCase();
-        applyFiltersAndSearch(1);
-    });
-});
+    const searchInput = document.getElementById('search');
+    if (searchInput && !searchInput.dataset.blogBound) {
+        searchInput.dataset.blogBound = '1';
+        searchInput.addEventListener('input', function() {
+            currentSearch = this.value.toLowerCase();
+            applyFiltersAndSearch(1);
+        });
+    }
+}
+
+// 生成的文章项使用内联 onclick="shareArticle(...)"，需保持全局可访问
+window.shareArticle = shareArticle;
+
+// 注册为可复用的页面模块
+window.__pageModules = window.__pageModules || {};
+window.__pageModules['blog_list.js'] = initBlogList;
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlogList);
+} else if (!window.__pjaxDynamicLoad) {
+    initBlogList();
+}
+
+})();

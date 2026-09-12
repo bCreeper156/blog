@@ -1,128 +1,26 @@
-// ========================================
-// 加载进度条 - 事件驱动重构版
-// ========================================
-(function() {
-    'use strict';
+// 加载进度条逻辑已统一迁移至 /js/loading.js（真实进度），此处不再包含。
 
-    function initProgressBar() {
-        const wrap = document.getElementById('gh-loader-wrap');
-        const bar = document.getElementById('gh-loader');
-        const tip = document.getElementById('gh-loader-tip');
-
-        if (!wrap || !bar || !tip) return;
-
-        let progress = 0;
-        let targetProgress = 0;
-        let animationFrame = null;
-        let hideTimer = null;
-
-        function showLoader() {
-            wrap.classList.remove('hide');
-            tip.classList.add('show');
-        }
-
-        function hideLoader() {
-            wrap.classList.add('hide');
-            tip.classList.remove('show');
-        }
-
-        function updateDisplay(value, text) {
-            const pct = Math.min(100, Math.max(0, Math.round(value)));
-            bar.style.width = pct + '%';
-            tip.textContent = text || `加载中 ${pct}%`;
-
-            if (pct >= 100) {
-                hideLoader();
-            } else {
-                showLoader();
-            }
-        }
-
-        function animateTo(target) {
-            targetProgress = Math.min(100, Math.max(0, target));
-            if (animationFrame) cancelAnimationFrame(animationFrame);
-
-            function step() {
-                const diff = targetProgress - progress;
-                if (Math.abs(diff) < 0.5) {
-                    progress = targetProgress;
-                    updateDisplay(progress);
-
-                    if (progress >= 100) {
-                        if (hideTimer) clearTimeout(hideTimer);
-                        hideTimer = setTimeout(hideLoader, 400);
-                    }
-                    return;
-                }
-
-                progress += diff * 0.2;
-                updateDisplay(progress);
-                animationFrame = requestAnimationFrame(step);
-            }
-
-            step();
-        }
-
-        function resetProgress() {
-            progress = 0;
-            targetProgress = 0;
-            bar.style.width = '0%';
-            hideLoader();
-            if (hideTimer) {
-                clearTimeout(hideTimer);
-                hideTimer = null;
-            }
-        }
-
-        function updateByState() {
-            const state = document.readyState;
-            if (state === 'loading') {
-                animateTo(20);
-            } else if (state === 'interactive') {
-                animateTo(60);
-            } else if (state === 'complete') {
-                animateTo(90);
-            }
-        }
-
-        document.addEventListener('readystatechange', updateByState);
-
-        window.addEventListener('load', function() {
-            animateTo(100);
-        });
-
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) {
-                resetProgress();
-                animateTo(100);
-            }
-        });
-
-        updateByState();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initProgressBar, { once: true });
-    } else {
-        initProgressBar();
-    }
-})();
-
-// ========== 移动端菜单 ==========
-document.addEventListener('DOMContentLoaded', function() {
+// ========== 通用内容初始化 ==========
+// 可重复调用：既用于首次加载，也用于无刷新页面切换（SPA）后的内容重新绑定。
+function initCommon() {
     const menuButton = document.querySelector('.menu');
     const nav = document.querySelector('nav ul');
 
-    if (menuButton && nav) {
+    if (menuButton && nav && !menuButton.dataset.commonBound) {
+        menuButton.dataset.commonBound = '1';
         menuButton.addEventListener('click', function(e) {
             e.stopPropagation();
             nav.classList.toggle('show');
         });
+    }
 
-        // 点击菜单外区域关闭
+    // 点击菜单外区域关闭（整个文档只绑定一次）
+    if (!window.__commonNavDocBound) {
+        window.__commonNavDocBound = true;
         document.addEventListener('click', function(e) {
             if (!e.target.closest('header')) {
-                nav.classList.remove('show');
+                const navList = document.querySelector('nav ul');
+                if (navList) navList.classList.remove('show');
             }
         });
     }
@@ -130,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const announcement = document.querySelector('.Ad');
     const closeButton = document.querySelector('.Ad__close');
 
-    if (announcement && closeButton) {
+    if (announcement && closeButton && !closeButton.dataset.commonBound) {
+        closeButton.dataset.commonBound = '1';
         closeButton.addEventListener('click', function() {
             announcement.classList.add('is-hidden');
             announcement.setAttribute('aria-hidden', 'true');
@@ -139,16 +38,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     initThemeToggle();
 
-    // 页面加载动画
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.4s';
-        document.body.style.opacity = '1';
-    }, 100);
-
     // 评论区初始化（Giscus 自动加载）
     initCommentSection();
-});
+}
+
+// 注册为可复用的页面模块（页面切换后重新初始化内容区）
+window.__pageModules = window.__pageModules || {};
+window.__pageModules['common.js'] = initCommon;
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCommon);
+} else {
+    initCommon();
+}
 
 // ========== 评论占位函数 ==========
 function initCommentSection() {
@@ -226,11 +128,14 @@ function initThemeToggle() {
     const currentTheme = getDefaultTheme();
     applyTheme(currentTheme);
 
-    themeButton.addEventListener('click', function() {
-        const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-        applyTheme(nextTheme);
-        saveTheme(nextTheme);
-    });
+    if (!themeButton.dataset.themeBound) {
+        themeButton.dataset.themeBound = '1';
+        themeButton.addEventListener('click', function() {
+            const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            applyTheme(nextTheme);
+            saveTheme(nextTheme);
+        });
+    }
 }
 
 // ========== 置顶按钮（统一创建 + 事件绑定） ==========
@@ -353,5 +258,18 @@ function initThemeToggle() {
     } else {
         initBackToTop();
     }
+})();
+
+// ========== 无刷新页面切换（保留导航栏与 footer） ==========
+// 统一在这里按需注入，全站所有引入 common.js 的页面都会自动获得该能力。
+(function() {
+    if (window.__pageTransitionLoading) return;
+    if (document.querySelector('script[src*="page_transition.js"]')) return;
+    window.__pageTransitionLoading = true;
+
+    var script = document.createElement('script');
+    script.src = '/js/page_transition.js';
+    script.async = false;
+    document.head.appendChild(script);
 })();
 

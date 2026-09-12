@@ -7,9 +7,12 @@
     <script src="/js/legacy_redirect.js"></script>
     <script src="js/dark_fix.js"></script>
     <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/loading.js"></script>
     <script src="/js/common.js" defer></script>
+    <script src="/js/page_transition.js" defer></script>
     <script src="/js/jump_warning.js" defer></script>
     <script src="/js/nope.js"></script>
+<link rel="icon" type="image/png" href="/images/LOGO_dark.png">
 </head>
 <body>
 
@@ -26,7 +29,7 @@
         </nav>
     </header>
 
-    <!-- 加载进度条（由 common.js 控制样式） -->
+    <!-- 加载进度条（逻辑见 /js/loading.js，样式见 /css/common.css） -->
     <div id="gh-loader-wrap">
         <div id="gh-loader"></div>
     </div>
@@ -47,16 +50,11 @@
         </section>
 
         <!-- 关于我 -->
-        <section class="about_me">
+        <section class="about_me" id="contact">
             <img src="/images/LOGO.png" data-light-src="/images/LOGO.png" data-dark-src="/images/LOGO_dark.png" id="site-logo" alt="Creeper苦力怕i个人博客LOGO">
-            <p>bilibili游戏区、科技区博主，爱玩游戏、编程</p>
+            <p>bilibili游戏区、科技区博主；学生开发者</p>
             <div class="social-media">
-                <a href="/jump_warning.html?url=https://github.com/bCreeper156">GitHub</a> |
-                <a href="/jump_warning.html?url=https://space.bilibili.com/3546378363996834">bilibili</a> |
-                <a href="/jump_warning.html?url=https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">YouTube</a> |
-                <a href="/jump_warning.html?url=https://qm.qq.com/q/3xAA2pN0bm">QQ群</a> |
-                <a href="mailto:humingxuan20241@outlook.com">邮箱</a> |
-                <a href="/jump_warning.html?url=http://ifdian.net/a/bcdogs156">爱发电</a>
+                <a href="/contact.html">🔗 查看全部联系方式</a>
             </div>
         </section>
 
@@ -72,8 +70,7 @@
         <!-- 底部链接区 -->
         <section class="tar">
             <h1 class="tar__title">博客源码</h1>
-            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog_old">想看我的老博客屎山？点击查看！ →</a>
-            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog">想看我的新博客源码？点击查看！ →</a>
+            <a href="/jump_warning.html?url=https://github.com/bCreeper156/blog">想看我的博客源码？点击查看！ →</a>
         </section>
     </main>
 
@@ -84,5 +81,32 @@
         <a href="/rules">用户与评论政策</a>
     </p>
             </footer>
+
+    <script>
+        (function () {
+            'use strict';
+
+            // 当用户通过 index.html#contact 打开（或点击 #contact 链接）时，
+            // 平滑滚动到「关于我」容器（.about_me / #contact）。
+            function scrollToContact() {
+                if (window.location.hash !== '#contact') return;
+                var target = document.getElementById('contact');
+                if (!target) return;
+                // 等待布局稳定后再滚动，保证定位准确
+                requestAnimationFrame(function () {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', scrollToContact, { once: true });
+            } else {
+                scrollToContact();
+            }
+
+            // 同一页面内再次触发 hash 变化时同样生效
+            window.addEventListener('hashchange', scrollToContact);
+        })();
+    </script>
 </body>
                                     </html>

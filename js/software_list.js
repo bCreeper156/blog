@@ -1,4 +1,7 @@
 // software_list.js (V2.1.0 完整版 - 带ID精准跳转与重置)
+(function () {
+'use strict';
+
 const softwareData = [
     { 
         id: 1,
@@ -194,8 +197,14 @@ function initSoftwarePage() {
     });
 }
 
+// 注册为可复用的页面模块
+window.__pageModules = window.__pageModules || {};
+window.__pageModules['software_list.js'] = initSoftwarePage;
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSoftwarePage);
-} else {
+} else if (!window.__pjaxDynamicLoad) {
     initSoftwarePage();
 }
+
+})();

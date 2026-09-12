@@ -378,7 +378,14 @@ footer a:hover {
     opacity: 1 !important;
 }
 
-/* ----- 加载进度条 ----- */
+/* ----- 加载进度条（全局统一：与 articles/article.css、js/common.js、articles/articles.js 保持一致） ----- */
+:root {
+    --progress-color: #0f9d58;
+    --progress-color-2: #14b86a;
+    --progress-color-3: #0b7a44;
+    --progress-shadow: rgba(15, 157, 88, 0.5);
+}
+
 #gh-loader-wrap {
     position: fixed;
     top: 0;
@@ -387,8 +394,9 @@ footer a:hover {
     height: 4px;
     z-index: 9999;
     pointer-events: none;
-    background: rgba(0, 0, 0, 0.02);
-    transition: opacity 0.25s ease;
+    background: rgba(15, 157, 88, 0.08);
+    overflow: hidden;
+    transition: opacity 0.3s ease;
 }
 
 #gh-loader-wrap.hide {
@@ -398,27 +406,34 @@ footer a:hover {
 #gh-loader {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, var(--md-primary) 0%, var(--md-primary-hover) 100%);
-    box-shadow: 0 0 8px rgba(15, 157, 88, 0.5);
-    transition: width 0.2s ease;
+    border-radius: 0 999px 999px 0;
+    background: linear-gradient(90deg, var(--progress-color) 0%, var(--progress-color-2) 55%, var(--progress-color-3) 100%);
+    box-shadow: 0 0 10px var(--progress-shadow);
+    transition: width 0.18s ease;
 }
 
 #gh-loader-tip {
     position: fixed;
-    top: 6px;
+    top: 10px;
     left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: var(--md-on-primary);
-    border-radius: var(--md-radius-pill);
+    transform: translateX(-50%) translateY(-4px);
+    background: rgba(18, 24, 16, 0.72);
+    color: #ffffff;
+    border-radius: 999px;
     font-size: 0.72rem;
-    padding: 2px 9px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 3px 10px;
     pointer-events: none;
     z-index: 9999;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 #gh-loader-tip.show {
     opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }

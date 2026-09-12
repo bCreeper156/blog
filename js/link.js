@@ -1,11 +1,15 @@
 // ==============================
 // 【1. 数据放在 JS 最顶端】
 // ==============================
+(function () {
+'use strict';
+
 const linkData = {
     // 快捷链接
     shortcuts: [
         { title: "GitHub", desc: "代码托管与开源项目", url: "https://github.com/bCreeper156" },
-        { title: "Bilibili", desc: "游戏区、科技区 UP 主", url: "https://space.bilibili.com/3546378363996834" }
+        { title: "Bilibili", desc: "游戏区、科技区 UP 主", url: "https://space.bilibili.com/3546378363996834" },
+        { title: "更多联系方式", desc: "查看我的全部联系方式", url: "/contact.html" }
     ],
     // 友情链接
     friends: [
@@ -14,21 +18,20 @@ const linkData = {
     ],
     // 我的项目
     projects: [
-        { 
-            title: "156博客源码", 
-            desc: "本博客的纯静态源代码。", 
-            btn1_name: "GitHub查看", 
-            btn1_url: "https://github.com/bCreeper156/blog",
-            btn2_name: "博客内查看（暂未开放）", 
-            btn2_url: "" 
+        {
+            title: "156博客源码",
+            desc: "本博客的纯静态源代码。",
+            githubName: "GitHub查看",
+            githubUrl: "https://github.com/bCreeper156/blog",
+            hasOnlinePreview: false
         },
-        { 
-            title: "156 2FA二维码备用代码识别工具", 
-            desc: "用于辅助无法识别二维码的设备或2FA软件", 
-            btn1_name: "GitHub查看", 
-            btn1_url: "https://github.com/bCreeper156/156-2FA-QR_code-Identification",
-            btn2_name: "博客内查看", 
-            btn2_url: "https://156blog.pages.dev/app/1" 
+        {
+            title: "156 2FA二维码备用代码识别工具",
+            desc: "用于辅助无法识别二维码的设备或2FA软件",
+            githubName: "GitHub查看",
+            githubUrl: "https://github.com/bCreeper156/156-2FA-QR_code-Identification",
+            hasOnlinePreview: true,
+            onlineUrl: "/app/1"
         }
     ]
 };
@@ -38,15 +41,19 @@ const linkData = {
 // ==============================
 function renderCards(id, items, type) {
     const container = document.getElementById(id);
+    if (!container) return;
     let html = '';
     items.forEach(item => {
         if (type === 'project') {
+            const onlineBtn = item.hasOnlinePreview
+                ? `<a href="${item.onlineUrl}" target="_self" class="card-btn">博客内查看 →</a>`
+                : '';
             html += `
                 <div class="link-card">
                     <div class="info"><h4>${item.title}</h4><p>${item.desc}</p></div>
                     <div style="display:flex; gap:8px; margin-top:10px;">
-                        <a href="${item.btn1_url}" target="_self" class="card-btn primary">${item.btn1_name} →</a>
-                        <a href="${item.btn2_url}" target="_self" class="card-btn">${item.btn2_name} →</a>
+                        <a href="${item.githubUrl}" target="_self" class="card-btn primary">${item.githubName} →</a>
+                        ${onlineBtn}
                     </div>
                 </div>
             `;
@@ -115,36 +122,17 @@ function openAddFriendToast() {
     }
 }
 
-// 执行渲染
-renderCards('shortcut-grid', linkData.shortcuts);
-renderCards('friend-grid', linkData.friends, 'friend');
-renderCards('project-grid', linkData.projects, 'project');
-
-const addFriendCard = document.querySelector('[data-add-friend]');
-if (addFriendCard) {
-    addFriendCard.addEventListener('click', openAddFriendToast);
-    addFriendCard.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            openAddFriendToast();
-        }
-    });
-}
-
 // 自动生成左侧侧边栏菜单
 const menuKeys = [
     { id: 'section-shortcuts', name: '⚡ 快捷链接' },
     { id: 'section-friends', name: '🤝 友情链接' },
     { id: 'section-projects', name: '🛠️ 我的项目' }
 ];
-document.getElementById('menu-list').innerHTML = menuKeys.map(k => 
-    `<a href="#${k.id}">${k.name}</a>`
-).join('');
 
-// 滚动监听（自动高亮侧边栏/移动目录）
-const sections = document.querySelectorAll('.link-page .section');
-const sidebarLinks = document.querySelectorAll('.link-page .sidebar a');
-window.addEventListener('scroll', () => {
+// 滚动监听（自动高亮侧边栏/移动目录）—— 整个文档只绑定一次，实时查询当前 DOM
+function onPageScroll() {
+    const sections = document.querySelectorAll('.link-page .section');
+    const sidebarLinks = document.querySelectorAll('.link-page .sidebar a');
     let current = '';
     sections.forEach(section => {
         const sectionTop = section.offsetTop - 150; // 提前判定
@@ -155,4 +143,48 @@ window.addEventListener('scroll', () => {
     sidebarLinks.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
     });
-});
+}
+if (!window.__linkScrollBound) {
+    window.__linkScrollBound = true;
+    window.addEventListener('scroll', onPageScroll, { passive: true });
+}
+
+// 页面初始化（首次加载与无刷新页面切换后都会调用，需保证可重复执行）
+function initLinkPage() {
+    renderCards('shortcut-grid', linkData.shortcuts);
+    renderCards('friend-grid', linkData.friends, 'friend');
+    renderCards('project-grid', linkData.projects, 'project');
+
+    const addFriendCard = document.querySelector('[data-add-friend]');
+    if (addFriendCard && !addFriendCard.dataset.bound) {
+        addFriendCard.dataset.bound = '1';
+        addFriendCard.addEventListener('click', openAddFriendToast);
+        addFriendCard.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openAddFriendToast();
+            }
+        });
+    }
+
+    const menuList = document.getElementById('menu-list');
+    if (menuList) {
+        menuList.innerHTML = menuKeys.map(k =>
+            `<a href="#${k.id}">${k.name}</a>`
+        ).join('');
+    }
+
+    onPageScroll();
+}
+
+// 注册为可复用的页面模块
+window.__pageModules = window.__pageModules || {};
+window.__pageModules['link.js'] = initLinkPage;
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLinkPage);
+} else if (!window.__pjaxDynamicLoad) {
+    initLinkPage();
+}
+
+})();
