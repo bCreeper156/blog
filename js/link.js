@@ -26,10 +26,10 @@ const linkData = {
             hasOnlinePreview: false
         },
         {
-            title: "156 2FA二维码备用代码识别工具",
-            desc: "用于辅助无法识别二维码的设备或2FA软件",
+            title: "156 2FA软件",
+            desc: "一款本地优先的软件",
             githubName: "GitHub查看",
-            githubUrl: "https://github.com/bCreeper156/156-2FA-QR_code-Identification",
+            githubUrl: "https://github.com/bCreeper156/156-2FA",
             hasOnlinePreview: true,
             onlineUrl: "/app/1"
         }
