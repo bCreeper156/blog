@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>156 2FA二维码备用代码识别工具 - 156博客</title>
-    <meta name="description" content="一款纯前端、零依赖的2FA二维码解析工具，帮助您从二维码中提取Secret密钥，全程本地处理，安全可靠。" />
+    <title>156 2FA 工具介绍 - 156博客</title>
+    <meta name="description" content="156 2FA 是一款纯本地运行、多用户隔离、零云端依赖的动态验证码工具。所有账户密钥以加密形式保存在本地，主密码仅用于本机校验和解密。" />
     <script src="/js/legacy_redirect.js"></script>
     <script src="/js/dark_fix.js"></script>
     <link rel="stylesheet" href="/articles/article.css" />
@@ -13,7 +13,7 @@
     <script src="/js/jump_warning.js" defer></script>
     <script src="/js/nope.js"></script>
     <script src="/articles/articles.js"></script>
-<link rel="icon" type="image/png" href="/images/LOGO_dark.png">
+    <link rel="icon" type="image/png" href="/images/LOGO_dark.png">
 </head>
 <body>
     <header>
@@ -32,16 +32,16 @@
     <main>
         <article>
             <section class="header">
-                <h1 class="article-title">156 2FA二维码备用代码识别工具</h1>
+                <h1 class="article-title">156 2FA 工具介绍</h1>
                 <div class="article-meta">
                     <span class="meta-item">
-                        <span class="meta-icon">📅</span> 2026年8月17日
+                        <span class="meta-icon">📅</span> 2026年9月12日
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">⏱️</span> 6分钟阅读
+                        <span class="meta-icon">⏱️</span> 8分钟阅读
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">🏷️</span> 2FA · 安全工具 · 开源 · 二维码 · 工具
+                        <span class="meta-icon">🏷️</span> 2FA · 安全工具 · 本地优先 · 多用户 · TOTP
                     </span>
                 </div>
             </section>
@@ -49,100 +49,77 @@
             <div class="article-content">
                 <!-- 前言 -->
                 <section class="article-section">
-                    <h2 class="section-title">📖 前言</h2>
+                    <h2 class="section-title">📖 这是什么</h2>
                     <p class="article-text">
-                        两因素认证（2FA）已经成为保护在线账户安全的重要手段。然而，当我们更换设备或需要迁移认证器时，从二维码中提取出原始的 Secret 密钥就成了一个刚需。今天要介绍的 <strong>156 2FA 二维码备用代码识别工具</strong>，正是为了解决这个问题而生的轻量级 Web 应用。
+                        156 2FA 是一款<strong>纯本地运行、多用户隔离、零云端依赖</strong>的动态验证码工具。它不托管任何数据，不依赖第三方服务，所有的账户密钥都以加密形式保存在你自己的电脑里，主密码只用于本机校验和解密。
+                    </p>
+                    <p class="article-text">
+                        你可以把它理解为：一个属于你自己的、可自行备份迁移的 2FA 保险库。
                     </p>
                 </section>
 
-                <!-- 工具简介 -->
+                <!-- 核心特点 -->
                 <section class="article-section">
-                    <h2 class="section-title">🛠️ 工具简介</h2>
-                    <p class="article-text">
-                        156 2FA 二维码备用代码识别工具是一款纯前端、零依赖的 2FA 二维码解析工具。它的核心功能非常简单直接：<strong>上传一张包含 2FA 信息的二维码图片，工具会自动识别并从中提取出 Secret 密钥（备用代码）</strong>。
-                    </p>
-
-                    <div class="highlight-box">
-                        <p>
-                            🔗 <strong>项目地址</strong>：<a href="https://github.com/bCreeper156/156-2FA-QR_code-Identification" target="_blank" rel="noopener">GitHub - bCreeper156/156-2FA-QR_code-Identification</a>
-                            <br />
-                            🌐 <strong>在线体验</strong>：<a href="https://156blog.pages.dev/app/1" target="_blank" rel="noopener">https://156blog.pages.dev/app/1</a>
-                        </p>
-                    </div>
-                </section>
-
-                <!-- 为什么需要 -->
-                <section class="article-section">
-                    <h2 class="section-title">🤔 为什么需要这个工具？</h2>
-                    <p class="article-text">在日常使用中，我们可能会遇到以下场景：</p>
+                    <h2 class="section-title">✨ 核心特点</h2>
                     <ul class="article-list">
-                        <li><strong>更换手机</strong>：需要将 Google Authenticator、Microsoft Authenticator 等应用中的 2FA 账户迁移到新设备。</li>
-                        <li><strong>备份密钥</strong>：希望在本地保存一份 Secret 密钥的副本，以防丢失。</li>
-                        <li><strong>手动导入</strong>：某些认证器不支持直接扫码，需要手动输入 Secret 密钥。</li>
+                        <li><strong>纯本地运行</strong>：所有计算、解密、验证码生成，全部在你本机完成，不上传网络。</li>
+                        <li><strong>多用户支持</strong>：不同用户可以拥有各自独立的加密保险库，数据彼此隔离，互不干扰。</li>
+                        <li><strong>加密存储</strong>：账户密钥以加密 JSON 形式保存，主密码通过 Argon2id 校验后用于解密。</li>
+                        <li><strong>标准 TOTP 算法</strong>：支持 SHA1 / SHA256 / SHA512，支持 6 位 / 8 位验证码，支持 30 秒 / 60 秒周期。</li>
+                        <li><strong>多种导入方式</strong>：支持手动输入密钥、上传二维码图片、粘贴 otpauth 链接导入。</li>
+                        <li><strong>备份与迁移</strong>：支持导出加密备份（.json），也支持导出 otpauth 明文文本（.txt）用于迁移到其他验证器。</li>
+                        <li><strong>无广告、无追踪、无网络请求</strong>：不依赖任何云服务，不采集任何用户数据。</li>
                     </ul>
-                    <p class="article-text">
-                        通常情况下，2FA 设置页面会提供一个二维码和一个明文密钥。但如果你只有二维码截图，而又需要提取其中的密钥，这个工具就能派上用场。
-                    </p>
                 </section>
 
-                <!-- 核心功能 -->
+                <!-- 使用方式 -->
                 <section class="article-section">
-                    <h2 class="section-title">✨ 核心功能</h2>
-                    <p class="article-text">从 Web 版页面的界面信息可以看出，该工具具备以下特点：</p>
+                    <h2 class="section-title">📋 使用方式</h2>
+
+                    <h3 class="subsection-title">1. 启动程序</h3>
+                    <p class="article-text">
+                        运行本地 Python 服务，程序会自动打开一个本地 Web 页面（默认监听 <code>127.0.0.1</code> 的随机端口）。
+                    </p>
+
+                    <h3 class="subsection-title">2. 登录</h3>
+                    <p class="article-text">
+                        首次使用时，你可以创建一个本地账户。输入用户名和主密码，程序会用 Argon2id 校验密码，并用该密码解密属于你的加密保险库。
+                    </p>
+
+                    <h3 class="subsection-title">3. 添加账户</h3>
+                    <p class="article-text">在“添加账户”弹窗中，你可以通过三种方式导入 2FA 账户：</p>
                     <ul class="article-list">
-                        <li><strong>从 2FA 二维码中提取 Secret 密钥</strong></li>
-                        <li><strong>支持多种图片格式</strong>：PNG、JPG、WebP、GIF、BMP</li>
-                        <li><strong>完整 URI 展示</strong>：除了 Secret 密钥外，还会显示完整的 <code>otpauth://</code> URI</li>
-                        <li><strong>全部在本地处理</strong>：所有图像解码和二维码识别均在浏览器端完成，<strong>数据不上传任何服务器</strong></li>
+                        <li><strong>手动输入</strong>：填写备注名称、发行方（可选）、Base32 密钥、算法、位数、周期。</li>
+                        <li><strong>二维码图片</strong>：上传包含 otpauth 信息的二维码图片，程序会自动解析出密钥。</li>
+                        <li><strong>链接导入</strong>：粘贴 <code>otpauth://</code> 格式的链接，程序会自动提取密钥和参数。</li>
                     </ul>
-                    <div class="highlight-box">
-                        <p>🔒 最后这一点尤为重要——这意味着你的 2FA 密钥不会经过任何第三方服务器，完全避免了传输过程中的泄露风险。</p>
-                    </div>
-                </section>
 
-                <!-- 如何使用 -->
-                <section class="article-section">
-                    <h2 class="section-title">📋 如何使用</h2>
-                    <p class="article-text">使用这个工具非常简单，只需三步：</p>
-                    <ol class="article-list" style="list-style-type: decimal; padding-left: 1.8rem;">
-                        <li>打开 Web 版页面：<a href="https://156blog.pages.dev/app/1" target="_blank" rel="noopener">https://156blog.pages.dev/app/1</a></li>
-                        <li>点击选择或拖拽一张包含 2FA 信息的二维码图片到指定区域</li>
-                        <li>工具会自动识别并解码，提取出 Secret 密钥和完整 URI</li>
-                    </ol>
+                    <h3 class="subsection-title">4. 查看验证码</h3>
                     <p class="article-text">
-                        如果解码成功，页面会显示提取到的备用密钥（Secret）和完整的 <code>otpauth://</code> URL。如果解码失败，工具也会给出相应的提示。
+                        登录后，主界面会显示所有账户的当前动态验证码，并配有倒计时圆环。每 30 秒自动刷新一次。
                     </p>
-                </section>
 
-                <!-- 技术原理 -->
-                <section class="article-section">
-                    <h2 class="section-title">⚙️ 技术原理浅析</h2>
-                    <p class="article-text">
-                        2FA 二维码通常遵循 <code>otpauth://</code> URI 格式，其结构大致如下：
-                    </p>
-                    <div style="background: #f5f7fa; padding: 0.8rem 1.2rem; border-radius: 8px; font-family: monospace; font-size: 0.9rem; margin: 0.6rem 0 1rem 0; overflow-x: auto; border: 1px solid #e9ecf0;">
-                        otpauth://totp/示例账户?secret=ABCDEFGHIJKLMNOP&issuer=示例服务
-                    </div>
-                    <p class="article-text">
-                        其中 <code>secret</code> 参数就是 TOTP 算法中使用的共享密钥。该工具通过前端二维码解码库（如 <code>jsQR</code> 或类似库）解析图片中的 QR 码内容，然后从 URI 中提取出 <code>secret</code> 字段。
-                    </p>
-                    <p class="article-text">
-                        整个流程完全在浏览器中运行，不涉及任何后端服务，这也是其隐私安全性的根本保障。
-                    </p>
-                </section>
-
-                <!-- 隐私与安全 -->
-                <section class="article-section">
-                    <h2 class="section-title">🔐 隐私与安全</h2>
-                    <p class="article-text">
-                        对于涉及 2FA 密钥的工具，安全性永远是第一考量。这个工具有两点值得称道：
-                    </p>
+                    <h3 class="subsection-title">5. 管理数据</h3>
+                    <p class="article-text">在设置页面中，你可以：</p>
                     <ul class="article-list">
-                        <li><strong>纯本地处理</strong>：所有计算都在你的浏览器（Web版）或本地（GitHub仓库下载的APP）中完成，图片不会被上传到任何服务器。</li>
-                        <li><strong>开源可审计</strong>：项目代码完全开源，任何人都可以审查其实现，确保没有后门或数据外传逻辑。</li>
+                        <li><strong>切换用户</strong>：锁闭当前保险库，返回登录界面，各用户数据独立。</li>
+                        <li><strong>导出备份</strong>：导出加密备份（.json）或 otpauth 明文文本（.txt）。</li>
+                        <li><strong>导入数据</strong>：支持“合并追加”和“覆盖全部”两种模式。</li>
+                        <li><strong>重置程序</strong>：删除本地保存的全部用户及其账户数据，恢复首次使用状态。</li>
+                    </ul>
+                </section>
+
+                <!-- 安全说明 -->
+                <section class="article-section">
+                    <h2 class="section-title">🔐 安全说明</h2>
+                    <ul class="article-list">
+                        <li><strong>主密码只在本机使用</strong>：密码用于 Argon2id 校验，并派生出用于解密保险库的密钥。密码不会上传网络，不会写入任何日志。</li>
+                        <li><strong>数据加密存储</strong>：账户密钥以加密 JSON 形式保存在程序目录下的 <code>data/vault.json</code>。即使文件被复制，没有主密码也无法解密。</li>
+                        <li><strong>本地服务不暴露公网</strong>：服务只监听 <code>127.0.0.1</code>，局域网内其他设备无法访问。</li>
+                        <li><strong>安全前提</strong>：本工具假设当前电脑为可信设备。如果电脑已被黑客控制，任何本地工具都无法保证密钥安全。</li>
                     </ul>
                     <div class="highlight-box">
-                        <p>✅ 正是这种“本地优先 + 开源”的设计理念，让这款工具在隐私保护上值得信赖。</p>
+                        <p>✅ 正是这种“本地优先 + 加密存储 + 多用户隔离”的设计理念，让这款工具在隐私保护上值得信赖。</p>
                     </div>
                 </section>
 
@@ -150,10 +127,10 @@
                 <section class="article-section">
                     <h2 class="section-title">👥 适用人群</h2>
                     <ul class="article-list">
-                        <li>需要迁移 2FA 账户的用户</li>
-                        <li>希望备份 2FA Secret 密钥的用户</li>
-                        <li>对隐私安全有较高要求的用户</li>
-                        <li>开发者或技术爱好者，想了解 2FA 二维码解析原理</li>
+                        <li>希望把 2FA 密钥完全掌握在自己手里，不想依赖云端验证器的用户。</li>
+                        <li>需要在一台电脑上为多个用户提供独立 2FA 保险库的用户。</li>
+                        <li>对隐私敏感，希望使用纯本地、零网络请求工具的用户。</li>
+                        <li>开发者或技术爱好者，想了解 TOTP 原理和本地加密存储的实现方式。</li>
                     </ul>
                 </section>
 
@@ -161,15 +138,18 @@
                 <section class="article-section">
                     <h2 class="section-title">📌 结语</h2>
                     <p class="article-text">
-                        156 2FA 二维码备用代码识别工具虽然功能单一，但贵在专注和纯粹。它精准地解决了一个小问题，并且以最安全的方式——纯本地处理——来实现。如果你有从二维码中提取 2FA Secret 密钥的需求，不妨试试这个小工具。
+                        156 2FA 不是要取代所有验证器，而是提供一个<strong>完全由你掌控</strong>的本地选项。
+                    </p>
+                    <p class="article-text">
+                        它不承诺“绝对安全”，但它承诺：你的密钥不会离开你的电脑，你的主密码不会上传网络，你的数据可以随时备份和迁移。
                     </p>
                     <div class="highlight-box">
                         <p>
-                            💡 <strong>温馨提示</strong>：Secret 密钥是 2FA 的核心凭证，请务必妥善保管，不要泄露给任何人。
+                            💡 <strong>温馨提示</strong>：主密码是解锁保险库的唯一凭证，请务必妥善保管，不要泄露给任何人。
                         </p>
                     </div>
                     <p class="article-text" style="margin-top: 0.8rem;">
-                        <em>本文介绍的工具为开源项目，欢迎前往 <a href="https://github.com/bCreeper156/156-2FA-QR_code-Identification" target="_blank" rel="noopener">GitHub 仓库</a> 查看源码或提交 Issue。</em>
+                        <em>本文介绍的工具为本地 Python + Web 工具，欢迎前往 <a href="https://github.com/bCreeper156" target="_blank" rel="noopener">GitHub 主页</a> 查看更多项目。</em>
                     </p>
                 </section>
                 <div id="LICENSE"></div>
