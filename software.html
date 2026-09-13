@@ -34,7 +34,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -60,14 +60,14 @@
 
             <div class="controls">
                 <div class="search-box">
-                    <span class="search-icon">🔍</span>
+                    <span class="search-icon material-symbols-rounded">search</span>
                     <input id="software-search" type="search" placeholder="搜索软件名称、功能或关键词" aria-label="搜索软件">
                 </div>
             </div>
 
-            <!-- ⭐ 新增：重置软件列表按钮（默认隐藏，仅在 ?id= 参数时显示） -->
+            <!-- 新增：重置软件列表按钮（默认隐藏，仅在 ?id= 参数时显示） -->
             <button id="resetSoftwareBtn" style="display:none; padding: 8px 16px; background: #10B981; color: white; border: none; border-radius: 999px; cursor: pointer; margin-top: 12px;">
-                🔄 重置列表
+                <span class="material-symbols-rounded">refresh</span> 重置列表
             </button>
 
             <div class="software-list-wrapper">

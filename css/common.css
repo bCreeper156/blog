@@ -5,12 +5,33 @@
 
 @charset "UTF-8";
 
+/* ----- Google Material Symbols 图标字体（用于替代全站 emoji） ----- */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+/* 图标类：与字号保持一致，垂直居中对齐文本；使用随主题自适应的彩色 */
+.material-symbols-rounded {
+    font-size: 1.15em;
+    line-height: 1;
+    vertical-align: -0.16em;
+    display: inline-block;
+    color: var(--md-icon);
+}
+
+/* 处于按钮/导航等彩色背景中的图标，沿用其本身的文字颜色，避免出现不协调或不可见 */
+.menu .material-symbols-rounded,
+button .material-symbols-rounded {
+    color: inherit;
+}
+
 :root {
     /* ----- 品牌色 ----- */
     --md-primary: #0f9d58;
     --md-primary-hover: #0b7a44;
     --md-primary-container: #e6f4ed;
     --md-primary-on-container: #0a2e1a;
+
+    /* ----- 图标颜色（Material Symbols 图标，随明暗主题自适应） ----- */
+    --md-icon: #0f9d58;
 
     /* ----- 表面与背景 ----- */
     --md-surface: #f5f7fa;          /* ← 已改为灰蓝色 */
@@ -42,6 +63,7 @@ html[data-theme="dark"] {
     --md-on-surface-variant: #b9bcc1;
     --md-on-primary: #ffffff;
     --md-on-nav: #f5f5f5;
+    --md-icon: #5ddb9a;
     --md-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
     --md-shadow-md: 0 4px 20px -4px rgba(0, 0, 0, 0.32);
     --md-shadow-lg: 0 2px 12px rgba(0, 0, 0, 0.35);

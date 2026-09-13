@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -35,22 +35,27 @@
                 <h1 class="article-title">适合小白的Windows电脑优化教程（完整版）</h1>
                 <div class="article-meta">
                     <span class="meta-item">
-                        <span class="meta-icon">📅</span> 2026年8月17日
+                        <span class="meta-icon material-symbols-rounded">calendar_today</span> 2026年8月17日
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">⏱️</span> 约18分钟阅读
+                        <span class="meta-icon material-symbols-rounded">schedule</span> 约18分钟阅读
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">🏷️</span> 电脑优化 · Windows · 教程
+                        <span class="meta-icon material-symbols-rounded">label</span> 电脑优化 · Windows · 教程
                     </span>
                 </div>
             </section>
+            <!-- 文章目录：由 /articles/articles.js 自动生成（宽屏时悬浮于正文左侧） -->
+            <nav class="article-toc" id="article-toc" aria-label="文章目录" hidden>
+                <div class="article-toc-title"><span class="material-symbols-rounded">toc</span> 文章目录</div>
+                <ol class="article-toc-list"></ol>
+            </nav>
             <div class="article-content">
 
                 <!-- 引言 -->
                 <section class="article-section">
                     <div class="highlight-box">
-                        <p>💡 <strong>核心原则</strong>：不碰注册表、不乱超频，只做安全有效的基础设置。</p>
+                        <p><span class="material-symbols-rounded">lightbulb</span> <strong>核心原则</strong>：不碰注册表、不乱超频，只做安全有效的基础设置。</p>
                     </div>
                 </section>
 
@@ -93,7 +98,7 @@
                     </ul>
 
                     <div class="highlight-box">
-                        <p>⚠️ 两款安全软件任选其一即可，不建议同时安装，避免冲突拖慢电脑。</p>
+                        <p><span class="material-symbols-rounded">warning</span> 两款安全软件任选其一即可，不建议同时安装，避免冲突拖慢电脑。</p>
                     </div>
                 </section>
 
@@ -163,7 +168,7 @@
                         <li>找到 <strong>“必应”</strong>，点击右侧 <strong>三个点</strong> → 选择 <strong>“设为默认”</strong></li>
                     </ul>
                     <div class="highlight-box">
-                        <p>💡 <strong>为什么不推荐百度</strong>：百度搜索推广中容易混入流氓软件下载站，对小白用户不够友好。必应搜索结果相对干净，国内可正常访问，是更安全的选择。</p>
+                        <p><span class="material-symbols-rounded">lightbulb</span> <strong>为什么不推荐百度</strong>：百度搜索推广中容易混入流氓软件下载站，对小白用户不够友好。必应搜索结果相对干净，国内可正常访问，是更安全的选择。</p>
                     </div>
 
                     <p class="article-text"><strong>② 迁移下载文件夹到 D 盘（避免 C 盘爆满）</strong></p>
@@ -176,7 +181,7 @@
 
                     <p class="article-text"><strong>③ 使用专业的密码管理器（不要用 Chrome 自带的）</strong></p>
                     <div class="highlight-box">
-                        <p>🔒 <strong>安全提示</strong>：Chrome 自带的密码管理器存在安全隐患。虽然密码在本地加密存储，但解密密钥在用户登录后会被暴露在系统中（例如通过特定工具可读取），一旦电脑被恶意软件入侵，密码就可能被批量导出。因此不建议依赖浏览器内置的密码管理功能。</p>
+                        <p><span class="material-symbols-rounded">lock</span> <strong>安全提示</strong>：Chrome 自带的密码管理器存在安全隐患。虽然密码在本地加密存储，但解密密钥在用户登录后会被暴露在系统中（例如通过特定工具可读取），一旦电脑被恶意软件入侵，密码就可能被批量导出。因此不建议依赖浏览器内置的密码管理功能。</p>
                     </div>
                     <p class="article-text"><strong>推荐：Bitwarden（浏览器扩展版）</strong></p>
                     <ul class="article-list">
@@ -214,7 +219,7 @@
 
                     <p class="article-text"><strong>官网下载</strong>：<a href="https://www.bandisoft.com/bandizip/" target="_blank" rel="noopener">https://www.bandisoft.com/bandizip/</a></p>
                     <div class="highlight-box">
-                        <p>💡 Windows 用户选择免费版即可（标有“Free”标识），Mac 版需付费</p>
+                        <p><span class="material-symbols-rounded">lightbulb</span> Windows 用户选择免费版即可（标有“Free”标识），Mac 版需付费</p>
                     </div>
 
                     <p class="article-text"><strong>安装与设置建议</strong></p>
@@ -224,7 +229,7 @@
                         <li>在设置中启用“右键菜单集成”，后续可直接在文件上右键完成压缩/解压</li>
                     </ul>
                     <div class="highlight-box">
-                        <p>⚠️ <strong>为什么不推荐 WinRAR</strong>：免费版有弹窗广告，且需要手动关闭；<strong>不推荐好压/快压</strong>：有捆绑软件和弹窗行为。</p>
+                        <p><span class="material-symbols-rounded">warning</span> <strong>为什么不推荐 WinRAR</strong>：免费版有弹窗广告，且需要手动关闭；<strong>不推荐好压/快压</strong>：有捆绑软件和弹窗行为。</p>
                     </div>
                 </section>
 
@@ -251,7 +256,7 @@
                         <li><strong>浏览器扩展</strong>：Chrome 应用店搜索 “FluxDown” 或访问 <a href="https://chromewebstore.google.com/detail/fluxdown/meleenglfggcmcajknpeeeiobnpfmahc" target="_blank" rel="noopener">安装链接</a></li>
                     </ul>
                     <div class="highlight-box">
-                        <p>🔒 <strong>安全提示</strong>：认准官方域名 <code>fluxdown.zerx.dev</code>，警惕假冒网站</p>
+                        <p><span class="material-symbols-rounded">lock</span> <strong>安全提示</strong>：认准官方域名 <code>fluxdown.zerx.dev</code>，警惕假冒网站</p>
                     </div>
 
                     <p class="article-text"><strong>安装与设置建议</strong></p>
@@ -281,7 +286,7 @@
 
                     <p class="article-text"><strong>下载地址</strong>：<a href="https://www.223210.xyz" target="_blank" rel="noopener">https://www.223210.xyz</a></p>
                     <div class="highlight-box">
-                        <p>💡 进入网站后选择适合自己系统的版本下载安装即可</p>
+                        <p><span class="material-symbols-rounded">lightbulb</span> 进入网站后选择适合自己系统的版本下载安装即可</p>
                     </div>
 
                     <p class="article-text"><strong>使用提示（遇到无法播放时排查）</strong></p>
@@ -297,7 +302,7 @@
                         <li><strong>群 2</strong>：<a href="https://qun.qq.com/universal-share/share?ac=1&authKey=uEWPeB6UX5PBFg7XyK98GTdC2FMfIryAvbYfNE0QoMTu6L%2B%2FM%2F6i50%2F4PhDfB4%2BV&busi_data=eyJncm91cENvZGUiOiIxMDc5MDU4MjIyIiwidG9rZW4iOiJsbXordVB3b2U3UmNkbHE0SlJ5STYxQkpYcjlzN0drbGp1SHZETlpFbkRpdXlVMXVIU1J6VjB5emU1OUFDek9XIiwidWluIjoiMzk4ODA0NTE0OSJ9&data=2yGR4pDHn-eKXVzIbq7ete_lcdc0D3Z2WKqni7lIAs7LNrkEyY4kC3EpOrTx1ptNovlw73U69vWCZ09B3S__4w&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">点击加入群聊</a></li>
                     </ul>
                     <div class="highlight-box">
-                        <p>💬 <strong>加群建议</strong>：加入官方群可获取最新版本更新通知、音源文件，遇到使用问题也可在群内反馈求助。</p>
+                        <p><span class="material-symbols-rounded">chat</span> <strong>加群建议</strong>：加入官方群可获取最新版本更新通知、音源文件，遇到使用问题也可在群内反馈求助。</p>
                     </div>
                 </section>
 
@@ -346,30 +351,30 @@
                         <li><strong>更换搜索引擎</strong>：软件默认使用 Google，可在设置中改为 <strong>必应 (Bing)</strong> 等</li>
                     </ul>
                     <div class="highlight-box">
-                        <p>💡 <strong>提示</strong>：Flow Launcher 功能更全面，但资源占用会比 Everything 稍高。如果电脑配置较低，也可考虑继续使用 Everything，或将 Flow Launcher 与 Everything 结合使用。</p>
+                        <p><span class="material-symbols-rounded">lightbulb</span> <strong>提示</strong>：Flow Launcher 功能更全面，但资源占用会比 Everything 稍高。如果电脑配置较低，也可考虑继续使用 Everything，或将 Flow Launcher 与 Everything 结合使用。</p>
                     </div>
                 </section>
 
                 <!-- 结尾 -->
                 <section class="article-section">
                     <div class="highlight-box">
-                        <p>🚀 如果做完以上步骤电脑仍然卡顿，且你的电脑还是机械硬盘（HDD）或内存小于 8GB，<strong>最有效的方案是加装固态硬盘（SSD）或增加内存条</strong>。</p>
+                        <p><span class="material-symbols-rounded">rocket_launch</span> 如果做完以上步骤电脑仍然卡顿，且你的电脑还是机械硬盘（HDD）或内存小于 8GB，<strong>最有效的方案是加装固态硬盘（SSD）或增加内存条</strong>。</p>
                     </div>
                 </section>
                 <div id="LICENSE"></div>
                 <!-- 文章底部操作栏 -->
                 <div class="article-actions">
                     <button class="action-btn" onclick="window.location.href='/blog.html'">
-                        📖 浏览更多文章
+                        <span class="material-symbols-rounded">auto_stories</span> 浏览更多文章
                     </button>
                     <button class="action-btn secondary" onclick="window.location.href='/index.html'">
-                        🏠 返回首页
+                        <span class="material-symbols-rounded">home</span> 返回首页
                     </button>
                 </div>
 
                 <!-- 评论提示 -->
                 <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
-                    💡 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
+                    <span class="material-symbols-rounded">lightbulb</span> 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
                 </div>
                 <div id="tcomment"></div>
             </div>

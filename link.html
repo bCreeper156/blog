@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">☰</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -31,12 +31,14 @@
     </header>
     <!-- === 156博客 链接页面专用 HTML === -->
     <div class="link-page">
-    
+        <!-- 友链模式返回按钮（整页左上角） -->
+        <a href="/link.html" class="friend-back-btn" id="friend-back" hidden>← 返回链接页</a>
+   
         <!-- 移动端横向目录 -->
         <div class="mobile-catalog">
-            <a href="#section-shortcuts">⚡ 快捷链接</a>
-            <a href="#section-friends">🤝 友情链接</a>
-            <a href="#section-projects">🛠️ 我的项目</a>
+            <a href="#section-shortcuts"><span class="material-symbols-rounded">bolt</span> 快捷链接</a>
+            <a href="#section-friends"><span class="material-symbols-rounded">handshake</span> 友情链接</a>
+            <a href="#section-projects"><span class="material-symbols-rounded">build</span> 我的项目</a>
         </div>
     
         <!-- 左侧目录 -->
@@ -49,24 +51,29 @@
         <div class="main-content">
             <!-- 快捷链接 -->
             <div class="section" id="section-shortcuts">
-                <div class="section-title">⚡ 快捷链接</div>
+                <div class="section-title"><span class="material-symbols-rounded">bolt</span> 快捷链接</div>
                 <div class="card-grid" id="shortcut-grid"></div>
             </div>
     
             <!-- 友情链接 -->
             <div class="section" id="section-friends">
-                <div class="section-title">🤝 友情链接</div>
+                <div class="section-title"><span class="material-symbols-rounded">handshake</span> 友情链接</div>
+                <div class="friend-search-wrap" id="friend-search-wrap" hidden>
+                    <span class="material-symbols-rounded friend-search-icon" aria-hidden="true">search</span>
+                    <input type="search" class="friend-search" id="friend-search"
+                           placeholder="搜索友链名称或简介…" aria-label="搜索友链" autocomplete="off">
+                </div>
                 <div class="card-grid" id="friend-grid"></div>
             </div>
     
             <!-- 我的项目 -->
             <div class="section" id="section-projects">
-                <div class="section-title">🛠️ 我的项目</div>
+                <div class="section-title"><span class="material-symbols-rounded">build</span> 我的项目</div>
                 <div class="card-grid" id="project-grid"></div>
             </div>
 	    <!-- GitHub 引导 -->
             <div class="section github-cta">
-                <div class="section-title">🌐 关注更多内容</div>
+                <div class="section-title"><span class="material-symbols-rounded">public</span> 关注更多内容</div>
                 <p>更多开源项目、更新动态和技术分享，欢迎访问我的 GitHub 主页。</p>
                 <a href="/jump_warning.html?url=https://github.com/bCreeper156" class="github-cta-link" target="_self">前往 GitHub →</a>
             </div>

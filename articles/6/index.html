@@ -17,7 +17,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -34,17 +34,22 @@
                 <h1 class="article-title">每日碳管理（工具）</h1>
                 <div class="article-meta">
                     <span class="meta-item">
-                        <span class="meta-icon">📅</span> 2026年3月29日
+                        <span class="meta-icon material-symbols-rounded">calendar_today</span> 2026年3月29日
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">⏱️</span> 1分钟阅读
+                        <span class="meta-icon material-symbols-rounded">schedule</span> 1分钟阅读
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">🏷️</span> 工具
+                        <span class="meta-icon material-symbols-rounded">label</span> 工具
                     </span>
                 </div>
             </section>
 
+            <!-- 文章目录：由 /articles/articles.js 自动生成（宽屏时悬浮于正文左侧） -->
+            <nav class="article-toc" id="article-toc" aria-label="文章目录" hidden>
+                <div class="article-toc-title"><span class="material-symbols-rounded">toc</span> 文章目录</div>
+                <ol class="article-toc-list"></ol>
+            </nav>
             <div class="article-content">
                 <h2>每日碳管理</h2>
                 <p>这是一个碳足迹计算器，帮助你了解和管理日常活动中的碳排放。您可以在QQ或微信中搜索"每日碳管理"来使用它；您也可以<a href="app.html">点此</a>立即体验！</p>
@@ -53,14 +58,14 @@
                 <div id="LICENSE"></div>
                 <div class="article-actions">
                     <button class="action-btn" onclick="window.location.href='/blog.html'">
-                        📖 浏览更多文章
+                        <span class="material-symbols-rounded">auto_stories</span> 浏览更多文章
                     </button>
                     <button class="action-btn secondary" onclick="window.location.href='/index.html'">
-                        🏠 返回首页
+                        <span class="material-symbols-rounded">home</span> 返回首页
                     </button>
                 </div>
                 <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
-                💡 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
+                <span class="material-symbols-rounded">lightbulb</span> 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
                 </div>
                 <div id="tcomment"></div>
             </div>

@@ -38,6 +38,12 @@ function initCommon() {
 
     initThemeToggle();
 
+    // 全站图片放大（Lightbox）—— 模块定义在下方，首次加载由其自行初始化，
+    // 这里仅用于无刷新切换（SPA）后重新确认已绑定（幂等）。
+    if (typeof window.initImageZoom === 'function') {
+        window.initImageZoom();
+    }
+
     // 评论区初始化（Giscus 自动加载）
     initCommentSection();
 }
@@ -56,6 +62,321 @@ if (document.readyState === 'loading') {
 function initCommentSection() {
     // Giscus 会自动加载，无需额外操作
 }
+
+// ========== 全站图片放大（Lightbox） ==========
+// 说明：
+//   1. 全站自动生效：点击正文（<main>）内的任意图片即可放大查看；
+//   2. 采用「捕获阶段事件委托」绑定在 document 上，只绑定一次，
+//      因此在无刷新页面切换（page_transition.js）替换内容区后依然有效，
+//      无需在每次切换后重新绑定；
+//   3. 支持：点击遮罩 / ✕ 按钮 / Esc 关闭；点击图片或双击切换缩放；
+//      滚轮缩放（以光标为中心）；放大后拖动平移；
+//   4. 如需让某张图片不参与放大，给该 <img> 添加 data-no-zoom 属性即可。
+(function () {
+    'use strict';
+
+    var STYLE_ID = 'image-zoom-style';
+    var OVERLAY_ID = 'image-zoom-overlay';
+    var IMG_ID = 'image-zoom-img';
+    var LOCK_CLASS = 'image-zoom-lock'; // 挂到 <html> 上，用于压制其它浮动元素
+    var MIN_SCALE = 1;
+    var MAX_SCALE = 6;
+    var STEP = 1.25;
+
+    var overlay = null;
+    var zoomImg = null;
+    var levelLabel = null;
+    var scale = 1;
+    var tx = 0;
+    var ty = 0;
+    var prevOverflow = '';
+    var dragging = false;
+    var dragStart = null;
+
+    function ensureImageZoomStyles() {
+        if (document.getElementById(STYLE_ID)) return;
+
+        var style = document.createElement('style');
+        style.id = STYLE_ID;
+        style.textContent = [
+            /* 正文图片默认可点击放大 */
+            'main img:not([data-no-zoom]) { cursor: zoom-in; }',
+            /* 放大浮层：最高层级，压过置顶按钮、加载进度条、弹窗等所有浮动元素 */
+            '#' + OVERLAY_ID + ' {',
+            '    position: fixed; inset: 0; z-index: 2147483647;',
+            '    display: flex; align-items: center; justify-content: center;',
+            '    background: rgba(8, 12, 10, 0);',
+            '    opacity: 0; visibility: hidden; pointer-events: none;',
+            '    overflow: hidden; touch-action: none;',
+            '    transition: opacity .28s ease, background-color .28s ease, visibility .28s;',
+            '}',
+            /* 预览打开期间，压住其它常驻浮动元素，确保预览始终在最上层 */
+            'html.' + LOCK_CLASS + ' #back-to-top,',
+            'html.' + LOCK_CLASS + ' #gh-loader-wrap,',
+            'html.' + LOCK_CLASS + ' #gh-loader-tip,',
+            'html.' + LOCK_CLASS + ' .nope-overlay { z-index: 1 !important; }',
+            '#' + OVERLAY_ID + '.is-open {',
+            '    opacity: 1; visibility: visible; pointer-events: auto;',
+            '    background: rgba(8, 12, 10, .88);',
+            '    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);',
+            '    transition: opacity .28s ease, background-color .28s ease, visibility 0s;',
+            '}',
+            '#' + IMG_ID + ' {',
+            '    max-width: 92vw; max-height: 88vh; width: auto; height: auto;',
+            '    border-radius: 12px; box-shadow: 0 24px 64px rgba(0, 0, 0, .5);',
+            '    cursor: zoom-in; user-select: none; -webkit-user-drag: none;',
+            '    transform: translate(0, 0) scale(1); transform-origin: center center;',
+            '    transition: transform .18s ease, opacity .2s ease; will-change: transform;',
+            '}',
+            '#' + OVERLAY_ID + '.is-zoomed #' + IMG_ID + ' { cursor: grab; }',
+            '#' + OVERLAY_ID + '.is-dragging #' + IMG_ID + ' { cursor: grabbing; transition: none; }',
+            /* 关闭按钮 */
+            '#image-zoom-close {',
+            '    position: fixed; top: 18px; right: 20px; z-index: 2;',
+            '    width: 44px; height: 44px; padding: 0; border: none; border-radius: 999px;',
+            '    background: rgba(20, 24, 22, .72); color: #fff; font-size: 20px; line-height: 1;',
+            '    cursor: pointer; transition: background-color .2s ease, transform .2s ease;',
+            '    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);',
+            '}',
+            '#image-zoom-close:hover { background: #0f9d58; transform: rotate(90deg); }',
+            /* 底部工具栏 */
+            '#image-zoom-toolbar {',
+            '    position: fixed; left: 50%; bottom: 22px; z-index: 2;',
+            '    display: flex; align-items: center; gap: 6px; padding: 8px 10px;',
+            '    border-radius: 999px; background: rgba(20, 24, 22, .72);',
+            '    box-shadow: 0 10px 30px rgba(0, 0, 0, .4);',
+            '    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);',
+            '    transform: translateX(-50%) translateY(12px); opacity: 0;',
+            '    transition: opacity .25s ease, transform .25s ease;',
+            '}',
+            '#' + OVERLAY_ID + '.is-open #image-zoom-toolbar { opacity: 1; transform: translateX(-50%) translateY(0); }',
+            '#image-zoom-toolbar button {',
+            '    width: 38px; height: 38px; padding: 0; border: none; border-radius: 999px;',
+            '    background: rgba(255, 255, 255, .1); color: #fff; font-size: 17px; line-height: 1;',
+            '    cursor: pointer; transition: background-color .2s ease;',
+            '}',
+            '#image-zoom-toolbar button:hover { background: #0f9d58; }',
+            '#image-zoom-level {',
+            '    min-width: 52px; text-align: center; color: #fff; font-size: 13px;',
+            '    font-weight: 600; font-variant-numeric: tabular-nums;',
+            '}',
+            '@media screen and (max-width: 768px) {',
+            '    #' + IMG_ID + ' { max-width: 96vw; max-height: 82vh; }',
+            '    #image-zoom-toolbar { gap: 4px; padding: 6px 8px; bottom: 14px; }',
+            '    #image-zoom-toolbar button { width: 34px; height: 34px; font-size: 15px; }',
+            '}',
+            '@media (prefers-reduced-motion: reduce) {',
+            '    #' + OVERLAY_ID + ', #' + IMG_ID + ', #image-zoom-toolbar { transition: none !important; }',
+            '}'
+        ].join('\n');
+        document.head.appendChild(style);
+    }
+
+    function buildOverlay() {
+        overlay = document.createElement('div');
+        overlay.id = OVERLAY_ID;
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', '图片预览');
+        overlay.innerHTML = [
+            '<img id="' + IMG_ID + '" alt="">',
+            '<button id="image-zoom-close" type="button" aria-label="关闭">&times;</button>',
+            '<div id="image-zoom-toolbar">',
+            '    <button type="button" data-act="out" aria-label="缩小">&minus;</button>',
+            '    <span id="image-zoom-level">100%</span>',
+            '    <button type="button" data-act="in" aria-label="放大">&plus;</button>',
+            '    <button type="button" data-act="reset" aria-label="重置">&#8635;</button>',
+            '</div>'
+        ].join('');
+
+        document.body.appendChild(overlay);
+
+        zoomImg = overlay.querySelector('#' + IMG_ID);
+        levelLabel = overlay.querySelector('#image-zoom-level');
+
+        overlay.addEventListener('click', onOverlayClick);
+        overlay.addEventListener('wheel', onWheel, { passive: false });
+        zoomImg.addEventListener('pointerdown', onPointerDown);
+        zoomImg.addEventListener('pointermove', onPointerMove);
+        zoomImg.addEventListener('pointerup', onPointerUp);
+        zoomImg.addEventListener('pointercancel', onPointerUp);
+    }
+
+    function applyTransform() {
+        if (!zoomImg) return;
+        zoomImg.style.transform = 'translate(' + tx + 'px, ' + ty + 'px) scale(' + scale + ')';
+        overlay.classList.toggle('is-zoomed', scale > 1.001);
+        if (levelLabel) levelLabel.textContent = Math.round(scale * 100) + '%';
+    }
+
+    function clampScale(value) {
+        return Math.min(MAX_SCALE, Math.max(MIN_SCALE, value));
+    }
+
+    function resetView() {
+        scale = 1;
+        tx = 0;
+        ty = 0;
+        applyTransform();
+    }
+
+    function open(img) {
+        var src = img.currentSrc || img.getAttribute('src');
+        if (!src) return;
+
+        ensureImageZoomStyles();
+        if (!overlay) buildOverlay();
+
+        zoomImg.style.opacity = '0';
+        zoomImg.src = src;
+        zoomImg.alt = img.getAttribute('alt') || '';
+        resetView();
+
+        if (!prevOverflow) prevOverflow = document.body.style.overflow || '';
+        document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add(LOCK_CLASS);
+        overlay.classList.add('is-open');
+
+        var reveal = function () { zoomImg.style.opacity = '1'; };
+        if (zoomImg.complete) {
+            requestAnimationFrame(reveal);
+        } else {
+            zoomImg.addEventListener('load', reveal, { once: true });
+            zoomImg.addEventListener('error', reveal, { once: true });
+        }
+    }
+
+    function close() {
+        if (!overlay || !overlay.classList.contains('is-open')) return;
+        overlay.classList.remove('is-open', 'is-zoomed', 'is-dragging');
+        document.documentElement.classList.remove(LOCK_CLASS);
+        document.body.style.overflow = prevOverflow;
+        prevOverflow = '';
+        dragging = false;
+    }
+
+    function zoomTo(newScale, originX, originY) {
+        newScale = clampScale(newScale);
+        if (Math.abs(newScale - scale) < 0.0001) return;
+
+        var rect = zoomImg.getBoundingClientRect();
+        var centerX = rect.left + rect.width / 2;
+        var centerY = rect.top + rect.height / 2;
+        var px = (originX == null) ? centerX : originX;
+        var py = (originY == null) ? centerY : originY;
+
+        var k = newScale / scale;
+        tx += (px - centerX) * (1 - k);
+        ty += (py - centerY) * (1 - k);
+        scale = newScale;
+
+        if (scale <= 1.001) { tx = 0; ty = 0; }
+        applyTransform();
+    }
+
+    function onOverlayClick(e) {
+        var act = e.target.closest ? e.target.closest('[data-act]') : null;
+        if (act) {
+            var type = act.getAttribute('data-act');
+            if (type === 'in') zoomTo(scale * STEP);
+            else if (type === 'out') zoomTo(scale / STEP);
+            else resetView();
+            return;
+        }
+        if (e.target === document.getElementById('image-zoom-close')) {
+            close();
+            return;
+        }
+        if (e.target === zoomImg) {
+            // 点击图片：在 1x 与 2x 之间切换
+            if (scale > 1.001) resetView();
+            else zoomTo(2);
+            return;
+        }
+        // 点击遮罩空白处关闭
+        close();
+    }
+
+    function onWheel(e) {
+        e.preventDefault();
+        var factor = e.deltaY < 0 ? STEP : 1 / STEP;
+        zoomTo(scale * factor, e.clientX, e.clientY);
+    }
+
+    function onPointerDown(e) {
+        if (scale <= 1.001) return;
+        dragging = true;
+        dragStart = { x: e.clientX - tx, y: e.clientY - ty };
+        overlay.classList.add('is-dragging');
+        if (zoomImg.setPointerCapture) zoomImg.setPointerCapture(e.pointerId);
+        e.preventDefault();
+    }
+
+    function onPointerMove(e) {
+        if (!dragging) return;
+        tx = e.clientX - dragStart.x;
+        ty = e.clientY - dragStart.y;
+        applyTransform();
+    }
+
+    function onPointerUp(e) {
+        if (!dragging) return;
+        dragging = false;
+        overlay.classList.remove('is-dragging');
+        if (zoomImg.releasePointerCapture) {
+            try { zoomImg.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        }
+    }
+
+    function onKeydown(e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            if (overlay && overlay.classList.contains('is-open')) {
+                e.preventDefault();
+                close();
+            }
+            return;
+        }
+        if (!overlay || !overlay.classList.contains('is-open')) return;
+        if (e.key === '+' || e.key === '=') zoomTo(scale * STEP);
+        else if (e.key === '-' || e.key === '_') zoomTo(scale / STEP);
+        else if (e.key === '0') resetView();
+    }
+
+    // 捕获阶段监听：优先于站内无刷新跳转（page_transition.js）的链接拦截，
+    // 避免正文中「被链接包裹的图片」在放大时误触发页面跳转。
+    function onDocClickCapture(e) {
+        if (e.button !== 0) return;
+        var img = e.target;
+        if (!img || img.tagName !== 'IMG') return;
+        if (img.id === IMG_ID) return;
+        if (img.hasAttribute('data-no-zoom')) return;
+        if (!img.closest || !img.closest('main')) return; // 仅正文区域图片
+
+        e.preventDefault();
+        e.stopPropagation();
+        open(img);
+    }
+
+    function initImageZoom() {
+        if (!document.body) return;
+        ensureImageZoomStyles();
+        if (window.__imageZoomBound) return;
+        window.__imageZoomBound = true;
+        document.addEventListener('click', onDocClickCapture, true);
+        document.addEventListener('keydown', onKeydown, false);
+    }
+
+    // 供 SPA 切换后调用（common.js 中的 initCommon 会调用）
+    window.initImageZoom = initImageZoom;
+
+    // 首次加载时自行初始化（事件委托 + 幂等，SPA 切换后无需重复绑定）
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initImageZoom, { once: true });
+    } else {
+        initImageZoom();
+    }
+})();
+
 
 // ========== 主题切换 ==========
 function getSavedTheme() {
@@ -87,7 +408,7 @@ function applyTheme(theme) {
     const toggle = document.querySelector('.theme-toggle');
     if (toggle) {
         const isDark = theme === 'dark';
-        toggle.textContent = isDark ? '🌙' : '☀️';
+        toggle.innerHTML = `<span class="material-symbols-rounded">${isDark ? 'dark_mode' : 'light_mode'}</span>`;
         toggle.setAttribute('aria-pressed', String(isDark));
         toggle.title = isDark ? '切换到白天模式' : '切换到暗黑模式';
     }

@@ -53,7 +53,11 @@
             gap: 8px;
         }
         .warning h2::before {
-            content: "⚠️";
+            content: "warning";
+            font-family: 'Material Symbols Rounded';
+            font-weight: normal;
+            font-style: normal;
+            line-height: 1;
             font-size: 2rem;
         }
         .warning p {
@@ -169,7 +173,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>

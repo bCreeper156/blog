@@ -131,6 +131,19 @@
     font-size: 14px;
     font-weight: 600;
 }
+/* 「查看更多友链」卡片 */
+.link-page .link-card.more-friend-card {
+    cursor: pointer;
+    border-style: dashed;
+    border-color: #bbf7d0;
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+    align-items: center;
+    text-align: center;
+}
+.link-page .link-card.more-friend-card:hover {
+    border-color: #10B981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+}
 .link-page .link-card .info h4 {
     font-size: 16px;
     margin-bottom: 6px;
@@ -141,6 +154,38 @@
     color: #666;
     line-height: 1.5;
     margin: 0;
+}
+
+/* 友链卡片左侧图标 / LOGO 区域 */
+.link-page .link-card .card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.link-page .link-card .friend-logo {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0fdf4;
+    border: 1px solid #d1fae5;
+    overflow: hidden;
+}
+.link-page .link-card .friend-logo .material-symbols-rounded {
+    font-size: 22px;
+    color: var(--md-icon, #0f9d58);
+}
+.link-page .link-card .friend-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.link-page .link-card .card-head .info {
+    min-width: 0;
 }
 .link-page .link-card .card-btn {
     display: inline-block;
@@ -227,6 +272,100 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+/* ---------- 仅显示友链模式（link.html?type=friends） ---------- */
+/* 隐藏侧边导航、移动端目录及其它无关区块，使友链自适应铺满整个页面 */
+.link-page.friends-only {
+    display: block;
+    width: 100%;
+    max-width: 1600px;
+    margin: 30px auto;
+    padding: 0 clamp(15px, 4vw, 48px);
+}
+.link-page.friends-only .sidebar,
+.link-page.friends-only .mobile-catalog,
+.link-page.friends-only .github-cta {
+    display: none !important;
+}
+.link-page.friends-only .main-content {
+    width: 100%;
+}
+.link-page.friends-only #section-friends {
+    margin-bottom: 0;
+}
+/* 友链模式下卡片随屏幕宽度自适应列数 */
+.link-page.friends-only .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+/* 友链模式：隐藏全站导航栏 */
+body:has(.link-page.friends-only) > header {
+    display: none !important;
+}
+
+/* 友链模式返回按钮 */
+.link-page .friend-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    color: #10B981;
+    text-decoration: none;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.link-page .friend-back-btn[hidden] {
+    display: none;
+}
+.link-page .friend-back-btn:hover {
+    background: #10B981;
+    color: #fff;
+    transform: translateX(-2px);
+}
+
+/* 友链搜索框（图标位于输入框左侧外部，不占用可输入区域） */
+.link-page .friend-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.link-page .friend-search-wrap[hidden] {
+    display: none;
+}
+.link-page .friend-search-icon {
+    flex-shrink: 0;
+    font-size: 22px;
+    color: #10B981;
+}
+.link-page .friend-search {
+    flex: 1 1 auto;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 13px 18px;
+    font-size: 15px;
+    color: #333;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.link-page .friend-search:focus {
+    outline: none;
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+.link-page .friend-search-empty {
+    grid-column: 1 / -1;
+    padding: 30px 0;
+    text-align: center;
+    color: #999;
+    font-size: 15px;
 }
 
 /* 移动端顶部横向目录 */
@@ -334,6 +473,19 @@ html[data-theme="dark"] .link-page .link-card .info p {
     color: #aaa; /* 辅助描述文字柔和 */
 }
 
+html[data-theme="dark"] .link-page .link-card .friend-logo {
+    background: #333;
+    border-color: #454545;
+}
+
+html[data-theme="dark"] .link-page .link-card.more-friend-card {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+}
+html[data-theme="dark"] .link-page .link-card.more-friend-card:hover {
+    border-color: #10B981;
+}
+
 html[data-theme="dark"] .link-page .link-card .card-btn {
     border-color: #555;
     color: #ccc;
@@ -370,4 +522,25 @@ html[data-theme="dark"] .link-page .mobile-catalog a {
 html[data-theme="dark"] .link-page .mobile-catalog a:active {
     background: #10B981;
     color: #fff;
+}
+
+html[data-theme="dark"] .link-page .friend-search {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #eee;
+}
+html[data-theme="dark"] .link-page .friend-back-btn {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #34D399;
+}
+html[data-theme="dark"] .link-page .friend-back-btn:hover {
+    background: #10B981;
+    color: #fff;
+}
+html[data-theme="dark"] .link-page .friend-search::placeholder {
+    color: #888;
+}
+html[data-theme="dark"] .link-page .friend-search-empty {
+    color: #888;
 }

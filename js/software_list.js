@@ -8,7 +8,7 @@ const softwareData = [
         name: "希沃白板5 - 插件 - 一体机模式", 
         desc: "为一体机提供更好的教学体验", 
         tags: ["希沃白板5", "一体机", "插件"], 
-        icon: "🏫", 
+        icon: "school", 
         downloadUrl: "https://gh-proxy.com/https://github.com/bCreeper156/blog_files/raw/refs/heads/main/%E6%8F%92%E4%BB%B6%EF%BC%9APC%E5%81%87%E8%A3%85%E6%98%AF%E4%B8%80%E4%BD%93%E6%9C%BA.exe",
         backupDownloadUrl: "https://github.com/bCreeper156/blog_files/raw/refs/heads/main/%E6%8F%92%E4%BB%B6%EF%BC%9APC%E5%81%87%E8%A3%85%E6%98%AF%E4%B8%80%E4%BD%93%E6%9C%BA.exe"
     },
@@ -17,7 +17,7 @@ const softwareData = [
         name: "Typedown - Markdown编辑器", 
         desc: "轻量级Markdown编辑器，支持实时预览", 
         tags: ["Typedown", "Markdown", "编辑器"], 
-        icon: "📝", 
+        icon: "description", 
         downloadUrl: "https://gh-proxy.com/https://github.com/bCreeper156/blog_files/raw/refs/heads/main/Typedown%20Installer.exe",
         backupDownloadUrl: "https://github.com/bCreeper156/blog_files/raw/refs/heads/main/Typedown%20Installer.exe"
     }
@@ -61,7 +61,7 @@ function renderSoftwareList() {
 
         const iconDiv = document.createElement('div');
         iconDiv.className = 'software-icon';
-        iconDiv.textContent = soft.icon || '📦';
+        iconDiv.innerHTML = `<span class="material-symbols-rounded">${soft.icon || 'inventory_2'}</span>`;
 
         const infoDiv = document.createElement('div');
         infoDiv.className = 'software-info';

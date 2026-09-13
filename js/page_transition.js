@@ -50,11 +50,12 @@
     // ---- 由全局脚本管理、切换内容区时必须保留的节点 id ----
     var KEEP_IDS = [
         'gh-loader-wrap', 'gh-loader', 'gh-loader-tip',
-        'back-to-top', 'nope-popup-overlay'
+        'back-to-top', 'nope-popup-overlay',
+        'image-zoom-overlay'        // 全站图片放大浮层
     ];
 
     // 管理脚本注入的 <style>，切换时不被误删
-    var KEEP_STYLE_IDS = ['nope-popup-styles', 'back-to-top-style', 'pjax-style'];
+    var KEEP_STYLE_IDS = ['nope-popup-styles', 'back-to-top-style', 'pjax-style', 'image-zoom-style'];
 
     // 单页 HTML 体积上限：超过此值说明不是普通内容页（如内嵌大型交互页），
     // 直接放弃无刷新切换，避免下载巨大的文档。

@@ -41,7 +41,7 @@
         <div id="nope-popup-overlay" class="nope-overlay">
             <div class="nope-popup-container">
                 <button class="nope-close-btn" aria-label="关闭">&times;</button>
-                <div class="nope-popup-icon">✨</div>
+                <div class="nope-popup-icon"><span class="material-symbols-rounded">auto_awesome</span></div>
                 <h3 class="nope-popup-title">发现更多精彩</h3>
                 <p class="nope-popup-message">
                     前往 主站 体验更多功能<br>

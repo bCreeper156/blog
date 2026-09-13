@@ -17,7 +17,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -35,21 +35,26 @@
                 <h1 class="article-title">156 2FA 工具介绍</h1>
                 <div class="article-meta">
                     <span class="meta-item">
-                        <span class="meta-icon">📅</span> 2026年9月12日
+                        <span class="meta-icon material-symbols-rounded">calendar_today</span> 2026年9月12日
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">⏱️</span> 8分钟阅读
+                        <span class="meta-icon material-symbols-rounded">schedule</span> 8分钟阅读
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">🏷️</span> 2FA · 安全工具 · 本地优先 · 多用户 · TOTP
+                        <span class="meta-icon material-symbols-rounded">label</span> 2FA · 安全工具 · 本地优先 · 多用户 · TOTP
                     </span>
                 </div>
             </section>
 
+            <!-- 文章目录：由 /articles/articles.js 自动生成（宽屏时悬浮于正文左侧） -->
+            <nav class="article-toc" id="article-toc" aria-label="文章目录" hidden>
+                <div class="article-toc-title"><span class="material-symbols-rounded">toc</span> 文章目录</div>
+                <ol class="article-toc-list"></ol>
+            </nav>
             <div class="article-content">
                 <!-- 前言 -->
                 <section class="article-section">
-                    <h2 class="section-title">📖 这是什么</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded">menu_book</span> 这是什么</h2>
                     <p class="article-text">
                         156 2FA 是一款<strong>纯本地运行、多用户隔离、零云端依赖</strong>的动态验证码工具。它不托管任何数据，不依赖第三方服务，所有的账户密钥都以加密形式保存在你自己的电脑里，主密码只用于本机校验和解密。
                     </p>
@@ -60,7 +65,7 @@
 
                 <!-- 核心特点 -->
                 <section class="article-section">
-                    <h2 class="section-title">✨ 核心特点</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded">auto_awesome</span> 核心特点</h2>
                     <ul class="article-list">
                         <li><strong>纯本地运行</strong>：所有计算、解密、验证码生成，全部在你本机完成，不上传网络。</li>
                         <li><strong>多用户支持</strong>：不同用户可以拥有各自独立的加密保险库，数据彼此隔离，互不干扰。</li>
@@ -74,7 +79,7 @@
 
                 <!-- 使用方式 -->
                 <section class="article-section">
-                    <h2 class="section-title">📋 使用方式</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded">checklist</span> 使用方式</h2>
 
                     <h3 class="subsection-title">1. 启动程序</h3>
                     <p class="article-text">
@@ -111,7 +116,7 @@
 
                 <!-- 安全说明 -->
                 <section class="article-section">
-                    <h2 class="section-title">🔐 安全说明</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded">shield</span> 安全说明</h2>
                     <ul class="article-list">
                         <li><strong>主密码只在本机使用</strong>：密码用于 Argon2id 校验，并派生出用于解密保险库的密钥。密码不会上传网络，不会写入任何日志。</li>
                         <li><strong>数据加密存储</strong>：账户密钥以加密 JSON 形式保存在程序目录下的 <code>data/vault.json</code>。即使文件被复制，没有主密码也无法解密。</li>
@@ -119,13 +124,13 @@
                         <li><strong>安全前提</strong>：本工具假设当前电脑为可信设备。如果电脑已被黑客控制，任何本地工具都无法保证密钥安全。</li>
                     </ul>
                     <div class="highlight-box">
-                        <p>✅ 正是这种“本地优先 + 加密存储 + 多用户隔离”的设计理念，让这款工具在隐私保护上值得信赖。</p>
+                        <p><span class="material-symbols-rounded">check_circle</span> 正是这种“本地优先 + 加密存储 + 多用户隔离”的设计理念，让这款工具在隐私保护上值得信赖。</p>
                     </div>
                 </section>
 
                 <!-- 适用人群 -->
                 <section class="article-section">
-                    <h2 class="section-title">👥 适用人群</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded">group</span> 适用人群</h2>
                     <ul class="article-list">
                         <li>希望把 2FA 密钥完全掌握在自己手里，不想依赖云端验证器的用户。</li>
                         <li>需要在一台电脑上为多个用户提供独立 2FA 保险库的用户。</li>
@@ -136,7 +141,7 @@
 
                 <!-- 结语 -->
                 <section class="article-section">
-                    <h2 class="section-title">📌 结语</h2>
+                    <h2 class="section-title"><span class="material-symbols-rounded">push_pin</span> 结语</h2>
                     <p class="article-text">
                         156 2FA 不是要取代所有验证器，而是提供一个<strong>完全由你掌控</strong>的本地选项。
                     </p>
@@ -145,7 +150,7 @@
                     </p>
                     <div class="highlight-box">
                         <p>
-                            💡 <strong>温馨提示</strong>：主密码是解锁保险库的唯一凭证，请务必妥善保管，不要泄露给任何人。
+                            <span class="material-symbols-rounded">lightbulb</span> <strong>温馨提示</strong>：主密码是解锁保险库的唯一凭证，请务必妥善保管，不要泄露给任何人。
                         </p>
                     </div>
                     <p class="article-text" style="margin-top: 0.8rem;">
@@ -156,16 +161,16 @@
                 <!-- 文章底部操作栏 -->
                 <div class="article-actions">
                     <button class="action-btn" onclick="window.location.href='/blog.html'">
-                        📖 浏览更多文章
+                        <span class="material-symbols-rounded">auto_stories</span> 浏览更多文章
                     </button>
                     <button class="action-btn secondary" onclick="window.location.href='/index.html'">
-                        🏠 返回首页
+                        <span class="material-symbols-rounded">home</span> 返回首页
                     </button>
                 </div>
 
                 <!-- 评论提示 -->
                 <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
-                    💡 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
+                    <span class="material-symbols-rounded">lightbulb</span> 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
                 </div>
                 <div id="tcomment"></div>
             </div>

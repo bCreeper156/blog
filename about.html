@@ -140,7 +140,7 @@
             text-decoration: underline;
         }
 
-        /* ===== 🌙 暗色模式 —— 柔和、不压抑 ===== */
+        /* ===== 暗色模式 —— 柔和、不压抑 ===== */
         html[data-theme="dark"] body {
             background: #0d1117 !important;
             color: #e6e6e6 !important;
@@ -234,7 +234,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">☰</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href='/'>156博客</a></h1>
         <nav>
             <ul>
@@ -254,13 +254,13 @@
             </div>
             <div class="about-content">
                 <div class="bio">
-                    <p>👋 你好，我是 Creeper156，一名七年级学生，也是这个博客的作者。<br>
+                    <p><span class="material-symbols-rounded">waving_hand</span> 你好，我是 Creeper156，一名七年级学生，也是这个博客的作者。<br>
                     我喜欢摆弄软件、拆解工具、在方块世界里搭服务器，以及吐槽那些“反人类”的产品设计。</p>
-                    <p>💻 我的数字哲学很简单：<strong>能 Web 就不 App，能本地就不上云，能开源就不闭源。</strong><br>
+                    <p><span class="material-symbols-rounded">laptop_mac</span> 我的数字哲学很简单：<strong>能 Web 就不 App，能本地就不上云，能开源就不闭源。</strong><br>
                     这个博客是我分享技术笔记、软件测评、折腾心得的地方，偶尔也记录一些对教育和内卷的清醒吐槽。</p>
                 </div>
 
-                <div class="section-title">🎯 兴趣领域</div>
+                <div class="section-title"><span class="material-symbols-rounded">target</span> 兴趣领域</div>
                 <div class="interests">
                     <span class="interest-tag">Minecraft 红石/生电</span>
                     <span class="interest-tag">开源软件</span>
@@ -270,7 +270,7 @@
                     <span class="interest-tag">独立博客</span>
                 </div>
 
-                <div class="section-title">📖 博客定位</div>
+                <div class="section-title"><span class="material-symbols-rounded">menu_book</span> 博客定位</div>
                 <p>这里没有算法推荐，没有广告弹窗，也没有“猜你喜欢”。每一篇文章都是我自己写、自己改、自己部署的。<br>
                 我记录过 IDM 的激活脚本、QQ 聊天记录迁移、纯血鸿蒙上装开源音乐软件、碳足迹计算器的数据溯源……<br>
                 未来还会继续写关于软件筛选、服务器搭建、以及那些“只有折腾过才懂”的踩坑经验。</p>
@@ -280,15 +280,15 @@
                     <span class="typing-cursor" id="cursor"></span>
                 </div>
 
-                <div class="section-title">🔗 找到我</div>
+                <div class="section-title"><span class="material-symbols-rounded">link</span> 找到我</div>
                 <div class="contact-links" id="contact-links">
                     <!-- 所有外部链接均已移除 target 属性，将在当前窗口打开 -->
                     <a href="https://github.com/bCreeper156">GitHub</a>
-                    <a href="https://space.bilibili.com/3546378363996834">📺 Bilibili</a>
-                    <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i">▶️ YouTube</a>
-                    <a href="mailto:creeper156@qq.com">📧 邮箱</a>
-                    <a href="https://qm.qq.com/q/3xAA2pN0bm">💬 QQ群</a>
-                    <a href="http://ifdian.net/a/bcdogs156">❤️ 爱发电</a>
+                    <a href="https://space.bilibili.com/3546378363996834"><span class="material-symbols-rounded">smart_display</span> Bilibili</a>
+                    <a href="https://www.youtube.com/@Creeper%E8%8B%A6%E5%8A%9B%E6%80%95i"><span class="material-symbols-rounded">play_arrow</span> YouTube</a>
+                    <a href="mailto:creeper156@qq.com"><span class="material-symbols-rounded">mail</span> 邮箱</a>
+                    <a href="https://qm.qq.com/q/3xAA2pN0bm"><span class="material-symbols-rounded">forum</span> QQ群</a>
+                    <a href="http://ifdian.net/a/bcdogs156"><span class="material-symbols-rounded">favorite</span> 爱发电</a>
                 </div>
 
                 <div class="footer-note">
@@ -345,7 +345,7 @@
                     const encodedUrl = encodeURIComponent(originalHref);
                     link.setAttribute('href', jumpWarningBase + encodedUrl);
 
-                    // ✅ 不再设置 target="_blank" —— 所有链接在当前窗口打开
+                    // 不再设置 target="_blank" —— 所有链接在当前窗口打开
                     // 保留 rel 属性（安全考量）
                     link.setAttribute('rel', 'noopener noreferrer');
                 });

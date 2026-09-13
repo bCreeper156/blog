@@ -3,6 +3,28 @@
    导航栏：白色背景，黑色文字，绿色悬停
    ======================================== */
 
+/* ----- Google Material Symbols 图标字体（供共用组件如主题切换使用） ----- */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+/* 图标类：与字号保持一致，垂直居中对齐文本；使用随主题自适应的彩色 */
+.material-symbols-rounded {
+    font-size: 1.15em;
+    line-height: 1;
+    vertical-align: -0.16em;
+    display: inline-block;
+    color: var(--md-icon, #0f9d58);
+}
+
+html[data-theme="dark"] {
+    --md-icon: #5ddb9a;
+}
+
+/* 处于按钮/导航等彩色背景中的图标，沿用其本身的文字颜色 */
+.menu .material-symbols-rounded,
+button .material-symbols-rounded {
+    color: inherit;
+}
+
 /* ----- 全局重置 ----- */
 * {
     padding: 0;
@@ -401,6 +423,73 @@ header a:hover {
     padding: 0;
     color: inherit;
     font-size: 0.9rem;
+}
+
+/* ========================================
+   代码块一键复制
+   ======================================== */
+.code-block {
+    position: relative;
+    margin: 1.5em 0;
+}
+.code-block pre {
+    margin: 0;
+}
+.code-copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border: 1px solid #e1e6ec;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #4b5563;
+    font-family: inherit;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    cursor: pointer;
+    opacity: 0.72;
+    transition: opacity 0.2s ease, color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.code-copy-btn:hover {
+    opacity: 1;
+    color: #0f9d58;
+    border-color: rgba(15, 157, 88, 0.4);
+    background: #ffffff;
+}
+.code-copy-btn:focus-visible {
+    opacity: 1;
+    outline: 2px solid rgba(15, 157, 88, 0.5);
+    outline-offset: 2px;
+}
+.code-copy-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+.code-copy-btn.copied {
+    opacity: 1;
+    color: #0f9d58;
+    border-color: rgba(15, 157, 88, 0.45);
+    background: #f0fbf5;
+}
+html[data-theme="dark"] .code-copy-btn {
+    background: rgba(45, 51, 56, 0.92);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #c9ccd1;
+}
+html[data-theme="dark"] .code-copy-btn:hover {
+    background: #2d3338;
+    border-color: rgba(15, 157, 88, 0.5);
+    color: #5ddb9a;
+}
+html[data-theme="dark"] .code-copy-btn.copied {
+    background: rgba(15, 157, 88, 0.18);
+    border-color: rgba(15, 157, 88, 0.5);
+    color: #5ddb9a;
 }
 
 .article-content blockquote {
@@ -964,6 +1053,14 @@ html[data-theme="dark"] {
         color: #0f9d58;
         border-bottom-color: rgba(255, 255, 255, 0.08);
     }
+    /* ---- 文章内所有标题层级统一为品牌绿（rgb(15, 157, 88)） ---- */
+    .article-content h2,
+    .article-content h3,
+    .article-content h4,
+    .article-content h5,
+    .article-content h6 {
+        color: #0f9d58;
+    }
 
     /* ---- 文章内的代码块、行内代码 ---- */
     .article-content pre {
@@ -1006,7 +1103,7 @@ html[data-theme="dark"] {
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     }
     .feature-title {
-        color: #ffffff;
+        color: #0f9d58;
     }
     .feature-desc {
         color: var(--md-on-surface-variant);
@@ -1035,7 +1132,7 @@ html[data-theme="dark"] {
         color: var(--md-on-surface);
     }
     .comment-widget h3 {
-        color: #ffffff;
+        color: #0f9d58;
     }
     .comment-widget input,
     .comment-widget textarea {
@@ -1079,5 +1176,143 @@ html[data-theme="dark"] {
     }
     ::-webkit-scrollbar-thumb:hover {
         background: #555;
+    }
+}
+
+/* ========================================
+   文章目录（TOC）
+   ======================================== */
+.article-toc {
+    margin: 0 0 2rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid #e6f4ec;
+    border-left: 4px solid #0f9d58;
+    border-radius: 10px;
+    background: #f7fdf9;
+}
+.article-toc[hidden] {
+    display: none;
+}
+.article-toc-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f9d58;
+    margin-bottom: 0.75rem;
+}
+.article-toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.article-toc-item {
+    margin: 0.25rem 0;
+}
+.article-toc-item.level-3 {
+    padding-left: 1.1rem;
+}
+.article-toc-item.level-4 {
+    padding-left: 2.2rem;
+}
+.article-toc-link {
+    display: block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #495057;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.article-toc-link:hover {
+    background: rgba(15, 157, 88, 0.08);
+    color: #0f9d58;
+}
+.article-toc-link.active {
+    background: rgba(15, 157, 88, 0.12);
+    color: #0f9d58;
+    font-weight: 600;
+}
+
+/* 目录跳转时的锚点留白 */
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5 {
+    scroll-margin-top: 24px;
+}
+
+@media screen and (max-width: 768px) {
+    .article-toc {
+        padding: 1rem;
+    }
+    .article-toc-item.level-3 {
+        padding-left: 0.8rem;
+    }
+    .article-toc-item.level-4 {
+        padding-left: 1.6rem;
+    }
+}
+
+/* 深色模式 */
+html[data-theme="dark"] .article-toc {
+    background: rgba(15, 157, 88, 0.08);
+    border-color: rgba(15, 157, 88, 0.25);
+    border-left-color: #0f9d58;
+}
+html[data-theme="dark"] .article-toc-title {
+    color: #5ddb9a;
+}
+html[data-theme="dark"] .article-toc-link {
+    color: #c9ccd1;
+}
+html[data-theme="dark"] .article-toc-link:hover {
+    background: rgba(15, 157, 88, 0.18);
+    color: #5ddb9a;
+}
+html[data-theme="dark"] .article-toc-link.active {
+    background: rgba(15, 157, 88, 0.22);
+    color: #5ddb9a;
+}
+
+/* ========================================
+   宽屏：文章目录悬浮在左侧，右侧为文章正文
+   ======================================== */
+@media screen and (min-width: 1140px) {
+    main {
+        max-width: 1200px;
+    }
+    /* 文章标题占满整行，正文与目录分列两栏 */
+    article {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 800px);
+        justify-content: center;
+        column-gap: 2rem;
+        align-items: start;
+    }
+    .header {
+        grid-column: 1 / -1;
+    }
+    .article-toc {
+        position: sticky;
+        top: 24px;
+        align-self: start;
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+        margin-bottom: 0;
+    }
+    .article-content {
+        grid-column: 2;
+    }
+
+    /* 没有目录的页面：正文容器单列并保持整体居中 */
+    article.no-toc,
+    article:has(.article-toc[hidden]) {
+        grid-template-columns: minmax(0, 800px);
+    }
+    article.no-toc .article-content,
+    article:has(.article-toc[hidden]) .article-content {
+        grid-column: 1;
     }
 }

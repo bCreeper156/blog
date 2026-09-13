@@ -546,7 +546,7 @@
 
         <!-- 状态 -->
         <div id="statusBox" class="status-box">
-            <span class="status-icon" id="statusIcon">⏳</span>
+            <span class="status-icon" id="statusIcon"><span class="material-symbols-outlined">hourglass_top</span></span>
             <span id="statusText">正在识别二维码…</span>
         </div>
 
@@ -747,15 +747,15 @@
                 statusBox.className = 'status-box show';
                 if (type === 'loading') {
                     statusBox.className = 'status-box show';
-                    statusIcon.textContent = '⏳';
+                    statusIcon.innerHTML = '<span class="material-symbols-outlined">hourglass_top</span>';
                     statusText.textContent = message || '正在识别二维码…';
                 } else if (type === 'success') {
                     statusBox.className = 'status-box show success';
-                    statusIcon.textContent = '✅';
+                    statusIcon.innerHTML = '<span class="material-symbols-outlined">check_circle</span>';
                     statusText.textContent = message || '解码成功';
                 } else if (type === 'error') {
                     statusBox.className = 'status-box show error';
-                    statusIcon.textContent = '⚠️';
+                    statusIcon.innerHTML = '<span class="material-symbols-outlined">warning</span>';
                     statusText.textContent = message || '解码失败，请尝试其他图片';
                 } else {
                     statusBox.classList.remove('show');
@@ -936,7 +936,7 @@
 
             // 初始状态
             resetAll();
-            console.log('🔐 2FA 备用密钥提取工具 (Material Design) 已加载');
+            console.log('2FA 备用密钥提取工具 (Material Design) 已加载');
         })();
     </script>
 </body>

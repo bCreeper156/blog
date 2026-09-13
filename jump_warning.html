@@ -88,7 +88,11 @@
             gap: 8px;
         }
         .warning h2::before {
-            content: "⚠️";
+            content: "warning";
+            font-family: 'Material Symbols Rounded';
+            font-weight: normal;
+            font-style: normal;
+            line-height: 1;
             font-size: 2rem;
         }
         .warning p {
@@ -195,6 +199,16 @@
             border-left-color: #60a5fa;
             background: rgba(30, 41, 59, 0.9);
         }
+        /* Material Symbols 图标：沿用容器语义色，随主题自适应 */
+        .url-note .material-symbols-rounded {
+            color: inherit;
+        }
+        .target-link-box .material-symbols-rounded {
+            color: #d93025;
+        }
+        html[data-theme="dark"] .target-link-box .material-symbols-rounded {
+            color: #f28b82;
+        }
         @media (max-width: 600px) {
             .warning { margin: 30px 16px; padding: 20px; }
             .anniu { flex-direction: column; gap: 12px; }
@@ -205,7 +219,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -229,7 +243,7 @@
         </div>
 
         <div id="js-extra-note" class="url-note">
-            ⓘ 请仔细核对域名，避免进入仿冒网站。
+            <span class="material-symbols-rounded">info</span> 请仔细核对域名，避免进入仿冒网站。
         </div>
     </section>
 
@@ -308,18 +322,18 @@
 
                 try {
                     const urlObj = new URL(targetHref);
-                    extraNote.innerHTML = `ⓘ 目标域名：<strong>${urlObj.hostname}</strong> —— 请确认是否为可信站点。`;
+                    extraNote.innerHTML = `<span class="material-symbols-rounded">info</span> 目标域名：<strong>${urlObj.hostname}</strong> —— 请确认是否为可信站点。`;
                 } catch {
-                    extraNote.innerHTML = `ⓘ 目标链接格式已通过安全校验，但仍请仔细确认。`;
+                    extraNote.innerHTML = `<span class="material-symbols-rounded">info</span> 目标链接格式已通过安全校验，但仍请仔细确认。`;
                 }
             } else {
-                targetDisplay.textContent = '❌ 未提供有效链接或链接参数缺失。';
+                targetDisplay.innerHTML = '<span class="material-symbols-rounded">error</span> 未提供有效链接或链接参数缺失。';
                 targetDisplay.style.background = '#ffe1de';
                 targetDisplay.style.borderColor = '#f5a79c';
                 jumpBtn.classList.add('disabled');
                 jumpBtn.href = 'javascript:void(0)';
                 jumpBtn.textContent = '链接不可用';
-                extraNote.innerHTML = '⚠️ 链接无效或参数错误，建议返回首页。';
+                extraNote.innerHTML = '<span class="material-symbols-rounded">warning</span> 链接无效或参数错误，建议返回首页。';
             }
 
             // 取消按钮：优先返回上一页；若没有可回退历史，则回到首页
@@ -336,7 +350,7 @@
             if (document.referrer) {
                 try {
                     const refUrl = new URL(document.referrer);
-                    extraNote.innerHTML += `<br>🔙 来自：${refUrl.hostname}`;
+                    extraNote.innerHTML += `<br><span class="material-symbols-rounded">arrow_back</span> 来自：${refUrl.hostname}`;
                 } catch (e) {}
             }
         })();

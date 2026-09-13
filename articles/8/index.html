@@ -17,7 +17,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -34,16 +34,21 @@
                 <h1 class="article-title">软件测评#5 - Ditto</h1>
                 <div class="article-meta">
                     <span class="meta-item">
-                        <span class="meta-icon">📅</span> 2026年8月16日
+                        <span class="meta-icon material-symbols-rounded">calendar_today</span> 2026年8月16日
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">⏱️</span> 6分钟阅读
+                        <span class="meta-icon material-symbols-rounded">schedule</span> 6分钟阅读
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">🏷️</span> 软件测评 · Ditto · 剪贴板工具
+                        <span class="meta-icon material-symbols-rounded">label</span> 软件测评 · Ditto · 剪贴板工具
                     </span>
                 </div>
             </section>
+            <!-- 文章目录：由 /articles/articles.js 自动生成（宽屏时悬浮于正文左侧） -->
+            <nav class="article-toc" id="article-toc" aria-label="文章目录" hidden>
+                <div class="article-toc-title"><span class="material-symbols-rounded">toc</span> 文章目录</div>
+                <ol class="article-toc-list"></ol>
+            </nav>
             <div class="article-content">
                 <section class="article-section">
                     <!-- 引言 -->
@@ -59,7 +64,7 @@
 
                     <!-- 资源提示 -->
                     <div class="highlight-box" style="margin: 1.2rem 0;">
-                        <p>📌 文件资源提示：本文相关安装包与便携版可在文末资源区获取，或前往博客内下载页查看。</p>
+                        <p><span class="material-symbols-rounded">push_pin</span> 文件资源提示：本文相关安装包与便携版可在文末资源区获取，或前往博客内下载页查看。</p>
                     </div>
 
                     <!-- Ditto 到底是什么 -->
@@ -149,7 +154,7 @@
                     <hr style="border:0; border-top:1px solid #e0e0e0; margin:2rem 0;">
 
                     <!-- 资源下载 -->
-                    <h3>📎 资源下载</h3>
+                    <h3><span class="material-symbols-rounded">attach_file</span> 资源下载</h3>
                     <ul style="padding-left:1.8rem; margin:0 0 1.2rem 0; line-height:2;">
                         <li>
                             <strong>博客内下载（含便携版/安装版）：</strong>
@@ -174,16 +179,16 @@
                 <!-- 文章操作按钮 -->
                 <div class="article-actions">
                     <button class="action-btn" onclick="window.location.href='/blog.html'">
-                        📖 浏览更多文章
+                        <span class="material-symbols-rounded">auto_stories</span> 浏览更多文章
                     </button>
                     <button class="action-btn secondary" onclick="window.location.href='/index.html'">
-                        🏠 返回首页
+                        <span class="material-symbols-rounded">home</span> 返回首页
                     </button>
                 </div>
 
                 <!-- 评论提示 -->
                 <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
-                    💡 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
+                    <span class="material-symbols-rounded">lightbulb</span> 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
                 </div>
                 <div id="tcomment"></div>
             </div>

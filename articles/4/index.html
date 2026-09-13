@@ -19,7 +19,7 @@
 </head>
 <body>
     <header>
-        <button class="menu">&#9776;</button>
+        <button class="menu"><span class="material-symbols-rounded">menu</span></button>
         <h1><a href="/index.html">156博客</a></h1>
         <nav>
             <ul>
@@ -36,17 +36,22 @@
                 <h1 class="article-title">软件测评#3——Cloudreve</h1>
                 <div class="article-meta">
                     <span class="meta-item">
-                        <span class="meta-icon">📅</span> 2026年3月7日
+                        <span class="meta-icon material-symbols-rounded">calendar_today</span> 2026年3月7日
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">⏱️</span> 12分钟阅读
+                        <span class="meta-icon material-symbols-rounded">schedule</span> 12分钟阅读
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">🏷️</span> 教程 · 云存储 · 内网穿透
+                        <span class="meta-icon material-symbols-rounded">label</span> 教程 · 云存储 · 内网穿透
                     </span>
                 </div>
             </section>
             
+            <!-- 文章目录：由 /articles/articles.js 自动生成（宽屏时悬浮于正文左侧） -->
+            <nav class="article-toc" id="article-toc" aria-label="文章目录" hidden>
+                <div class="article-toc-title"><span class="material-symbols-rounded">toc</span> 文章目录</div>
+                <ol class="article-toc-list"></ol>
+            </nav>
             <div class="article-content">
                 <section class="article-section">
                     
@@ -101,13 +106,13 @@
                         <p>这里给的示例是<a href="/jump_warning.html?url=https://rainyun.com" rel="noopener">雨云</a>，其他方法见<a href="/jump_warning.html?url=https://docs.cloudreve.org" rel="noopener">Cloudreve官方文档</a></p>
                     </blockquote>
 
-                    <h3>📋 准备工作</h3>
+                    <h3><span class="material-symbols-rounded">checklist</span> 准备工作</h3>
                     <ul>
                         <li><strong>雨云服务器</strong>：一台已购买的云服务器（建议 2核2G 以上，系统选择 <strong>Debian 12/Ubuntu 22.04</strong>）。<br />若使用国内机房（如宿迁、十堰），需域名已备案；否则建议选择香港或美国机房。</li>
                         <li><strong>域名（可选）</strong>：如需通过域名访问并启用 HTTPS，请提前将域名解析到服务器公网 IP。</li>
                     </ul>
 
-                    <h3>🚀 第一步：部署 Cloudreve V4</h3>
+                    <h3><span class="material-symbols-rounded">rocket_launch</span> 第一步：部署 Cloudreve V4</h3>
                     <p class="article-text">根据你的操作习惯，任选以下一种方式完成部署。</p>
 
                     <h4>方式一：使用雨云预安装 APP（最简单）</h4>
@@ -178,13 +183,13 @@ WantedBy=multi-user.target</code></pre>
                         <p>💡 <strong>关于数据库</strong>：以上方式默认使用 SQLite，适合小型或个人使用。<strong>对于生产环境或高并发场景，建议配置 MySQL 或 PostgreSQL</strong>，以获得更好的性能和稳定性。具体方法请参考<a href="/jump_warning.html?url=https://docs.cloudreve.org/" rel="noopener">官方文档</a>。</p>
                     </blockquote>
 
-                    <h3>🔓 第二步：放行端口并访问</h3>
+                    <h3><span class="material-symbols-rounded">lock_open</span> 第二步：放行端口并访问</h3>
                     <ul>
                         <li><strong>放行端口</strong>：在雨云控制台的服务器防火墙/安全组中，放行 <strong>TCP 5212</strong> 端口（Web 访问）。如需离线下载功能，还需放行 <strong>TCP/UDP 6888</strong> 端口。</li>
                         <li><strong>浏览器访问</strong>：<code>http://&lt;你的服务器IP&gt;:5212</code>，完成第一个账号的注册，该账号即拥有所有管理权限。</li>
                     </ul>
 
-                    <h3>🌐 第三步：配置域名访问与 HTTPS（推荐）</h3>
+                    <h3><span class="material-symbols-rounded">public</span> 第三步：配置域名访问与 HTTPS（推荐）</h3>
 
                     <h4>1. 安装 Nginx（以宝塔面板为例）</h4>
                     <pre><code class="language-bash">wget -O install.sh https://download.bt.cn/install/install-ubuntu_6.0.sh && bash install.sh ed8484bec</code></pre>
@@ -212,7 +217,7 @@ WantedBy=multi-user.target</code></pre>
                     <h4>3. 启用 HTTPS</h4>
                     <p class="article-text">在网站设置中申请 Let's Encrypt 证书，并开启强制 HTTPS。</p>
 
-                    <h3>⚙️ 第四步：进阶配置——挂载雨云对象存储（ROS）</h3>
+                    <h3><span class="material-symbols-rounded">settings</span> 第四步：进阶配置——挂载雨云对象存储（ROS）</h3>
                     <p class="article-text">将文件存储到对象存储可节省服务器硬盘空间。</p>
                     <ol>
                         <li><strong>创建存储桶</strong>：在雨云控制台购买并创建对象存储桶，开启<strong>公共读取</strong>，记录 <strong>Endpoint</strong>、<strong>AccessKey</strong>、<strong>SecretKey</strong>。</li>
@@ -235,7 +240,7 @@ WantedBy=multi-user.target</code></pre>
                         <li><strong>应用策略</strong>：在 <strong>用户组</strong> 中，将默认组的存储策略修改为刚创建的策略，此后新上传文件将直接存入雨云对象存储。</li>
                     </ol>
 
-                    <h3>❓ 常见问题</h3>
+                    <h3><span class="material-symbols-rounded">help</span> 常见问题</h3>
 
                     <h4>Q1：如何确认 Cloudreve 是 V4 版本？</h4>
                     <ul>
@@ -257,7 +262,7 @@ WantedBy=multi-user.target</code></pre>
                         <li>管理员可以在后台 <strong>用户管理</strong> 中开启“允许用户注册”，或者通过邀请链接添加用户。普通用户注册后默认为普通会员，需由管理员提升权限。</li>
                     </ul>
 
-                    <h3>✅ 完成</h3>
+                    <h3><span class="material-symbols-rounded">check_circle</span> 完成</h3>
                     <p class="article-text">
                         至此，你已经在雨云服务器上基于 Cloudreve V4 搭建了私有网盘。享受文件存储、分享和离线下载的乐趣吧！记得定期备份 <code>/opt/cloudreve/cloudreve.db</code>（SQLite）或导出数据库（MySQL/PostgreSQL），以及配置文件。
                     </p>
@@ -265,14 +270,14 @@ WantedBy=multi-user.target</code></pre>
                 <div id="LICENSE"></div>
                 <div class="article-actions">
                     <button class="action-btn" onclick="window.location.href='/blog.html'">
-                        📖 浏览更多文章
+                        <span class="material-symbols-rounded">auto_stories</span> 浏览更多文章
                     </button>
                     <button class="action-btn secondary" onclick="window.location.href='/index.html'">
-                        🏠 返回首页
+                        <span class="material-symbols-rounded">home</span> 返回首页
                     </button>
                 </div>
                 <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
-                💡 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
+                <span class="material-symbols-rounded">lightbulb</span> 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
                 </div>
                 <!-- 评论容器，放在正确位置 -->
                 <div id="tcomment"></div>

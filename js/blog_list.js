@@ -132,16 +132,16 @@ function renderArticles(articlesToRender, page = 1) {
                 <p class="article-excerpt">${article.excerpt}</p>
                 <div class="article-meta">
                     <span class="meta-item">
-                        <span class="meta-icon">📅</span> ${article.date}
+                        <span class="meta-icon material-symbols-rounded">calendar_month</span> ${article.date}
                     </span>
                     <span class="meta-item">
-                        <span class="meta-icon">⏱️</span> ${article.readTime}
+                        <span class="meta-icon material-symbols-rounded">schedule</span> ${article.readTime}
                     </span>
                 </div>
             </div>
             ${article.category !== '公告' ? `<span class="article-category">${article.category}</span>` : ''}
             <div class="article-actions">
-                <button class="action-btn" title="分享" onclick="shareArticle(${article.id})">↗️</button>
+                <button class="action-btn" title="分享" onclick="shareArticle(${article.id})"><span class="material-symbols-rounded">north_east</span></button>
             </div>
         </li>
     `).join('');
