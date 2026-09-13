@@ -126,6 +126,7 @@
                     history.replaceState(null, '', link.getAttribute('href'));
                 }
                 updateTocActive();
+                closeMobileToc();
             });
         }
 
@@ -223,11 +224,66 @@
         }
     }
 
+    /* ============================================================
+       窄屏目录侧边栏
+       目录折叠为悬浮在左侧的侧边栏，通过开关按钮展开 / 收起。
+       ============================================================ */
+    var TOC_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5h18v2H3V5zm0 6h12v2H3v-2zm0 6h18v2H3v-2z"/></svg>';
+
+    function setMobileTocState(open) {
+        var toc = document.getElementById('article-toc');
+        var article = document.querySelector('main article');
+        if (!toc || !article) return;
+
+        article.classList.toggle('toc-open', open);
+        toc.classList.toggle('open', open);
+
+        var button = article.querySelector('.toc-toggle');
+        if (button) {
+            button.setAttribute('aria-expanded', open ? 'true' : 'false');
+            var label = button.querySelector('.toc-toggle-text');
+            if (label) label.textContent = open ? '收起' : '目录';
+        }
+    }
+
+    // 点击目录项跳转后自动收起（仅窄屏有展开状态时会生效）
+    function closeMobileToc() {
+        var article = document.querySelector('main article');
+        if (article && article.classList.contains('toc-open')) {
+            setMobileTocState(false);
+        }
+    }
+
+    function initMobileTocSidebar() {
+        var toc = document.getElementById('article-toc');
+        var article = document.querySelector('main article');
+        if (!toc || !article || toc.hidden) return;
+
+        if (!article.querySelector('.toc-toggle')) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'toc-toggle';
+            button.setAttribute('aria-controls', 'article-toc');
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-label', '展开文章目录');
+            button.innerHTML = TOC_ICON + '<span class="toc-toggle-text">目录</span>';
+            button.addEventListener('click', function () {
+                var current = document.querySelector('main article');
+                setMobileTocState(!(current && current.classList.contains('toc-open')));
+            });
+            article.appendChild(button);
+        }
+
+        // 页面（无刷新）切换后目录默认处于收起状态
+        setMobileTocState(false);
+    }
+
     function initArticlePage() {
         fillLicense();
         buildArticleToc();
         var toc = document.getElementById('article-toc');
         markArticleTocState(!!toc && !toc.hidden);
+        initMobileTocSidebar();
         initCodeCopy();
     }
 

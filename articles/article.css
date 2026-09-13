@@ -1193,6 +1193,10 @@ html[data-theme="dark"] {
 .article-toc[hidden] {
     display: none;
 }
+/* 窄屏下的目录开关按钮（宽屏隐藏） */
+.toc-toggle {
+    display: none;
+}
 .article-toc-title {
     display: flex;
     align-items: center;
@@ -1314,5 +1318,75 @@ html[data-theme="dark"] .article-toc-link.active {
     article.no-toc .article-content,
     article:has(.article-toc[hidden]) .article-content {
         grid-column: 1;
+    }
+}
+
+/* ========================================
+   窄屏：目录折叠为悬浮在左侧的侧边栏
+   ======================================== */
+@media screen and (max-width: 1139px) {
+    .article-toc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 60;
+        box-sizing: border-box;
+        width: min(280px, 78vw);
+        max-width: none;
+        height: 100vh;
+        height: 100dvh;
+        max-height: none;
+        margin: 0;
+        padding: 1.25rem 1.1rem 2rem;
+        border-radius: 0 14px 14px 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        transform: translateX(-102%);
+        visibility: hidden;
+        transition: transform 0.28s ease, visibility 0.28s ease;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.16);
+    }
+    .article-toc.open {
+        transform: translateX(0);
+        visibility: visible;
+    }
+    .toc-toggle {
+        position: fixed;
+        top: 50%;
+        left: 12px;
+        z-index: 61;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 9px 13px;
+        border: 1px solid rgba(15, 157, 88, 0.35);
+        border-radius: 999px;
+        background: #ffffff;
+        color: #0f9d58;
+        font-family: inherit;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1;
+        cursor: pointer;
+        transform: translateY(-50%);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+        transition: left 0.28s ease, background 0.2s ease, color 0.2s ease;
+    }
+    .toc-toggle svg {
+        width: 15px;
+        height: 15px;
+        fill: currentColor;
+    }
+    article.toc-open .toc-toggle {
+        left: calc(min(280px, 78vw) + 12px);
+    }
+    /* 悬浮侧边栏需要不透明背景（深色模式下原样式为半透明，会透出正文） */
+    html[data-theme="dark"] .article-toc {
+        background: #1e2528;
+    }
+    html[data-theme="dark"] .toc-toggle {
+        background: #2d3338;
+        border-color: rgba(15, 157, 88, 0.5);
+        color: #5ddb9a;
     }
 }
