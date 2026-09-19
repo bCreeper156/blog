@@ -115,15 +115,33 @@
         if (!body) return null;
         var header = body.querySelector(':scope > header');
         var footer = body.querySelector(':scope > footer');
-        if (!header || !footer) return null;
 
-        var content = [];
-        var node = header.nextElementSibling;
-        while (node && node !== footer) {
-            content.push(node);
-            node = node.nextElementSibling;
+        if (header && footer) {
+            var content = [];
+            var node = header.nextElementSibling;
+            while (node && node !== footer) {
+                content.push(node);
+                node = node.nextElementSibling;
+            }
+            return { header: header, footer: footer, content: content };
         }
-        return { header: header, footer: footer, content: content };
+
+        // header / footer 由 common.js 动态注入的页面：抓取到的静态 HTML
+        // 中没有这两个容器。若目标页引入了 common.js，则视其整个 <body>
+        // 为内容区，布局复用当前页面已注入的 header / footer；
+        // 否则（未引入 common.js 的独立子页）维持原行为：返回 null，
+        // 退回整页跳转。
+        if (doc === document) return null;
+        var hasCommon = doc.querySelector('script[src*="common.js"]');
+        if (!hasCommon) return null;
+        var cur = getRegions(document);
+        if (!cur) return null;
+
+        var all = [];
+        Array.prototype.forEach.call(body.children, function (n) {
+            all.push(n);
+        });
+        return { header: cur.header, footer: cur.footer, content: all };
     }
 
     function shouldKeep(node) {

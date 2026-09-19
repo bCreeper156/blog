@@ -130,7 +130,7 @@ function createAddFriendToast() {
     toast.className = 'friend-link-toast';
     toast.innerHTML = `
         <div class="friend-toast-box">
-            <div class="friend-toast-header">添加友链</div>
+            <div class="friend-toast-header">添加友链格式</div>
             <div class="friend-toast-content">
                 1. 博客名称：<br>
                 2. 博客简介：<br>
@@ -139,7 +139,7 @@ function createAddFriendToast() {
             </div>
             <div class="friend-toast-actions">
                 <button type="button" class="toast-btn secondary" data-close-toast>取消</button>
-                <a href="mailto://humingxuan20241@outlook.com?subject=友链申请&body=1.博客名称：%0A2.博客简介：%0A3.博客链接：%0A4.博客LOGO：" class="toast-btn primary" data-add-mailto>现在添加</a>
+                <a href="mailto:humingxuan20241@outlook.com?subject=友链申请&body=1.博客名称：%0A2.博客简介：%0A3.博客链接：%0A4.博客LOGO：" class="toast-btn primary" data-add-mailto>现在添加</a>
             </div>
         </div>
     `;
@@ -230,21 +230,47 @@ if (!window.__linkScrollBound) {
     window.addEventListener('scroll', onPageScroll, { passive: true });
 }
 
+// 友链模式：创建右上角深浅色切换按钮（复用 common.js 的主题接口）
+function createFriendsThemeToggle() {
+    if (document.getElementById('friends-theme-toggle')) return;
+    const api = window.__themeAPI;
+    if (!api) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'friends-theme-toggle';
+    btn.className = 'theme-toggle friends-theme-toggle';
+    btn.setAttribute('aria-label', '切换网站主题');
+    btn.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        api.applyTheme(next);
+        api.saveTheme(next);
+    });
+    document.body.appendChild(btn);
+    api.applyTheme(document.documentElement.dataset.theme || api.getDefaultTheme());
+}
+
 // 页面初始化（首次加载与无刷新页面切换后都会调用，需保证可重复执行）
 function initLinkPage() {
     // link.html?type=friends 时只显示全部友链
     const friendsOnly = getQueryParam('type') === 'friends';
 
     renderCards('shortcut-grid', linkData.shortcuts);
-    // 普通模式下在友链栏底部追加「查看更多友链」卡片；友链模式则不显示
-    const friendsList = friendsOnly
-        ? linkData.friends
-        : linkData.friends.concat([{
-            title: '查看更多友链',
-            desc: '浏览全部友情链接',
-            type: 'more-link',
-            url: '/link.html?type=friends'
-        }]);
+    // 普通模式下仅显示「添加友链」+ 第 1 个友链，并在底部追加「查看更多友链」卡片；
+    // 友链模式（?type=friends）下显示全部友链，且不追加该卡片
+    const moreCard = {
+        title: '查看更多友链',
+        desc: '浏览全部友情链接',
+        type: 'more-link',
+        url: '/link.html?type=friends'
+    };
+    let friendsList;
+    if (friendsOnly) {
+        friendsList = linkData.friends;
+    } else {
+        const special = linkData.friends.filter(f => f.type === 'add-link');
+        const realFriends = linkData.friends.filter(f => f.type !== 'add-link');
+        friendsList = special.concat(realFriends.slice(0, 1), [moreCard]);
+    }
     renderCards('friend-grid', friendsList, 'friend');
     renderCards('project-grid', linkData.projects, 'project');
 
@@ -261,6 +287,14 @@ function initLinkPage() {
     const backBtn = document.getElementById('friend-back');
     if (backBtn) {
         backBtn.hidden = !friendsOnly;
+    }
+
+    // 仅显示友链模式下：显示右上角主题切换按钮
+    const friendsToggle = document.getElementById('friends-theme-toggle');
+    if (friendsOnly) {
+        createFriendsThemeToggle();
+    } else if (friendsToggle) {
+        friendsToggle.remove();
     }
 
     // 仅显示友链模式下：启用搜索过滤

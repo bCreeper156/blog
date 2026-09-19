@@ -53,6 +53,7 @@ button .material-symbols-rounded {
     --md-radius-card: 16px;
     --md-radius-btn: 30px;
     --md-radius-pill: 999px;
+    --site-header-height: 80px;
 }
 
 html[data-theme="dark"] {
@@ -133,6 +134,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-top: var(--site-header-height);
     background-color: var(--md-surface);
     font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--md-on-surface);
@@ -153,12 +155,23 @@ a:hover {
 
 /* ----- 导航栏（白色背景，黑色文字，绿色悬停） ----- */
 header {
-    background: var(--md-surface-container);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.78);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
     box-shadow: var(--md-shadow-sm);
-    height: 80px;
+    height: var(--site-header-height);
     width: 100%;
-    position: relative;
     flex-shrink: 0;
+}
+
+html[data-theme="dark"] header {
+    background: rgba(29, 29, 29, 0.78);
+    border-bottom-color: rgba(255, 255, 255, 0.10);
 }
 
 header h1 {
@@ -240,10 +253,14 @@ header a:hover {
 
 /* ----- 移动端菜单（白色背景，黑色文字） ----- */
 @media screen and (max-width: 768px) {
+    header {
+        z-index: 1000;
+    }
+
     header ul {
         display: none;
         position: absolute;
-        top: 80px;
+        top: var(--site-header-height);
         left: 0;
         width: 100%;
         background: var(--md-surface-container);
@@ -251,6 +268,7 @@ header a:hover {
         padding: 10px 0;
         z-index: 1000;
         box-shadow: var(--md-shadow-lg);
+        line-height: normal;
     }
 
     header ul.show {
@@ -262,6 +280,10 @@ header a:hover {
         margin: 0;
         text-align: center;
         padding: 10px 0;
+    }
+
+    header nav a {
+        display: block;
     }
 
     header h1 {

@@ -1,6 +1,35 @@
-/* === 156 博客 - 链接页独立样式（完整版，含暗色适配） === */
+/* ========================================
+   156 博客 - link.css（链接页）
+   Material 3 令牌驱动，明暗主题自动切换
+   依赖 common.css 中的 --md-* 变量
+   ======================================== */
 
-/* ---------- 亮色模式（默认） ---------- */
+@charset "UTF-8";
+
+/* ----- 页面级扩展变量（Material 3 令牌） ----- */
+:root {
+    --link-card-border: #e1e3e1;
+    --link-card-bg: #ffffff;
+    --link-card-hover-shadow: 0 4px 12px rgba(15, 157, 88, 0.12);
+    --link-dashed-border: #b8e6cf;
+    --link-logo-bg: #e6f4ed;
+    --link-logo-border: #c9ead8;
+    --link-elevation: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --link-elevation-hover: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="dark"] {
+    --link-card-border: #2c2f31;
+    --link-card-bg: #1d1d1d;
+    --link-card-hover-shadow: 0 4px 12px rgba(15, 157, 88, 0.18);
+    --link-dashed-border: #274534;
+    --link-logo-bg: #24352c;
+    --link-logo-border: #31463a;
+    --link-elevation: 0 2px 8px rgba(0, 0, 0, 0.32);
+    --link-elevation-hover: 0 4px 12px rgba(0, 0, 0, 0.40);
+}
+
+/* ---------- 布局 ---------- */
 .link-page {
     max-width: 1200px;
     margin: 30px auto;
@@ -16,32 +45,31 @@
     position: sticky;
     top: 20px;
     height: fit-content;
-    background: #fff;
+    background: var(--md-surface-container);
     border-radius: 12px;
     padding: 20px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: var(--link-elevation);
 }
 .link-page .sidebar h3 {
-    padding: 0 20px;
+    padding: 0 20px 0 15px;
     margin-bottom: 15px;
     font-size: 16px;
-    color: #555;
-    border-left: 3px solid #10B981; /* 苦力怕绿 */
-    padding-left: 15px;
+    color: var(--md-on-surface-variant);
+    border-left: 3px solid var(--md-primary);
 }
 .link-page .sidebar a {
     display: block;
     padding: 12px 20px;
     transition: 0.2s;
     border-left: 3px solid transparent;
-    color: #333;
+    color: var(--md-on-surface);
     text-decoration: none;
 }
 .link-page .sidebar a:hover,
 .link-page .sidebar a.active {
-    background: #f0fdf4;
-    border-left-color: #10B981;
-    color: #10B981;
+    background: var(--md-surface-tint);
+    border-left-color: var(--md-primary);
+    color: var(--md-primary);
 }
 
 /* 右侧内容 */
@@ -50,18 +78,18 @@
     min-width: 0;
 }
 .link-page .section {
-    background: #fff;
+    background: var(--md-surface-container);
     border-radius: 12px;
     padding: 25px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    box-shadow: var(--link-elevation);
     scroll-margin-top: 20px;
 }
 .link-page .section-title {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 2px solid var(--link-card-border);
     padding-bottom: 15px;
 }
 
@@ -72,7 +100,7 @@
 }
 .link-page .github-cta p {
     margin: 0;
-    color: #666;
+    color: var(--md-on-surface-variant);
     line-height: 1.7;
 }
 .link-page .github-cta-link {
@@ -82,16 +110,24 @@
     width: fit-content;
     padding: 10px 18px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #10B981, #34D399);
-    color: #fff;
+    background: linear-gradient(135deg, var(--md-primary), #34D399);
+    color: var(--md-on-primary);
     text-decoration: none;
     font-weight: 600;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.18);
+    box-shadow: 0 8px 20px rgba(15, 157, 88, 0.18);
 }
 .link-page .github-cta-link:hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.22);
+    box-shadow: 0 10px 24px rgba(15, 157, 88, 0.24);
+}
+
+html[data-theme="dark"] .link-page .github-cta-link {
+    background: linear-gradient(135deg, #0b7a44, #0f9d58);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+html[data-theme="dark"] .link-page .github-cta-link:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
 }
 
 /* 卡片网格 */
@@ -101,33 +137,33 @@
     gap: 20px;
 }
 .link-page .link-card {
-    border: 1px solid #f0f0f0;
+    border: 1px solid var(--link-card-border);
     border-radius: 10px;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s;
-    background: #fff;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    background: var(--link-card-bg);
     text-decoration: none;
     color: inherit;
 }
 .link-page .link-card:hover {
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-    border-color: #10B981;
+    box-shadow: var(--link-card-hover-shadow);
+    border-color: var(--md-primary);
 }
 .link-page .link-card.add-friend-card {
     cursor: pointer;
     border-style: dashed;
-    border-color: #a7f3d0;
-    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+    border-color: var(--link-dashed-border);
+    background: var(--link-card-bg);
 }
 .link-page .link-card.add-friend-card:hover {
-    border-color: #10B981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+    border-color: var(--md-primary);
+    box-shadow: var(--link-card-hover-shadow);
 }
 .link-page .link-card .card-foot {
     margin-top: 12px;
-    color: #10B981;
+    color: var(--md-primary);
     font-size: 14px;
     font-weight: 600;
 }
@@ -135,23 +171,23 @@
 .link-page .link-card.more-friend-card {
     cursor: pointer;
     border-style: dashed;
-    border-color: #bbf7d0;
-    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+    border-color: var(--link-dashed-border);
+    background: var(--link-card-bg);
     align-items: center;
     text-align: center;
 }
 .link-page .link-card.more-friend-card:hover {
-    border-color: #10B981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+    border-color: var(--md-primary);
+    box-shadow: var(--link-card-hover-shadow);
 }
 .link-page .link-card .info h4 {
     font-size: 16px;
     margin-bottom: 6px;
-    color: #333;
+    color: var(--md-on-surface);
 }
 .link-page .link-card .info p {
     font-size: 13px;
-    color: #666;
+    color: var(--md-on-surface-variant);
     line-height: 1.5;
     margin: 0;
 }
@@ -170,13 +206,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f0fdf4;
-    border: 1px solid #d1fae5;
+    background: var(--link-logo-bg);
+    border: 1px solid var(--link-logo-border);
     overflow: hidden;
 }
 .link-page .link-card .friend-logo .material-symbols-rounded {
     font-size: 22px;
-    color: var(--md-icon, #0f9d58);
+    color: var(--md-icon);
 }
 .link-page .link-card .friend-logo img {
     width: 100%;
@@ -192,20 +228,22 @@
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 13px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--link-card-border);
     text-decoration: none;
     margin-right: 8px;
     margin-top: 12px;
+    color: var(--md-on-surface-variant);
 }
 .link-page .link-card .card-btn.primary {
-    border-color: #10B981;
-    color: #10B981;
+    border-color: var(--md-primary);
+    color: var(--md-primary);
 }
 .link-page .link-card .card-btn.primary:hover {
-    background: #10B981;
-    color: #fff;
+    background: var(--md-primary);
+    color: var(--md-on-primary);
 }
 
+/* ---------- 友链提示弹窗 ---------- */
 .friend-link-toast {
     position: fixed;
     inset: 0;
@@ -224,24 +262,24 @@
 }
 .friend-toast-box {
     width: min(420px, calc(100vw - 32px));
-    background: #fff;
+    background: var(--md-surface-container);
     border-radius: 16px;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
     padding: 22px 20px 18px;
-    border: 1px solid #f0f0f0;
+    border: 1px solid var(--link-card-border);
 }
 .friend-toast-header {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 16px;
-    color: #1f2937;
+    color: var(--md-on-surface);
 }
 .friend-toast-content {
     font-size: 15px;
     line-height: 1.9;
-    color: #4b5563;
+    color: var(--md-on-surface-variant);
     padding: 12px 14px;
-    background: #f9fafb;
+    background: var(--md-surface);
     border-radius: 10px;
     margin-bottom: 18px;
 }
@@ -263,12 +301,12 @@
     transform: translateY(-1px);
 }
 .toast-btn.secondary {
-    background: #f3f4f6;
-    color: #374151;
+    background: var(--md-surface-tint);
+    color: var(--md-on-surface);
 }
 .toast-btn.primary {
-    background: linear-gradient(135deg, #10B981, #34D399);
-    color: #fff;
+    background: linear-gradient(135deg, var(--md-primary), #34D399);
+    color: var(--md-on-primary);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -313,22 +351,32 @@ body:has(.link-page.friends-only) > header {
     padding: 8px 16px;
     border-radius: 999px;
     font-size: 14px;
-    color: #10B981;
+    color: var(--md-primary);
     text-decoration: none;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
+    background: var(--md-primary-container);
+    border: 1px solid var(--link-dashed-border);
     transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 .link-page .friend-back-btn[hidden] {
     display: none;
 }
 .link-page .friend-back-btn:hover {
-    background: #10B981;
-    color: #fff;
+    background: var(--md-primary);
+    color: var(--md-on-primary);
     transform: translateX(-2px);
 }
+/* 深色模式：降低亮度，避免浅绿背景刺眼 */
+html[data-theme="dark"] .link-page .friend-back-btn {
+    background: #1f3529;
+    border-color: #31463a;
+    color: #5ddb9a;
+}
+html[data-theme="dark"] .link-page .friend-back-btn:hover {
+    background: #0b7a44;
+    color: #fff;
+}
 
-/* 友链搜索框（图标位于输入框左侧外部，不占用可输入区域） */
+/* ---------- 友链搜索框 ---------- */
 .link-page .friend-search-wrap {
     display: flex;
     align-items: center;
@@ -341,7 +389,7 @@ body:has(.link-page.friends-only) > header {
 .link-page .friend-search-icon {
     flex-shrink: 0;
     font-size: 22px;
-    color: #10B981;
+    color: var(--md-icon);
 }
 .link-page .friend-search {
     flex: 1 1 auto;
@@ -349,26 +397,30 @@ body:has(.link-page.friends-only) > header {
     box-sizing: border-box;
     padding: 13px 18px;
     font-size: 15px;
-    color: #333;
-    border: 1px solid #e5e7eb;
+    color: var(--md-on-surface);
+    border: 1px solid var(--link-card-border);
     border-radius: 10px;
-    background: #fff;
+    background: var(--md-surface-container);
     transition: border-color 0.2s, box-shadow 0.2s;
+}
+.link-page .friend-search::placeholder {
+    color: var(--md-on-surface-variant);
+    opacity: 0.7;
 }
 .link-page .friend-search:focus {
     outline: none;
-    border-color: #10B981;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    border-color: var(--md-primary);
+    box-shadow: 0 0 0 3px var(--md-state-focus, rgba(15, 157, 88, 0.15));
 }
 .link-page .friend-search-empty {
     grid-column: 1 / -1;
     padding: 30px 0;
     text-align: center;
-    color: #999;
+    color: var(--md-on-surface-variant);
     font-size: 15px;
 }
 
-/* 移动端顶部横向目录 */
+/* ---------- 移动端顶部横向目录 ---------- */
 .link-page .mobile-catalog {
     display: none;
     overflow-x: auto;
@@ -383,20 +435,51 @@ body:has(.link-page.friends-only) > header {
 .link-page .mobile-catalog a {
     display: inline-block;
     padding: 8px 16px;
-    background: #fff;
+    background: var(--md-surface-container);
     border-radius: 20px;
     font-size: 14px;
-    color: #333;
+    color: var(--md-on-surface);
     text-decoration: none;
     margin-right: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: var(--md-shadow-sm);
 }
 .link-page .mobile-catalog a:active {
-    background: #10B981;
-    color: #fff;
+    background: var(--md-primary);
+    color: var(--md-on-primary);
 }
 
-/* 移动端响应式 */
+/* ---------- 友链模式右上角主题切换按钮 ---------- */
+.friends-theme-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+    border: 1px solid var(--link-card-border);
+    border-radius: 999px;
+    box-shadow: var(--link-elevation);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+body:has(.link-page.friends-only) .friends-theme-toggle {
+    display: inline-flex;
+}
+.friends-theme-toggle:hover,
+.friends-theme-toggle:focus-visible {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+    border-color: var(--md-primary);
+    transform: translateY(-1px);
+}
+
+/* ---------- 移动端响应式 ---------- */
 @media (max-width: 768px) {
     .link-page {
         flex-direction: column;
@@ -413,134 +496,4 @@ body:has(.link-page.friends-only) > header {
     .link-page .card-grid {
         grid-template-columns: 1fr;
     }
-}
-
-/* ---------- 暗色模式（html[data-theme="dark"]） ---------- */
-html[data-theme="dark"] .link-page .sidebar,
-html[data-theme="dark"] .link-page .section,
-html[data-theme="dark"] .link-page .link-card,
-html[data-theme="dark"] .link-page .mobile-catalog a {
-    background: #2a2a2a; /* 柔和深灰，不压抑 */
-}
-
-html[data-theme="dark"] .link-page .sidebar {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-html[data-theme="dark"] .link-page .sidebar h3 {
-    color: #ccc;
-    border-left-color: #10B981; /* 绿色不变 */
-}
-
-html[data-theme="dark"] .link-page .sidebar a {
-    color: #ddd;
-}
-html[data-theme="dark"] .link-page .sidebar a:hover,
-html[data-theme="dark"] .link-page .sidebar a.active {
-    background: #3a3a3a;
-    border-left-color: #10B981;
-    color: #10B981; /* 保持绿色高亮 */
-}
-
-/* 主内容文字颜色 */
-html[data-theme="dark"] .link-page .main-content,
-html[data-theme="dark"] .link-page .section-title,
-html[data-theme="dark"] .link-page .link-card .info h4 {
-    color: #fff;
-}
-
-html[data-theme="dark"] .link-page .section {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-html[data-theme="dark"] .link-page .section-title {
-    border-bottom-color: #444;
-}
-
-html[data-theme="dark"] .link-page .github-cta p {
-    color: #aaa;
-}
-
-html[data-theme="dark"] .link-page .link-card {
-    border-color: #3a3a3a;
-}
-html[data-theme="dark"] .link-page .link-card:hover {
-    border-color: #10B981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
-}
-
-html[data-theme="dark"] .link-page .link-card .info p {
-    color: #aaa; /* 辅助描述文字柔和 */
-}
-
-html[data-theme="dark"] .link-page .link-card .friend-logo {
-    background: #333;
-    border-color: #454545;
-}
-
-html[data-theme="dark"] .link-page .link-card.more-friend-card {
-    background: #2a2a2a;
-    border-color: #3a3a3a;
-}
-html[data-theme="dark"] .link-page .link-card.more-friend-card:hover {
-    border-color: #10B981;
-}
-
-html[data-theme="dark"] .link-page .link-card .card-btn {
-    border-color: #555;
-    color: #ccc;
-}
-html[data-theme="dark"] .link-page .link-card .card-btn.primary {
-    border-color: #10B981;
-    color: #10B981;
-}
-html[data-theme="dark"] .link-page .link-card .card-btn.primary:hover {
-    background: #10B981;
-    color: #fff;
-}
-
-html[data-theme="dark"] .friend-toast-box {
-    background: #2a2a2a;
-    border-color: #3a3a3a;
-}
-html[data-theme="dark"] .friend-toast-header {
-    color: #fff;
-}
-html[data-theme="dark"] .friend-toast-content {
-    background: #1f1f1f;
-    color: #d1d5db;
-}
-html[data-theme="dark"] .toast-btn.secondary {
-    background: #3a3a3a;
-    color: #e5e7eb;
-}
-
-html[data-theme="dark"] .link-page .mobile-catalog a {
-    color: #ddd;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-}
-html[data-theme="dark"] .link-page .mobile-catalog a:active {
-    background: #10B981;
-    color: #fff;
-}
-
-html[data-theme="dark"] .link-page .friend-search {
-    background: #2a2a2a;
-    border-color: #3a3a3a;
-    color: #eee;
-}
-html[data-theme="dark"] .link-page .friend-back-btn {
-    background: #2a2a2a;
-    border-color: #3a3a3a;
-    color: #34D399;
-}
-html[data-theme="dark"] .link-page .friend-back-btn:hover {
-    background: #10B981;
-    color: #fff;
-}
-html[data-theme="dark"] .link-page .friend-search::placeholder {
-    color: #888;
-}
-html[data-theme="dark"] .link-page .friend-search-empty {
-    color: #888;
 }

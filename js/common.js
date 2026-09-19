@@ -3,14 +3,21 @@
 // ========== 通用内容初始化 ==========
 // 可重复调用：既用于首次加载，也用于无刷新页面切换（SPA）后的内容重新绑定。
 function initCommon() {
-    const menuButton = document.querySelector('.menu');
-    const nav = document.querySelector('nav ul');
+    // 先确保 header / footer 已由 JS 注入，再绑定其中的交互
+    initNavFooter();
 
-    if (menuButton && nav && !menuButton.dataset.commonBound) {
-        menuButton.dataset.commonBound = '1';
-        menuButton.addEventListener('click', function(e) {
+    if (!window.__commonMenuBound) {
+        window.__commonMenuBound = true;
+        document.addEventListener('click', function(e) {
+            const menuButton = e.target.closest('.menu');
+            if (!menuButton) return;
+
+            const nav = document.querySelector('header nav ul');
+            if (!nav) return;
+
             e.stopPropagation();
-            nav.classList.toggle('show');
+            const isOpen = nav.classList.toggle('show');
+            menuButton.setAttribute('aria-expanded', String(isOpen));
         });
     }
 
@@ -18,6 +25,7 @@ function initCommon() {
     if (!window.__commonNavDocBound) {
         window.__commonNavDocBound = true;
         document.addEventListener('click', function(e) {
+            if (e.target.closest('.menu')) return;
             if (!e.target.closest('header')) {
                 const navList = document.querySelector('nav ul');
                 if (navList) navList.classList.remove('show');
@@ -46,6 +54,96 @@ function initCommon() {
 
     // 评论区初始化（Giscus 自动加载）
     initCommentSection();
+}
+
+// ========== 导航栏与版权声明（JS 驱动） ==========
+// 整个 header（含导航栏）与 footer（版权声明）均由 JS 创建。
+// 各页面 HTML 在原 header / footer 位置放置占位 div：
+//   <div id="site-header"></div> 与 <div id="site-footer"></div>
+// initNavFooter() 会把构建好的 <header> / <footer> 原地替换进占位 div，
+// 从而保持原有的文档结构与样式作用位置；页面缺少占位 div 时退回
+// body 开头 / 末尾插入。幂等：已存在则跳过。
+
+const SITE_NAV_ITEMS = [
+    { href: '/index.html', label: '首页' },
+    { href: '/blog.html', label: '博客' },
+    { href: '/link.html', label: '链接' },
+    { href: '/about.html', label: '关于' }
+];
+
+const SITE_FOOTER_LINKS = [
+    { href: '/jump_warning.html?url=https://github.com/bCreeper156/blog/blob/main/LICENSE', label: 'Copyright © ' + new Date().getFullYear() + ' Creeper156' },
+    { href: '/privacy', label: '隐私政策' },
+    { href: '/rules', label: '用户与评论政策' }
+];
+
+function buildSiteHeader() {
+    const header = document.createElement('header');
+
+    const menuBtn = document.createElement('button');
+    menuBtn.className = 'menu';
+    menuBtn.innerHTML = '<span class="material-symbols-rounded">menu</span>';
+    header.appendChild(menuBtn);
+
+    const h1 = document.createElement('h1');
+    const siteLink = document.createElement('a');
+    siteLink.href = '/';
+    siteLink.textContent = '156博客';
+    h1.appendChild(siteLink);
+    header.appendChild(h1);
+
+    const nav = document.createElement('nav');
+    const ul = document.createElement('ul');
+    SITE_NAV_ITEMS.forEach(function (item) {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = item.href;
+        a.textContent = item.label;
+        li.appendChild(a);
+        ul.appendChild(li);
+    });
+    nav.appendChild(ul);
+    header.appendChild(nav);
+
+    return header;
+}
+
+function buildSiteFooter() {
+    const footer = document.createElement('footer');
+    const p = document.createElement('p');
+    SITE_FOOTER_LINKS.forEach(function (item, i) {
+        if (i > 0) p.appendChild(document.createTextNode(' · '));
+        const a = document.createElement('a');
+        a.href = item.href;
+        a.textContent = item.label;
+        p.appendChild(a);
+    });
+    footer.appendChild(p);
+    return footer;
+}
+
+function initNavFooter() {
+    if (!document.body) return;
+
+    // header：优先替换页面中的占位 div（#site-header）
+    if (!document.querySelector('body > header')) {
+        const headerHost = document.getElementById('site-header');
+        if (headerHost && headerHost.parentNode === document.body) {
+            document.body.replaceChild(buildSiteHeader(), headerHost);
+        } else {
+            document.body.insertBefore(buildSiteHeader(), document.body.firstChild);
+        }
+    }
+
+    // footer：优先替换页面中的占位 div（#site-footer）
+    if (!document.querySelector('body > footer')) {
+        const footerHost = document.getElementById('site-footer');
+        if (footerHost && footerHost.parentNode === document.body) {
+            document.body.replaceChild(buildSiteFooter(), footerHost);
+        } else {
+            document.body.appendChild(buildSiteFooter());
+        }
+    }
 }
 
 // 注册为可复用的页面模块（页面切换后重新初始化内容区）
@@ -405,13 +503,12 @@ function getDefaultTheme() {
 
 function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
-    const toggle = document.querySelector('.theme-toggle');
-    if (toggle) {
+    document.querySelectorAll('.theme-toggle').forEach(toggle => {
         const isDark = theme === 'dark';
         toggle.innerHTML = `<span class="material-symbols-rounded">${isDark ? 'dark_mode' : 'light_mode'}</span>`;
         toggle.setAttribute('aria-pressed', String(isDark));
         toggle.title = isDark ? '切换到白天模式' : '切换到暗黑模式';
-    }
+    });
 
     // Swap images that provide a dark-mode source via data-dark-src
     try {
@@ -458,6 +555,9 @@ function initThemeToggle() {
         });
     }
 }
+
+// 暴露主题接口，供独立页面（如 link.html?type=friends 友链模式）调用
+window.__themeAPI = { applyTheme: applyTheme, getDefaultTheme: getDefaultTheme, saveTheme: saveTheme };
 
 // ========== 置顶按钮（统一创建 + 事件绑定） ==========
 (function() {

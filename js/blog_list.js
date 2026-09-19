@@ -95,6 +95,9 @@ const articles = [
     }
 ];
 
+// 暴露文章数据供其他页面（如关于页统计）读取
+window.__blogArticles = articles;
+
 // 分页配置
 const ARTICLES_PER_PAGE = 5;
 let currentPage = 1;
@@ -105,6 +108,7 @@ let currentSearch = '';
 // 渲染文章列表
 function renderArticles(articlesToRender, page = 1) {
     const container = document.getElementById('articles-container');
+    if (!container) return; // 页面上不存在列表容器（如关于页仅读取数据）时跳过渲染
     currentPage = page;
     
     // 计算分页
