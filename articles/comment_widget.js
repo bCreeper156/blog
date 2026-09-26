@@ -2,7 +2,8 @@
     'use strict';
 
     var COMMENT_ORIGIN = 'https://cf-comment-system.c156.workers.dev';
-    var frameReady = false;
+    var SITE_KEY = env.SITE_KEY;
+        var frameReady = false;
     var frame;
 
     function currentArticleId() {
@@ -22,6 +23,7 @@
 
     function buildFrame() {
         var params = new URLSearchParams({
+            site_key: SITE_KEY,
             article_id: currentArticleId(),
             parent_origin: window.location.origin
         });
