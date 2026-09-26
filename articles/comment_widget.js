@@ -2,6 +2,7 @@
     'use strict';
 
     var COMMENT_ORIGIN = 'https://cf-comment-system.c156.workers.dev';
+    var SITE_KEY = '<KEY>';
         var frameReady = false;
     var frame;
 
