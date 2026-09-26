@@ -77,7 +77,7 @@
         var headings = [];
         for (var i = 0; i < candidates.length; i++) {
             var el = candidates[i];
-            if (el.closest('.feature-card, .comment-widget, .article-actions, #tcomment, #article-toc')) continue;
+            if (el.closest('.feature-card, .comment-widget, .cf-comment-widget, .article-actions, #article-toc')) continue;
             if (parseInt(el.tagName.substring(1), 10) > TOC_MAX_LEVEL) continue;
             headings.push(el);
         }

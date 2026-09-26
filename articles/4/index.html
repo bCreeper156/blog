@@ -12,9 +12,8 @@
     <script src="/js/loading.js"></script>
     <script src="/js/common.js"></script>
     <script src="/js/jump_warning.js" defer></script>
-    <script src="/js/nope.js"></script>
     <script src="/articles/articles.js"></script>
-    <!-- 移除了 twikoo 初始化，待 DOM 加载后执行 -->
+    <script src="/articles/comment_widget.js"></script>
 <link rel="icon" type="image/png" href="/images/LOGO_dark.png">
 </head>
 <body>
@@ -266,25 +265,9 @@ WantedBy=multi-user.target</code></pre>
                         <span class="material-symbols-rounded">home</span> 返回首页
                     </button>
                 </div>
-                <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
-                <span class="material-symbols-rounded">lightbulb</span> 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
-                </div>
-                <!-- 评论容器，放在正确位置 -->
-                <div id="tcomment"></div>
             </div>
         </article>
     </main>
-<!-- Twikoo 初始化移到文档底部，确保容器已加载 -->
-    <script src="https://cdn.jsdelivr.net/npm/twikoo@1.7.15/dist/twikoo.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            twikoo.init({
-                envId: 'https://twikoo-vercel-psi-azure.vercel.app',
-                el: '#tcomment',
-                // path: window.location.pathname, // 可选，用于区分不同页面
-            });
-        });
-    </script>
     <!-- Placeholder: footer injected by /js/common.js -->
     <div id="site-footer"></div>
 </body>

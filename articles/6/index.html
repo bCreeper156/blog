@@ -11,8 +11,8 @@
     <script src="/js/loading.js"></script>
     <script src="/js/common.js"></script>
     <script src="/js/jump_warning.js" defer></script>
-    <script src="/js/nope.js"></script>
     <script src="/articles/articles.js"></script>
+    <script src="/articles/comment_widget.js"></script>
 <link rel="icon" type="image/png" href="/images/LOGO_dark.png">
 </head>
 <body>
@@ -54,23 +54,10 @@
                         <span class="material-symbols-rounded">home</span> 返回首页
                     </button>
                 </div>
-                <div class="twikoo-tip" style="font-size:13px;color:#888;margin-bottom:8px;">
-                <span class="material-symbols-rounded">lightbulb</span> 如遇评论加载失败，请刷新页面或清除缓存以更新至最新版本，并检查网络。
-                </div>
-                <div id="tcomment"></div>
             </div>
         </article>
 
     </main>
-<script src="https://cdn.jsdelivr.net/npm/twikoo@1.7.15/dist/twikoo.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            twikoo.init({
-                envId: 'https://twikoo-vercel-psi-azure.vercel.app',
-                el: '#tcomment',
-            });
-        });
-    </script>
     <!-- Placeholder: footer injected by /js/common.js -->
     <div id="site-footer"></div>
 </body>

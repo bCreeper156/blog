@@ -124,6 +124,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: 80px;
 }
 
 main {
@@ -136,10 +137,16 @@ main {
 
 /* ----- 导航栏（白色背景，黑色文字，绿色悬停） ----- */
 header {
-    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.78);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
     height: 80px;
     width: 100%;
-    position: relative;
     flex-shrink: 0;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
@@ -541,98 +548,27 @@ html[data-theme="dark"] .code-copy-btn.copied {
     color: #10b981;
     text-decoration: none;
     font-weight: 500;
+    overflow-wrap: anywhere;
 }
 
 .article-content a:hover {
     text-decoration: underline;
 }
 
-/* ----- 评论区域（留言板） ----- */
-.comment-widget {
+/* ----- Cloudflare 评论系统 ----- */
+.cf-comment-widget {
     margin-top: 2.5rem;
-    padding: 1.2rem;
-    border: 1px solid #e2e6ea;
-    border-radius: 10px;
-    background-color: #fafbfc;
-}
-
-.comment-widget h3 {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.1rem;
-    color: #2c3e50;
-}
-
-.comment-widget form {
-    display: grid;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-}
-
-.comment-widget input,
-.comment-widget textarea,
-.comment-widget button {
-    font-family: inherit;
-}
-
-.comment-widget input,
-.comment-widget textarea {
-    width: 100%;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    padding: 0.65rem 0.8rem;
-}
-
-.comment-widget textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.comment-widget .comment-list {
-    margin: 0;
-    list-style: none;
-    padding: 0;
-    max-height: 440px;
-    overflow-y: auto;
-}
-
-.comment-widget .comment-list li {
-    border-bottom: 1px solid #e2e6ea;
-    padding: 0.75rem 0;
-}
-
-.comment-widget .comment-list li:last-child {
-    border-bottom: none;
-}
-
-.comment-widget .comment-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    color: #495057;
-    margin-bottom: 0.35rem;
-}
-
-.comment-widget .comment-body {
+    padding-top: 2rem;
+    border-top: 1px solid #e2e6ea;
     color: #343a40;
-    white-space: pre-wrap;
-    word-break: break-word;
 }
 
-.comment-widget .comment-empty,
-.comment-widget .comment-error {
-    color: #6c757d;
-    font-size: 0.95rem;
-    padding: 0.75rem 0.35rem;
-}
-
-.comment-widget .comment-submit {
-    background: #0f9d58;
+.cf-comment-frame {
+    display: block;
+    width: 100%;
+    min-height: 320px;
     border: 0;
-    color: white;
-    padding: 0.65rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    background: transparent;
 }
 
 .comment-widget .comment-submit:hover {
@@ -1004,8 +940,10 @@ html[data-theme="dark"] {
         color: var(--md-on-surface);
     }
     header {
-        background-color: var(--md-surface-container);
+        background: rgba(29, 29, 29, 0.78);
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        backdrop-filter: blur(18px) saturate(140%);
     }
     header h1 a,
     header ul a {
@@ -1288,7 +1226,7 @@ html[data-theme="dark"] .article-toc-link.active {
         max-width: 1200px;
     }
     /* 文章标题占满整行，正文与目录分列两栏 */
-    article {
+    main > article {
         display: grid;
         grid-template-columns: 260px minmax(0, 800px);
         justify-content: center;
@@ -1311,12 +1249,12 @@ html[data-theme="dark"] .article-toc-link.active {
     }
 
     /* 没有目录的页面：正文容器单列并保持整体居中 */
-    article.no-toc,
-    article:has(.article-toc[hidden]) {
+    main > article.no-toc,
+    main > article:has(.article-toc[hidden]) {
         grid-template-columns: minmax(0, 800px);
     }
-    article.no-toc .article-content,
-    article:has(.article-toc[hidden]) .article-content {
+    main > article.no-toc > .article-content,
+    main > article:has(.article-toc[hidden]) > .article-content {
         grid-column: 1;
     }
 }

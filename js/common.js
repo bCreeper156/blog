@@ -212,7 +212,6 @@ function initCommentSection() {
             'html.' + LOCK_CLASS + ' #back-to-top,',
             'html.' + LOCK_CLASS + ' #gh-loader-wrap,',
             'html.' + LOCK_CLASS + ' #gh-loader-tip,',
-            'html.' + LOCK_CLASS + ' .nope-overlay { z-index: 1 !important; }',
             '#' + OVERLAY_ID + '.is-open {',
             '    opacity: 1; visibility: visible; pointer-events: auto;',
             '    background: rgba(8, 12, 10, .88);',
